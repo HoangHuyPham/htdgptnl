@@ -8,11 +8,12 @@ namespace be.Models
     public class Criteria
     {
         public Guid Id { get; set; }
-        public string Name { get; set; } = null!;
-        public float Threshhold { get; set; } = 0;
-        public float Target { get; set; } = 0;
-        public float Stretch { get; set; } = 0;
-        public float Weight { get; set; } = 0;
-        public ICollection<ArchivementCriteria>? ArchivementCriterias{ get; set; } = [];
+        public string Content { get; set; } = null!;
+        public bool ProofRequired { get; set; }
+        public Guid? EvaluateScoreId { get; set; }
+        public EvaluateScore? EvaluateScore { get; set; }
+        public ICollection<ProofImage> ProofImages{ get; set; } = [];
+        public Guid? ArchivementId { get; set; }
+        public Archievement? Archievement { get; set; }
     }
 }

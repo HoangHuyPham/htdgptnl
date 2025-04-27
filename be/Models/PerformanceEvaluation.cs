@@ -8,10 +8,9 @@ namespace be.Models
     public class PerformanceEvaluation
     {
         public Guid Id { get; set; }
-        public double TotalScoreWhat { get; set; } = 0;
-        public double TotalScore { get; set; } = 0;
-        public Guid? EmployeeId { get; set; }
-        public Employee? Employee { get; set; }
-        public ICollection<ArchivementCriteria>? ArchivementCriterias{ get; set; } = [];
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public ICollection<Archievement> Archievements { get; set; } = [];
+        public Guid? EvaluationScheduleId { get; set; }
+        public EvaluationSchedule? EvaluationSchedule { get; set; }
     }
 }

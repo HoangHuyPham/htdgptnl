@@ -1,26 +1,37 @@
-
 using be.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace be.Controllers;
-class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options) {
-    DbSet<User> Users { get; set; }
-    DbSet<Role> Roles { get; set; }
-    DbSet<EvaluationSchedule> EvaluationSchedules { get; set;}
-    DbSet<Employee> Employees { get; set; }
-    DbSet<EmployeeDetail> EmployeeDetails { get; set; }
-    DbSet<WorkingDetail> WorkingDetails { get; set; }
-    DbSet<Grade> Grades { get; set; }
-    DbSet<Position> Positions { get; set; }
-    DbSet<Plant> Plants { get; set; }
-    DbSet<Department> Departments { get; set; }
-    DbSet<Process> Processes { get; set; }
-    DbSet<Operation> Operations{ get; set; }
-    DbSet<PerformanceEvaluation> PerformanceEvaluations{ get; set; }
-    DbSet<BellCurveScore> BellCurveScores{ get; set;}
-    DbSet<PositionEs> PositionEss{ get; set; }
-    DbSet<BalanceScore> BalanceScores{ get; set; }
-    DbSet<ArchivementCriteria> ArchivementCriterias{ get; set; }
-    DbSet<Archievement> Archievements{ get; set; }
-    DbSet<Criteria> Criterias{ get; set; }
+namespace be.Contexts
+{
+    public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
+    {
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<EvaluationSchedule> EvaluationSchedules { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<EmployeeDetail> EmployeeDetails { get; set; }
+        public DbSet<WorkingDetail> WorkingDetails { get; set; }
+        public DbSet<Grade> Grades { get; set; }
+        public DbSet<Position> Positions { get; set; }
+        public DbSet<Plant> Plants { get; set; }
+        public DbSet<Department> Departments { get; set; }
+        public DbSet<Process> Processes { get; set; }
+        public DbSet<Operation> Operations { get; set; }
+        public DbSet<PerformanceEvaluation> PerformanceEvaluations { get; set; }
+        public DbSet<BellCurveScore> BellCurveScores { get; set; }
+        public DbSet<PositionEs> PositionEss { get; set; }
+        public DbSet<BalanceScore> BalanceScores { get; set; }
+        public DbSet<Archievement> Archievements { get; set; }
+        public DbSet<Criteria> Criterias { get; set; }
+        public DbSet<EvaluateScore> EvaluateScores { get; set; }
+        public DbSet<Image> Images { get; set; }
+        public DbSet<ProofImage> ProofImages { get; set; }
+        public DbSet<ArchievementItem> ArchievementItems { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<EvaluateScore>().HasOne(e=>e.EmployeeEvaluate).WithMany(e=>e.EvaluateScores).HasForeignKey(e=>e.EmployeeEvaluateId);
+            modelBuilder.Entity<ProofImage>().HasOne(e=>e.ProofCriteria).WithMany(e=>e.ProofImages).HasForeignKey(e=>e.ProofCriteriaId);
+        }
+    }
 }

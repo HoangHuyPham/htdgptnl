@@ -12,38 +12,6 @@ namespace be.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Archievements",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Threshhold = table.Column<float>(type: "real", nullable: false),
-                    Target = table.Column<float>(type: "real", nullable: false),
-                    Stretch = table.Column<float>(type: "real", nullable: false),
-                    Weight = table.Column<float>(type: "real", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Archievements", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Criterias",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Threshhold = table.Column<float>(type: "real", nullable: false),
-                    Target = table.Column<float>(type: "real", nullable: false),
-                    Stretch = table.Column<float>(type: "real", nullable: false),
-                    Weight = table.Column<float>(type: "real", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Criterias", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "EvaluationSchedules",
                 columns: table => new
                 {
@@ -58,6 +26,19 @@ namespace be.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Images",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Size = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Images", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Positions",
                 columns: table => new
                 {
@@ -67,6 +48,24 @@ namespace be.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Positions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PerformanceEvaluations",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EvaluationScheduleId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PerformanceEvaluations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PerformanceEvaluations_EvaluationSchedules_EvaluationScheduleId",
+                        column: x => x.EvaluationScheduleId,
+                        principalTable: "EvaluationSchedules",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -95,7 +94,6 @@ namespace be.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsEligible = table.Column<bool>(type: "bit", nullable: false),
                     PositionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
@@ -123,6 +121,25 @@ namespace be.Migrations
                         name: "FK_PositionEss_Positions_PositionId",
                         column: x => x.PositionId,
                         principalTable: "Positions",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Archievements",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TotalWeight = table.Column<float>(type: "real", nullable: false),
+                    PerformanceEvaluationId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Archievements", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Archievements_PerformanceEvaluations_PerformanceEvaluationId",
+                        column: x => x.PerformanceEvaluationId,
+                        principalTable: "PerformanceEvaluations",
                         principalColumn: "Id");
                 });
 
@@ -185,6 +202,24 @@ namespace be.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "EvaluateScores",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Score = table.Column<float>(type: "real", nullable: false),
+                    EmployeeEvaluateId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EvaluateScores", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EvaluateScores_Employees_EmployeeEvaluateId",
+                        column: x => x.EmployeeEvaluateId,
+                        principalTable: "Employees",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Grades",
                 columns: table => new
                 {
@@ -215,25 +250,6 @@ namespace be.Migrations
                     table.PrimaryKey("PK_Operations", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Operations_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PerformanceEvaluations",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TotalScoreWhat = table.Column<double>(type: "float", nullable: false),
-                    TotalScore = table.Column<double>(type: "float", nullable: false),
-                    EmployeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PerformanceEvaluations", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PerformanceEvaluations_Employees_EmployeeId",
                         column: x => x.EmployeeId,
                         principalTable: "Employees",
                         principalColumn: "Id");
@@ -323,33 +339,25 @@ namespace be.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ArchivementCriterias",
+                name: "ArchievementItems",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TotalScore = table.Column<double>(type: "float", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Threshold = table.Column<float>(type: "real", nullable: false),
+                    Target = table.Column<float>(type: "real", nullable: false),
+                    Stretch = table.Column<float>(type: "real", nullable: false),
+                    Weight = table.Column<float>(type: "real", nullable: false),
                     ArchivementId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ArchievementId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CriteriaId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    PerformanceEvaluationId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    ArchievementId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ArchivementCriterias", x => x.Id);
+                    table.PrimaryKey("PK_ArchievementItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ArchivementCriterias_Archievements_ArchievementId",
+                        name: "FK_ArchievementItems_Archievements_ArchievementId",
                         column: x => x.ArchievementId,
                         principalTable: "Archievements",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_ArchivementCriterias_Criterias_CriteriaId",
-                        column: x => x.CriteriaId,
-                        principalTable: "Criterias",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_ArchivementCriterias_PerformanceEvaluations_PerformanceEvaluationId",
-                        column: x => x.PerformanceEvaluationId,
-                        principalTable: "PerformanceEvaluations",
                         principalColumn: "Id");
                 });
 
@@ -378,19 +386,69 @@ namespace be.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Criterias",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProofRequired = table.Column<bool>(type: "bit", nullable: false),
+                    EvaluateScoreId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ArchivementId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ArchievementId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ArchievementItemId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Criterias", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Criterias_ArchievementItems_ArchievementItemId",
+                        column: x => x.ArchievementItemId,
+                        principalTable: "ArchievementItems",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Criterias_Archievements_ArchievementId",
+                        column: x => x.ArchievementId,
+                        principalTable: "Archievements",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Criterias_EvaluateScores_EvaluateScoreId",
+                        column: x => x.EvaluateScoreId,
+                        principalTable: "EvaluateScores",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProofImages",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ImageId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ProofCriteriaId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProofImages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProofImages_Criterias_ProofCriteriaId",
+                        column: x => x.ProofCriteriaId,
+                        principalTable: "Criterias",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ProofImages_Images_ImageId",
+                        column: x => x.ImageId,
+                        principalTable: "Images",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.CreateIndex(
-                name: "IX_ArchivementCriterias_ArchievementId",
-                table: "ArchivementCriterias",
+                name: "IX_ArchievementItems_ArchievementId",
+                table: "ArchievementItems",
                 column: "ArchievementId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ArchivementCriterias_CriteriaId",
-                table: "ArchivementCriterias",
-                column: "CriteriaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ArchivementCriterias_PerformanceEvaluationId",
-                table: "ArchivementCriterias",
+                name: "IX_Archievements_PerformanceEvaluationId",
+                table: "Archievements",
                 column: "PerformanceEvaluationId");
 
             migrationBuilder.CreateIndex(
@@ -408,6 +466,23 @@ namespace be.Migrations
                 filter: "[EmployeeId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Criterias_ArchievementId",
+                table: "Criterias",
+                column: "ArchievementId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Criterias_ArchievementItemId",
+                table: "Criterias",
+                column: "ArchievementItemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Criterias_EvaluateScoreId",
+                table: "Criterias",
+                column: "EvaluateScoreId",
+                unique: true,
+                filter: "[EvaluateScoreId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Departments_EmployeeId",
                 table: "Departments",
                 column: "EmployeeId",
@@ -417,12 +492,19 @@ namespace be.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeDetails_EmployeeId",
                 table: "EmployeeDetails",
-                column: "EmployeeId");
+                column: "EmployeeId",
+                unique: true,
+                filter: "[EmployeeId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_PositionId",
                 table: "Employees",
                 column: "PositionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EvaluateScores_EmployeeEvaluateId",
+                table: "EvaluateScores",
+                column: "EmployeeEvaluateId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Grades_EmployeeId",
@@ -439,11 +521,11 @@ namespace be.Migrations
                 filter: "[EmployeeId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PerformanceEvaluations_EmployeeId",
+                name: "IX_PerformanceEvaluations_EvaluationScheduleId",
                 table: "PerformanceEvaluations",
-                column: "EmployeeId",
+                column: "EvaluationScheduleId",
                 unique: true,
-                filter: "[EmployeeId] IS NOT NULL");
+                filter: "[EvaluationScheduleId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Plants_EmployeeId",
@@ -463,6 +545,16 @@ namespace be.Migrations
                 column: "EmployeeId",
                 unique: true,
                 filter: "[EmployeeId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProofImages_ImageId",
+                table: "ProofImages",
+                column: "ImageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProofImages_ProofCriteriaId",
+                table: "ProofImages",
+                column: "ProofCriteriaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Roles_EvaluationScheduleId",
@@ -486,15 +578,14 @@ namespace be.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_WorkingDetails_EmployeeId",
                 table: "WorkingDetails",
-                column: "EmployeeId");
+                column: "EmployeeId",
+                unique: true,
+                filter: "[EmployeeId] IS NOT NULL");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "ArchivementCriterias");
-
             migrationBuilder.DropTable(
                 name: "BalanceScores");
 
@@ -523,31 +614,43 @@ namespace be.Migrations
                 name: "Processes");
 
             migrationBuilder.DropTable(
+                name: "ProofImages");
+
+            migrationBuilder.DropTable(
                 name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "WorkingDetails");
 
             migrationBuilder.DropTable(
-                name: "Archievements");
-
-            migrationBuilder.DropTable(
                 name: "Criterias");
 
             migrationBuilder.DropTable(
-                name: "PerformanceEvaluations");
-
-            migrationBuilder.DropTable(
-                name: "EvaluationSchedules");
+                name: "Images");
 
             migrationBuilder.DropTable(
                 name: "Users");
 
             migrationBuilder.DropTable(
+                name: "ArchievementItems");
+
+            migrationBuilder.DropTable(
+                name: "EvaluateScores");
+
+            migrationBuilder.DropTable(
+                name: "Archievements");
+
+            migrationBuilder.DropTable(
                 name: "Employees");
 
             migrationBuilder.DropTable(
+                name: "PerformanceEvaluations");
+
+            migrationBuilder.DropTable(
                 name: "Positions");
+
+            migrationBuilder.DropTable(
+                name: "EvaluationSchedules");
         }
     }
 }

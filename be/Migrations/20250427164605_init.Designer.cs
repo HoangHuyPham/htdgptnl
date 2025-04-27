@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using be.Controllers;
+using be.Contexts;
 
 #nullable disable
 
 namespace be.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250407062043_init")]
+    [Migration("20250427164605_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -35,24 +35,20 @@ namespace be.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("Stretch")
-                        .HasColumnType("real");
+                    b.Property<Guid?>("PerformanceEvaluationId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<float>("Target")
-                        .HasColumnType("real");
-
-                    b.Property<float>("Threshhold")
-                        .HasColumnType("real");
-
-                    b.Property<float>("Weight")
+                    b.Property<float>("TotalWeight")
                         .HasColumnType("real");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PerformanceEvaluationId");
+
                     b.ToTable("Archievements");
                 });
 
-            modelBuilder.Entity("be.Models.ArchivementCriteria", b =>
+            modelBuilder.Entity("be.Models.ArchievementItem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -64,24 +60,27 @@ namespace be.Migrations
                     b.Property<Guid?>("ArchivementId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CriteriaId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("PerformanceEvaluationId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<float>("Stretch")
+                        .HasColumnType("real");
 
-                    b.Property<double>("TotalScore")
-                        .HasColumnType("float");
+                    b.Property<float>("Target")
+                        .HasColumnType("real");
+
+                    b.Property<float>("Threshold")
+                        .HasColumnType("real");
+
+                    b.Property<float>("Weight")
+                        .HasColumnType("real");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ArchievementId");
 
-                    b.HasIndex("CriteriaId");
-
-                    b.HasIndex("PerformanceEvaluationId");
-
-                    b.ToTable("ArchivementCriterias");
+                    b.ToTable("ArchievementItems");
                 });
 
             modelBuilder.Entity("be.Models.BalanceScore", b =>
@@ -135,23 +134,34 @@ namespace be.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Name")
+                    b.Property<Guid?>("ArchievementId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ArchievementItemId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ArchivementId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("Stretch")
-                        .HasColumnType("real");
+                    b.Property<Guid?>("EvaluateScoreId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<float>("Target")
-                        .HasColumnType("real");
-
-                    b.Property<float>("Threshhold")
-                        .HasColumnType("real");
-
-                    b.Property<float>("Weight")
-                        .HasColumnType("real");
+                    b.Property<bool>("ProofRequired")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ArchievementId");
+
+                    b.HasIndex("ArchievementItemId");
+
+                    b.HasIndex("EvaluateScoreId")
+                        .IsUnique()
+                        .HasFilter("[EvaluateScoreId] IS NOT NULL");
 
                     b.ToTable("Criterias");
                 });
@@ -187,9 +197,6 @@ namespace be.Migrations
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsEligible")
-                        .HasColumnType("bit");
 
                     b.Property<Guid?>("PositionId")
                         .HasColumnType("uniqueidentifier");
@@ -235,9 +242,30 @@ namespace be.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId");
+                    b.HasIndex("EmployeeId")
+                        .IsUnique()
+                        .HasFilter("[EmployeeId] IS NOT NULL");
 
                     b.ToTable("EmployeeDetails");
+                });
+
+            modelBuilder.Entity("be.Models.EvaluateScore", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("EmployeeEvaluateId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<float>("Score")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeEvaluateId");
+
+                    b.ToTable("EvaluateScores");
                 });
 
             modelBuilder.Entity("be.Models.EvaluationSchedule", b =>
@@ -283,6 +311,24 @@ namespace be.Migrations
                     b.ToTable("Grades");
                 });
 
+            modelBuilder.Entity("be.Models.Image", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long>("Size")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Images");
+                });
+
             modelBuilder.Entity("be.Models.Operation", b =>
                 {
                     b.Property<Guid>("Id")
@@ -311,20 +357,17 @@ namespace be.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("EmployeeId")
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("EvaluationScheduleId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<double>("TotalScore")
-                        .HasColumnType("float");
-
-                    b.Property<double>("TotalScoreWhat")
-                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId")
+                    b.HasIndex("EvaluationScheduleId")
                         .IsUnique()
-                        .HasFilter("[EmployeeId] IS NOT NULL");
+                        .HasFilter("[EvaluationScheduleId] IS NOT NULL");
 
                     b.ToTable("PerformanceEvaluations");
                 });
@@ -406,6 +449,27 @@ namespace be.Migrations
                         .HasFilter("[EmployeeId] IS NOT NULL");
 
                     b.ToTable("Processes");
+                });
+
+            modelBuilder.Entity("be.Models.ProofImage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ImageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ProofCriteriaId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ImageId");
+
+                    b.HasIndex("ProofCriteriaId");
+
+                    b.ToTable("ProofImages");
                 });
 
             modelBuilder.Entity("be.Models.Role", b =>
@@ -511,28 +575,29 @@ namespace be.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId");
+                    b.HasIndex("EmployeeId")
+                        .IsUnique()
+                        .HasFilter("[EmployeeId] IS NOT NULL");
 
                     b.ToTable("WorkingDetails");
                 });
 
-            modelBuilder.Entity("be.Models.ArchivementCriteria", b =>
+            modelBuilder.Entity("be.Models.Archievement", b =>
                 {
-                    b.HasOne("be.Models.Archievement", "Archievement")
-                        .WithMany("ArchivementCriterias")
-                        .HasForeignKey("ArchievementId");
-
-                    b.HasOne("be.Models.Criteria", "Criteria")
-                        .WithMany("ArchivementCriterias")
-                        .HasForeignKey("CriteriaId");
-
-                    b.HasOne("be.Models.PerformanceEvaluation", null)
-                        .WithMany("ArchivementCriterias")
+                    b.HasOne("be.Models.PerformanceEvaluation", "PerformanceEvaluation")
+                        .WithMany("Archievements")
                         .HasForeignKey("PerformanceEvaluationId");
 
-                    b.Navigation("Archievement");
+                    b.Navigation("PerformanceEvaluation");
+                });
 
-                    b.Navigation("Criteria");
+            modelBuilder.Entity("be.Models.ArchievementItem", b =>
+                {
+                    b.HasOne("be.Models.Archievement", "Archievement")
+                        .WithMany("ArchivementItems")
+                        .HasForeignKey("ArchievementId");
+
+                    b.Navigation("Archievement");
                 });
 
             modelBuilder.Entity("be.Models.BalanceScore", b =>
@@ -551,6 +616,25 @@ namespace be.Migrations
                         .HasForeignKey("be.Models.BellCurveScore", "EmployeeId");
 
                     b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("be.Models.Criteria", b =>
+                {
+                    b.HasOne("be.Models.Archievement", "Archievement")
+                        .WithMany()
+                        .HasForeignKey("ArchievementId");
+
+                    b.HasOne("be.Models.ArchievementItem", null)
+                        .WithMany("Criterias")
+                        .HasForeignKey("ArchievementItemId");
+
+                    b.HasOne("be.Models.EvaluateScore", "EvaluateScore")
+                        .WithOne("Criteria")
+                        .HasForeignKey("be.Models.Criteria", "EvaluateScoreId");
+
+                    b.Navigation("Archievement");
+
+                    b.Navigation("EvaluateScore");
                 });
 
             modelBuilder.Entity("be.Models.Department", b =>
@@ -574,10 +658,19 @@ namespace be.Migrations
             modelBuilder.Entity("be.Models.EmployeeDetail", b =>
                 {
                     b.HasOne("be.Models.Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId");
+                        .WithOne("EmployeeDetail")
+                        .HasForeignKey("be.Models.EmployeeDetail", "EmployeeId");
 
                     b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("be.Models.EvaluateScore", b =>
+                {
+                    b.HasOne("be.Models.Employee", "EmployeeEvaluate")
+                        .WithMany("EvaluateScores")
+                        .HasForeignKey("EmployeeEvaluateId");
+
+                    b.Navigation("EmployeeEvaluate");
                 });
 
             modelBuilder.Entity("be.Models.Grade", b =>
@@ -600,11 +693,11 @@ namespace be.Migrations
 
             modelBuilder.Entity("be.Models.PerformanceEvaluation", b =>
                 {
-                    b.HasOne("be.Models.Employee", "Employee")
+                    b.HasOne("be.Models.EvaluationSchedule", "EvaluationSchedule")
                         .WithOne("PerformanceEvaluation")
-                        .HasForeignKey("be.Models.PerformanceEvaluation", "EmployeeId");
+                        .HasForeignKey("be.Models.PerformanceEvaluation", "EvaluationScheduleId");
 
-                    b.Navigation("Employee");
+                    b.Navigation("EvaluationSchedule");
                 });
 
             modelBuilder.Entity("be.Models.Plant", b =>
@@ -634,6 +727,21 @@ namespace be.Migrations
                     b.Navigation("Employee");
                 });
 
+            modelBuilder.Entity("be.Models.ProofImage", b =>
+                {
+                    b.HasOne("be.Models.Image", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId");
+
+                    b.HasOne("be.Models.Criteria", "ProofCriteria")
+                        .WithMany("ProofImages")
+                        .HasForeignKey("ProofCriteriaId");
+
+                    b.Navigation("Image");
+
+                    b.Navigation("ProofCriteria");
+                });
+
             modelBuilder.Entity("be.Models.Role", b =>
                 {
                     b.HasOne("be.Models.EvaluationSchedule", "EvaluationSchedule")
@@ -659,20 +767,25 @@ namespace be.Migrations
             modelBuilder.Entity("be.Models.WorkingDetail", b =>
                 {
                     b.HasOne("be.Models.Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId");
+                        .WithOne("WorkingDetail")
+                        .HasForeignKey("be.Models.WorkingDetail", "EmployeeId");
 
                     b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("be.Models.Archievement", b =>
                 {
-                    b.Navigation("ArchivementCriterias");
+                    b.Navigation("ArchivementItems");
+                });
+
+            modelBuilder.Entity("be.Models.ArchievementItem", b =>
+                {
+                    b.Navigation("Criterias");
                 });
 
             modelBuilder.Entity("be.Models.Criteria", b =>
                 {
-                    b.Navigation("ArchivementCriterias");
+                    b.Navigation("ProofImages");
                 });
 
             modelBuilder.Entity("be.Models.Employee", b =>
@@ -681,27 +794,38 @@ namespace be.Migrations
 
                     b.Navigation("Department");
 
+                    b.Navigation("EmployeeDetail");
+
+                    b.Navigation("EvaluateScores");
+
                     b.Navigation("Grade");
 
                     b.Navigation("Operation");
-
-                    b.Navigation("PerformanceEvaluation");
 
                     b.Navigation("Plant");
 
                     b.Navigation("Process");
 
                     b.Navigation("User");
+
+                    b.Navigation("WorkingDetail");
+                });
+
+            modelBuilder.Entity("be.Models.EvaluateScore", b =>
+                {
+                    b.Navigation("Criteria");
                 });
 
             modelBuilder.Entity("be.Models.EvaluationSchedule", b =>
                 {
+                    b.Navigation("PerformanceEvaluation");
+
                     b.Navigation("Roles");
                 });
 
             modelBuilder.Entity("be.Models.PerformanceEvaluation", b =>
                 {
-                    b.Navigation("ArchivementCriterias");
+                    b.Navigation("Archievements");
                 });
 
             modelBuilder.Entity("be.Models.Position", b =>

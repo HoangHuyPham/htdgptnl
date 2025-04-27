@@ -9,10 +9,9 @@ namespace be.Models
     {
         public Guid Id { get; set; }
         public string Name { get; set; } = null!;
-        public float Threshhold { get; set; } = 0;
-        public float Target { get; set; } = 0;
-        public float Stretch { get; set; } = 0;
-        public float Weight { get; set; } = 0;
-        public ICollection<ArchivementCriteria>? ArchivementCriterias{ get; set; } = [];
+        public float TotalWeight { get; set; } = 0;
+        public ICollection<ArchievementItem>? ArchivementItems{ get; set; } = [];
+        public Guid? PerformanceEvaluationId { get; set; }
+        public PerformanceEvaluation? PerformanceEvaluation { get; set; }
     }
 }

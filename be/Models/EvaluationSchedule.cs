@@ -12,5 +12,6 @@ namespace be.Models
         public DateTime End { get; set; }
         public string Description { get; set; } = null!;
         public ICollection<Role> Roles { get; set; } = [];
+        public PerformanceEvaluation? PerformanceEvaluation { get; set; }
     }
 }
