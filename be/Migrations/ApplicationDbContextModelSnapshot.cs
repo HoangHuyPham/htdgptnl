@@ -17,48 +17,43 @@ namespace be.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.3")
+                .HasAnnotation("ProductVersion", "8.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("be.Models.Archievement", b =>
+            modelBuilder.Entity("be.Models.Achievement", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("PerformanceEvaluationId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<float>("TotalWeight")
+                    b.Property<float?>("TotalWeight")
                         .HasColumnType("real");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PerformanceEvaluationId");
 
-                    b.ToTable("Archievements");
+                    b.ToTable("Achievements");
                 });
 
-            modelBuilder.Entity("be.Models.ArchievementItem", b =>
+            modelBuilder.Entity("be.Models.AchievementItem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ArchievementId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("ArchivementId")
+                    b.Property<Guid?>("AchievementId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<float>("Stretch")
@@ -75,9 +70,9 @@ namespace be.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ArchievementId");
+                    b.HasIndex("AchievementId");
 
-                    b.ToTable("ArchievementItems");
+                    b.ToTable("AchievementItems");
                 });
 
             modelBuilder.Entity("be.Models.BalanceScore", b =>
@@ -118,9 +113,7 @@ namespace be.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId")
-                        .IsUnique()
-                        .HasFilter("[EmployeeId] IS NOT NULL");
+                    b.HasIndex("EmployeeId");
 
                     b.ToTable("BellCurveScores");
                 });
@@ -131,34 +124,18 @@ namespace be.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ArchievementId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("ArchievementItemId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("ArchivementId")
+                    b.Property<Guid?>("AchievementItemId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("EvaluateScoreId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("ProofRequired")
+                    b.Property<bool?>("ProofRequired")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ArchievementId");
-
-                    b.HasIndex("ArchievementItemId");
-
-                    b.HasIndex("EvaluateScoreId")
-                        .IsUnique()
-                        .HasFilter("[EvaluateScoreId] IS NOT NULL");
+                    b.HasIndex("AchievementItemId");
 
                     b.ToTable("Criterias");
                 });
@@ -169,18 +146,10 @@ namespace be.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("EmployeeId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId")
-                        .IsUnique()
-                        .HasFilter("[EmployeeId] IS NOT NULL");
 
                     b.ToTable("Departments");
                 });
@@ -191,20 +160,56 @@ namespace be.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<float?>("BellCurveScore")
+                        .HasColumnType("real");
+
+                    b.Property<Guid?>("DepartmentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("EmployeeDetailId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("GradeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("OperationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("PlantId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid?>("PositionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ProcessId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("WorkingDetailId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("GradeId");
+
+                    b.HasIndex("OperationId");
+
+                    b.HasIndex("PlantId");
+
                     b.HasIndex("PositionId");
+
+                    b.HasIndex("ProcessId");
+
+                    b.HasIndex("WorkingDetailId");
 
                     b.ToTable("Employees");
                 });
@@ -220,6 +225,9 @@ namespace be.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("EmployeeId1")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("FullName")
@@ -239,9 +247,7 @@ namespace be.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId")
-                        .IsUnique()
-                        .HasFilter("[EmployeeId] IS NOT NULL");
+                    b.HasIndex("EmployeeId1");
 
                     b.ToTable("EmployeeDetails");
                 });
@@ -252,15 +258,20 @@ namespace be.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("EmployeeEvaluateId")
+                    b.Property<Guid?>("CriteriaId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<float>("Score")
+                    b.Property<Guid?>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<float?>("Score")
                         .HasColumnType("real");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeEvaluateId");
+                    b.HasIndex("CriteriaId");
+
+                    b.HasIndex("EmployeeId");
 
                     b.ToTable("EvaluateScores");
                 });
@@ -281,6 +292,10 @@ namespace be.Migrations
                     b.Property<DateTime>("Start")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("EvaluationSchedules");
@@ -292,18 +307,10 @@ namespace be.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("EmployeeId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId")
-                        .IsUnique()
-                        .HasFilter("[EmployeeId] IS NOT NULL");
 
                     b.ToTable("Grades");
                 });
@@ -332,18 +339,10 @@ namespace be.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("EmployeeId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId")
-                        .IsUnique()
-                        .HasFilter("[EmployeeId] IS NOT NULL");
 
                     b.ToTable("Operations");
                 });
@@ -360,6 +359,9 @@ namespace be.Migrations
                     b.Property<Guid?>("EvaluationScheduleId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("EvaluationScheduleId")
@@ -375,18 +377,10 @@ namespace be.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("EmployeeId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId")
-                        .IsUnique()
-                        .HasFilter("[EmployeeId] IS NOT NULL");
 
                     b.ToTable("Plants");
                 });
@@ -398,7 +392,6 @@ namespace be.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -413,7 +406,6 @@ namespace be.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("PositionId")
@@ -432,18 +424,10 @@ namespace be.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("EmployeeId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId")
-                        .IsUnique()
-                        .HasFilter("[EmployeeId] IS NOT NULL");
 
                     b.ToTable("Processes");
                 });
@@ -454,17 +438,19 @@ namespace be.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ImageId")
+                    b.Property<Guid?>("EvaluateScoreId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ProofCriteriaId")
+                    b.Property<Guid?>("ImageId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ImageId");
+                    b.HasIndex("EvaluateScoreId");
 
-                    b.HasIndex("ProofCriteriaId");
+                    b.HasIndex("ImageId")
+                        .IsUnique()
+                        .HasFilter("[ImageId] IS NOT NULL");
 
                     b.ToTable("ProofImages");
                 });
@@ -483,21 +469,34 @@ namespace be.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("UserId")
+                    b.HasKey("Id");
+
+                    b.HasIndex("EvaluationScheduleId");
+
+                    b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("be.Models.RoleEvaluationSchedule", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("EvaluationScheduleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("RoleId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("EvaluationScheduleId");
 
-                    b.HasIndex("UserId")
-                        .IsUnique()
-                        .HasFilter("[UserId] IS NOT NULL");
+                    b.HasIndex("RoleId");
 
-                    b.ToTable("Roles");
+                    b.ToTable("RoleEvaluationSchedules");
                 });
 
             modelBuilder.Entity("be.Models.User", b =>
@@ -507,22 +506,21 @@ namespace be.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("EmployeeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("RoleId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Username")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -530,6 +528,8 @@ namespace be.Migrations
                     b.HasIndex("EmployeeId")
                         .IsUnique()
                         .HasFilter("[EmployeeId] IS NOT NULL");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Users");
                 });
@@ -542,9 +542,6 @@ namespace be.Migrations
 
                     b.Property<int>("Actual")
                         .HasColumnType("int");
-
-                    b.Property<Guid?>("EmployeeId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Hoic")
                         .HasColumnType("int");
@@ -572,29 +569,25 @@ namespace be.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId")
-                        .IsUnique()
-                        .HasFilter("[EmployeeId] IS NOT NULL");
-
                     b.ToTable("WorkingDetails");
                 });
 
-            modelBuilder.Entity("be.Models.Archievement", b =>
+            modelBuilder.Entity("be.Models.Achievement", b =>
                 {
                     b.HasOne("be.Models.PerformanceEvaluation", "PerformanceEvaluation")
-                        .WithMany("Archievements")
+                        .WithMany("Achievements")
                         .HasForeignKey("PerformanceEvaluationId");
 
                     b.Navigation("PerformanceEvaluation");
                 });
 
-            modelBuilder.Entity("be.Models.ArchievementItem", b =>
+            modelBuilder.Entity("be.Models.AchievementItem", b =>
                 {
-                    b.HasOne("be.Models.Archievement", "Archievement")
-                        .WithMany("ArchivementItems")
-                        .HasForeignKey("ArchievementId");
+                    b.HasOne("be.Models.Achievement", "Achievement")
+                        .WithMany("AchivementItems")
+                        .HasForeignKey("AchievementId");
 
-                    b.Navigation("Archievement");
+                    b.Navigation("Achievement");
                 });
 
             modelBuilder.Entity("be.Models.BalanceScore", b =>
@@ -609,83 +602,74 @@ namespace be.Migrations
             modelBuilder.Entity("be.Models.BellCurveScore", b =>
                 {
                     b.HasOne("be.Models.Employee", "Employee")
-                        .WithOne("BellCurveScore")
-                        .HasForeignKey("be.Models.BellCurveScore", "EmployeeId");
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
 
                     b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("be.Models.Criteria", b =>
                 {
-                    b.HasOne("be.Models.Archievement", "Archievement")
-                        .WithMany()
-                        .HasForeignKey("ArchievementId");
-
-                    b.HasOne("be.Models.ArchievementItem", null)
+                    b.HasOne("be.Models.AchievementItem", "AchievementItem")
                         .WithMany("Criterias")
-                        .HasForeignKey("ArchievementItemId");
+                        .HasForeignKey("AchievementItemId");
 
-                    b.HasOne("be.Models.EvaluateScore", "EvaluateScore")
-                        .WithOne("Criteria")
-                        .HasForeignKey("be.Models.Criteria", "EvaluateScoreId");
-
-                    b.Navigation("Archievement");
-
-                    b.Navigation("EvaluateScore");
-                });
-
-            modelBuilder.Entity("be.Models.Department", b =>
-                {
-                    b.HasOne("be.Models.Employee", "Employee")
-                        .WithOne("Department")
-                        .HasForeignKey("be.Models.Department", "EmployeeId");
-
-                    b.Navigation("Employee");
+                    b.Navigation("AchievementItem");
                 });
 
             modelBuilder.Entity("be.Models.Employee", b =>
                 {
-                    b.HasOne("be.Models.Position", "Position")
-                        .WithMany()
+                    b.HasOne("be.Models.Department", null)
+                        .WithMany("Employees")
+                        .HasForeignKey("DepartmentId");
+
+                    b.HasOne("be.Models.Grade", null)
+                        .WithMany("Employees")
+                        .HasForeignKey("GradeId");
+
+                    b.HasOne("be.Models.Operation", null)
+                        .WithMany("Employees")
+                        .HasForeignKey("OperationId");
+
+                    b.HasOne("be.Models.Plant", null)
+                        .WithMany("Employees")
+                        .HasForeignKey("PlantId");
+
+                    b.HasOne("be.Models.Position", null)
+                        .WithMany("Employees")
                         .HasForeignKey("PositionId");
 
-                    b.Navigation("Position");
+                    b.HasOne("be.Models.Process", null)
+                        .WithMany("Employees")
+                        .HasForeignKey("ProcessId");
+
+                    b.HasOne("be.Models.WorkingDetail", null)
+                        .WithMany("Employees")
+                        .HasForeignKey("WorkingDetailId");
                 });
 
             modelBuilder.Entity("be.Models.EmployeeDetail", b =>
                 {
                     b.HasOne("be.Models.Employee", "Employee")
-                        .WithOne("EmployeeDetail")
-                        .HasForeignKey("be.Models.EmployeeDetail", "EmployeeId");
+                        .WithMany()
+                        .HasForeignKey("EmployeeId1");
 
                     b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("be.Models.EvaluateScore", b =>
                 {
+                    b.HasOne("be.Models.Criteria", "Criteria")
+                        .WithMany("EvaluateScores")
+                        .HasForeignKey("CriteriaId");
+
                     b.HasOne("be.Models.Employee", "EmployeeEvaluate")
                         .WithMany("EvaluateScores")
-                        .HasForeignKey("EmployeeEvaluateId");
+                        .HasForeignKey("EmployeeId");
+
+                    b.Navigation("Criteria");
 
                     b.Navigation("EmployeeEvaluate");
-                });
-
-            modelBuilder.Entity("be.Models.Grade", b =>
-                {
-                    b.HasOne("be.Models.Employee", "Employee")
-                        .WithOne("Grade")
-                        .HasForeignKey("be.Models.Grade", "EmployeeId");
-
-                    b.Navigation("Employee");
-                });
-
-            modelBuilder.Entity("be.Models.Operation", b =>
-                {
-                    b.HasOne("be.Models.Employee", "Employee")
-                        .WithOne("Operation")
-                        .HasForeignKey("be.Models.Operation", "EmployeeId");
-
-                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("be.Models.PerformanceEvaluation", b =>
@@ -697,15 +681,6 @@ namespace be.Migrations
                     b.Navigation("EvaluationSchedule");
                 });
 
-            modelBuilder.Entity("be.Models.Plant", b =>
-                {
-                    b.HasOne("be.Models.Employee", "Employee")
-                        .WithOne("Plant")
-                        .HasForeignKey("be.Models.Plant", "EmployeeId");
-
-                    b.Navigation("Employee");
-                });
-
             modelBuilder.Entity("be.Models.PositionEs", b =>
                 {
                     b.HasOne("be.Models.Position", "Position")
@@ -715,43 +690,45 @@ namespace be.Migrations
                     b.Navigation("Position");
                 });
 
-            modelBuilder.Entity("be.Models.Process", b =>
-                {
-                    b.HasOne("be.Models.Employee", "Employee")
-                        .WithOne("Process")
-                        .HasForeignKey("be.Models.Process", "EmployeeId");
-
-                    b.Navigation("Employee");
-                });
-
             modelBuilder.Entity("be.Models.ProofImage", b =>
                 {
-                    b.HasOne("be.Models.Image", "Image")
-                        .WithMany()
-                        .HasForeignKey("ImageId");
-
-                    b.HasOne("be.Models.Criteria", "ProofCriteria")
+                    b.HasOne("be.Models.EvaluateScore", "EvaluateScore")
                         .WithMany("ProofImages")
-                        .HasForeignKey("ProofCriteriaId");
+                        .HasForeignKey("EvaluateScoreId");
+
+                    b.HasOne("be.Models.Image", "Image")
+                        .WithOne("ProofImage")
+                        .HasForeignKey("be.Models.ProofImage", "ImageId");
+
+                    b.Navigation("EvaluateScore");
 
                     b.Navigation("Image");
-
-                    b.Navigation("ProofCriteria");
                 });
 
             modelBuilder.Entity("be.Models.Role", b =>
                 {
-                    b.HasOne("be.Models.EvaluationSchedule", "EvaluationSchedule")
+                    b.HasOne("be.Models.EvaluationSchedule", null)
                         .WithMany("Roles")
                         .HasForeignKey("EvaluationScheduleId");
+                });
 
-                    b.HasOne("be.Models.User", "User")
-                        .WithOne("Role")
-                        .HasForeignKey("be.Models.Role", "UserId");
+            modelBuilder.Entity("be.Models.RoleEvaluationSchedule", b =>
+                {
+                    b.HasOne("be.Models.EvaluationSchedule", "EvaluationSchedule")
+                        .WithMany("RoleEvaluationSchedules")
+                        .HasForeignKey("EvaluationScheduleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("be.Models.Role", "Role")
+                        .WithMany("RoleEvaluationSchedules")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("EvaluationSchedule");
 
-                    b.Navigation("User");
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("be.Models.User", b =>
@@ -759,82 +736,102 @@ namespace be.Migrations
                     b.HasOne("be.Models.Employee", null)
                         .WithOne("User")
                         .HasForeignKey("be.Models.User", "EmployeeId");
+
+                    b.HasOne("be.Models.Role", null)
+                        .WithMany("Users")
+                        .HasForeignKey("RoleId");
                 });
 
-            modelBuilder.Entity("be.Models.WorkingDetail", b =>
+            modelBuilder.Entity("be.Models.Achievement", b =>
                 {
-                    b.HasOne("be.Models.Employee", "Employee")
-                        .WithOne("WorkingDetail")
-                        .HasForeignKey("be.Models.WorkingDetail", "EmployeeId");
-
-                    b.Navigation("Employee");
+                    b.Navigation("AchivementItems");
                 });
 
-            modelBuilder.Entity("be.Models.Archievement", b =>
-                {
-                    b.Navigation("ArchivementItems");
-                });
-
-            modelBuilder.Entity("be.Models.ArchievementItem", b =>
+            modelBuilder.Entity("be.Models.AchievementItem", b =>
                 {
                     b.Navigation("Criterias");
                 });
 
             modelBuilder.Entity("be.Models.Criteria", b =>
                 {
-                    b.Navigation("ProofImages");
+                    b.Navigation("EvaluateScores");
+                });
+
+            modelBuilder.Entity("be.Models.Department", b =>
+                {
+                    b.Navigation("Employees");
                 });
 
             modelBuilder.Entity("be.Models.Employee", b =>
                 {
-                    b.Navigation("BellCurveScore");
-
-                    b.Navigation("Department");
-
-                    b.Navigation("EmployeeDetail");
-
                     b.Navigation("EvaluateScores");
 
-                    b.Navigation("Grade");
-
-                    b.Navigation("Operation");
-
-                    b.Navigation("Plant");
-
-                    b.Navigation("Process");
-
                     b.Navigation("User");
-
-                    b.Navigation("WorkingDetail");
                 });
 
             modelBuilder.Entity("be.Models.EvaluateScore", b =>
                 {
-                    b.Navigation("Criteria");
+                    b.Navigation("ProofImages");
                 });
 
             modelBuilder.Entity("be.Models.EvaluationSchedule", b =>
                 {
                     b.Navigation("PerformanceEvaluation");
 
+                    b.Navigation("RoleEvaluationSchedules");
+
                     b.Navigation("Roles");
+                });
+
+            modelBuilder.Entity("be.Models.Grade", b =>
+                {
+                    b.Navigation("Employees");
+                });
+
+            modelBuilder.Entity("be.Models.Image", b =>
+                {
+                    b.Navigation("ProofImage");
+                });
+
+            modelBuilder.Entity("be.Models.Operation", b =>
+                {
+                    b.Navigation("Employees");
                 });
 
             modelBuilder.Entity("be.Models.PerformanceEvaluation", b =>
                 {
-                    b.Navigation("Archievements");
+                    b.Navigation("Achievements");
+                });
+
+            modelBuilder.Entity("be.Models.Plant", b =>
+                {
+                    b.Navigation("Employees");
                 });
 
             modelBuilder.Entity("be.Models.Position", b =>
                 {
                     b.Navigation("BalanceScore");
 
+                    b.Navigation("Employees");
+
                     b.Navigation("PositionEss");
                 });
 
-            modelBuilder.Entity("be.Models.User", b =>
+            modelBuilder.Entity("be.Models.Process", b =>
                 {
-                    b.Navigation("Role");
+                    b.Navigation("Employees");
+                });
+
+            modelBuilder.Entity("be.Models.Role", b =>
+                {
+                    b.Navigation("RoleEvaluationSchedules");
+
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("be.Models.WorkingDetail", b =>
+                {
+                    b.Navigation("Employees");
                 });
 #pragma warning restore 612, 618
         }

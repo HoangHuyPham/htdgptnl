@@ -17,7 +17,6 @@ namespace be.Models
         public int Written { get; set; } = 0;
         public int Verbal { get; set; } = 0;
         public int Maternity { get; set; } = 0;
-        public Guid? EmployeeId { get; set; }
-        public Employee? Employee{ get; set; }
+        public ICollection<Employee>? Employees { get; set; }
     }
 }

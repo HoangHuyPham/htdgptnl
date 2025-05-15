@@ -8,8 +8,7 @@ namespace be.Models
     public class Operation
     {
         public Guid Id { get; set; }
-        public string Name { get; set; } = null!;
-        public Guid? EmployeeId { get; set; }
-        public Employee? Employee { get; set; }
+        public string? Name { get; set; } = Guid.NewGuid().ToString();
+        public ICollection<Employee>? Employees { get; set; } = [];
     }
 }

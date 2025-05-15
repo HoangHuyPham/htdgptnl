@@ -21,17 +21,17 @@ namespace be.Contexts
         public DbSet<BellCurveScore> BellCurveScores { get; set; }
         public DbSet<PositionEs> PositionEss { get; set; }
         public DbSet<BalanceScore> BalanceScores { get; set; }
-        public DbSet<Archievement> Archievements { get; set; }
+        public DbSet<Achievement> Achievements { get; set; }
         public DbSet<Criteria> Criterias { get; set; }
         public DbSet<EvaluateScore> EvaluateScores { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<ProofImage> ProofImages { get; set; }
-        public DbSet<ArchievementItem> ArchievementItems { get; set; }
+        public DbSet<AchievementItem> AchievementItems { get; set; }
+        public DbSet<RoleEvaluationSchedule> RoleEvaluationSchedules { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<EvaluateScore>().HasOne(e=>e.EmployeeEvaluate).WithMany(e=>e.EvaluateScores).HasForeignKey(e=>e.EmployeeEvaluateId);
-            modelBuilder.Entity<ProofImage>().HasOne(e=>e.ProofCriteria).WithMany(e=>e.ProofImages).HasForeignKey(e=>e.ProofCriteriaId);
+            modelBuilder.Entity<EvaluateScore>().HasOne(e=>e.EmployeeEvaluate).WithMany(e=>e.EvaluateScores).HasForeignKey(e=>e.EmployeeId);
         }
     }
 }

@@ -15,13 +15,13 @@ namespace be.Repos
             return target;
         }
 
-        public async Task<Criteria?> Delete(Guid id)
+        public async Task<bool> Delete(Guid id)
         {
             var existCriteria = await _context.Criterias.FirstOrDefaultAsync(x => x.Id == id);
-            if (existCriteria == null) return null;
-            _context.Criterias.Remove(existCriteria);
+            if (existCriteria == null) return false;
+            var result = _context.Criterias.Remove(existCriteria);
             await _context.SaveChangesAsync();
-            return existCriteria;
+            return result != null;
         }
 
         public async Task<List<Criteria>> FindAll()
@@ -36,7 +36,7 @@ namespace be.Repos
             return existCriteria;
         }
 
-        public async Task<Criteria?> Update(Guid id, Criteria data)
+        public async Task<Criteria?> Update(Criteria data)
         {
              _context.Criterias.Update(data);
             await _context.SaveChangesAsync();

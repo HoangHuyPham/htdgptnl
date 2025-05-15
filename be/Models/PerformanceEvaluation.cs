@@ -9,7 +9,8 @@ namespace be.Models
     {
         public Guid Id { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
-        public ICollection<Archievement> Archievements { get; set; } = [];
+        public string? Name { get; set; } = Guid.NewGuid().ToString();
+        public ICollection<Achievement> Achievements { get; set; } = [];
         public Guid? EvaluationScheduleId { get; set; }
         public EvaluationSchedule? EvaluationSchedule { get; set; }
     }

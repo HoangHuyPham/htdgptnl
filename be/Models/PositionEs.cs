@@ -8,7 +8,7 @@ namespace be.Models
     public class PositionEs
     {
         public Guid Id { get; set; }
-        public string Name { get; set; } = null!;
+        public string? Name { get; set; } = Guid.NewGuid().ToString();
         public Guid? PositionId { get; set; }
         public Position? Position { get; set; }
     }
