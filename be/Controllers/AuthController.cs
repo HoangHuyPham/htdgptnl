@@ -32,7 +32,7 @@ namespace be.Controllers
 
             var jwtToken = authService.GenerateJWTToken(User);
 
-            return Ok(new ApiPaginationResponse<string>
+            return Ok(new ApiResponse<string>
             {
                 Message = "login success",
                 Data = jwtToken,
