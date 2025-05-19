@@ -14,11 +14,6 @@ namespace fe.ModelViews
 {
     internal class LoginWindowModelView : AModelView
     {
-        public RelayCommand LoginCmd => new((execute) =>
-        {
-            Login();
-        }, (canExecute) => true);
-
         private LoginDTO loginDTO = new();
         public LoginDTO LoginDTO
         {
@@ -29,6 +24,17 @@ namespace fe.ModelViews
                 OnPropertyChanged();
             }
         }
+        public LoginWindowModelView()
+        {
+            loginDTO = new();
+            loginDTO.PropertyChanged += (_, __) => LoginCmd?.RaiseCanExecuteChanged();
+        }
+        public RelayCommand LoginCmd => new((execute) =>
+        {
+            Login();
+        }, (canExecute) => true);
+
+        
 
         private async void Login()
         {

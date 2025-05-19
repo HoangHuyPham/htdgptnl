@@ -38,17 +38,30 @@
         <Rectangle Grid.ColumnSpan="8" Fill="#FF2E2E2E" Height="49" />
 
         <TextBlock  Grid.ColumnSpan="8" Text="Login" TextAlignment="Center" FontSize="30" FontWeight="Bold" Foreground="Azure" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0"></TextBlock>
-         
-        <Grid Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4">
-            <custom_controls:PlaceHolderInput TextContent="{Binding LoginDTO.Username, UpdateSourceTrigger=PropertyChanged}" PlaceHolder="username/email"/>
-        </Grid>
 
-        <Grid Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4">
-            <custom_controls:PlaceHolderInput TextContent="{Binding LoginDTO.Password, UpdateSourceTrigger=PropertyChanged}" PlaceHolder="password"/>
-        </Grid>
+        <Grid Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Grid.RowSpan="4">
+            <StackPanel>
+                <custom_controls:PlaceHolderInput TextContent="{Binding LoginDTO.Username, UpdateSourceTrigger=PropertyChanged}" PlaceHolder="username/email"/>
 
-        <Grid Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2">
-            <Button Content="Login" FontSize="24" Command="{Binding LoginCmd}" />
+                <custom_controls:PlaceHolderInput Margin="0 10" TextContent="{Binding LoginDTO.Password, UpdateSourceTrigger=PropertyChanged}" PlaceHolder="password"/>
+
+                <Button Content="Login" FontSize="24" Command="{Binding LoginCmd}" />
+
+                <TextBlock Text="Login failed" FontSize="20" Foreground="Red" HorizontalAlignment="Center" Margin="0 10">
+                    <TextBlock.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation
+                                        Storyboard.TargetProperty="Opacity"
+                                        From="0.0" To="1.0" Duration="0:0:1" 
+                                        />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </TextBlock.Triggers>
+                </TextBlock>
+            </StackPanel>
         </Grid>
 
     </Grid>
