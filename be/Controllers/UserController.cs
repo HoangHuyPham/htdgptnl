@@ -1,20 +1,26 @@
+using System.Transactions;
+using be.Contexts;
 using be.DTOs.User;
 using be.Helpers;
 using be.Mappers;
 using be.Models;
 using be.Repos.Interfaces;
 using be.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace be.Controllers
 {
+    [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
-    public class UserController(IUserRepository _UserRepo, IAuthService _authService) : ControllerBase
+    public class UserController(IUserRepository _UserRepo, IAuthService _authService, ApplicationDbContext _dbContext) : ControllerBase
     {
         private readonly IUserRepository UserRepo = _UserRepo;
         private readonly IAuthService authService = _authService;
+        private readonly ApplicationDbContext dbContext = _dbContext;
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] string? query)
         {
@@ -30,6 +36,7 @@ namespace be.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateUserDTO dto)
         {
+            using var transaction = await dbContext.Database.BeginTransactionAsync();
             try
             {
                 var newUser = await authService.CreateUser(dto.Username, dto.Password);
@@ -48,10 +55,23 @@ namespace be.Controllers
                 newUser.Email = dto.Email;
                 newUser.Phone = dto.Phone;
 
+                var savedUser = await UserRepo.Update(newUser);
+
+                if (savedUser == null)
+                {
+                    return Ok(new ApiResponse<User>
+                    {
+                        Message = "create failed",
+                        Data = null,
+                    });
+                }
+
+                await transaction.CommitAsync();
+                
                 return Ok(new ApiResponse<User>
                 {
                     Message = "create success",
-                    Data = newUser,
+                    Data = savedUser,
                 });
             }
             catch
@@ -79,7 +99,7 @@ namespace be.Controllers
                         Data = null
                     });
                 }
-                
+
                 User.EmployeeId = dto.EmployeeId;
                 User.RoleId = dto.RoleId;
                 User.Email = dto.Email;

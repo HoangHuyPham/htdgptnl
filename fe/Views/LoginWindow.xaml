@@ -6,12 +6,7 @@
         xmlns:local="clr-namespace:fe"
         mc:Ignorable="d"
         xmlns:custom_controls="clr-namespace:fe.CustomControls"
-        xmlns:datacontext="clr-namespace:fe.ModelViews"
         Title="Login" Height="450" Width="800">
-    <Window.DataContext>
-        <datacontext:LoginWindowModelView/>
-    </Window.DataContext>
-
     <Grid Background="Gray">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
@@ -47,22 +42,33 @@
 
                 <Button Content="Login" FontSize="24" Command="{Binding LoginCmd}" />
 
-                <TextBlock Text="Login failed" FontSize="20" Foreground="Red" HorizontalAlignment="Center" Margin="0 10">
-                    <TextBlock.Triggers>
-                        <EventTrigger RoutedEvent="Loaded">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <DoubleAnimation
-                                        Storyboard.TargetProperty="Opacity"
-                                        From="0.0" To="1.0" Duration="0:0:1" 
-                                        />
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                    </TextBlock.Triggers>
+                <TextBlock Text="{Binding Message}" FontSize="20" HorizontalAlignment="Center" Margin="0 10">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Foreground" Value="LightGreen"/>
+                            <Style.Triggers>
+                                <DataTrigger  Binding="{Binding IsError}" Value="True">
+                                    <Setter Property="Foreground" Value="Red"/>
+                                </DataTrigger>
+                                <EventTrigger RoutedEvent="Loaded">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation
+                                                 Storyboard.TargetProperty="Opacity"
+                                                 From="0.0" To="1.0" Duration="0:0:1" 
+                                            />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
                 </TextBlock>
             </StackPanel>
         </Grid>
 
+        <Grid Grid.RowSpan="8" Grid.ColumnSpan="8">
+            <custom_controls:LoadingScreen Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"/>
+        </Grid>
     </Grid>
 </Window>

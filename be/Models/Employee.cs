@@ -7,7 +7,7 @@ namespace be.Models
 {
     public class Employee
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; }= Guid.NewGuid();
         public string Type { get; set; } = null!;
         public string FullName { get; set; } = null!;
         public float? BellCurveScore { get; set; } = 0;

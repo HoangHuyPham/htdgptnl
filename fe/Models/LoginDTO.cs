@@ -8,14 +8,8 @@ using System.Threading.Tasks;
 
 namespace fe.Models
 {
-    public class LoginDTO : INotifyPropertyChanged
+    public class LoginDTO
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
-        protected void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null!)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-    
         public string Username { get; set; } = null!;
         public string Password { get; set; } = null!;
     }

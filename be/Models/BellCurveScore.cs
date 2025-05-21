@@ -7,7 +7,7 @@ namespace be.Models
 {
     public class BellCurveScore
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; }= Guid.NewGuid();
         public double Score { get; set; } = 0;
         public Guid? EmployeeId { get; set; }
         public Employee? Employee { get; set; }

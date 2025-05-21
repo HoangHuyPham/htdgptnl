@@ -8,7 +8,7 @@ namespace be.Models
 {
     public class Achievement
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         public string? Name { get; set; } = Guid.NewGuid().ToString();
         public float? TotalWeight { get; set; } = 0;
         public ICollection<AchievementItem>? AchivementItems{ get; set; } = [];

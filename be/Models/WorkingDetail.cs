@@ -7,7 +7,7 @@ namespace be.Models
 {
     public class WorkingDetail
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; }= Guid.NewGuid();
         public int Standard { get; set; } = 0;
         public int Actual { get; set; } = 0;
         public int Hoic { get; set; } = 0;

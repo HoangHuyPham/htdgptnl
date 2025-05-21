@@ -9,7 +9,7 @@ namespace be.Models
 {
     public class RoleEvaluationSchedule
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; }= Guid.NewGuid();
         public Guid RoleId { get; set; }
         public Guid EvaluationScheduleId { get; set; }
         public Role Role { get; set; } = null!;

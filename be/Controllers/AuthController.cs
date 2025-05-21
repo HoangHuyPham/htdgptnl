@@ -22,7 +22,7 @@ namespace be.Controllers
         public async Task<IActionResult> Login([FromBody] LoginDTO dto)
         {
             var User = await authService.Login(dto.Username, dto.Password);
-
+            
             if (User == null)
                 return Ok(new ApiResponse<User>
                 {

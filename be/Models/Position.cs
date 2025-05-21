@@ -8,7 +8,7 @@ namespace be.Models
 {
     public class Position
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; }= Guid.NewGuid();
         public string? Name { get; set; } = Guid.NewGuid().ToString();
         [JsonIgnore]
         public ICollection<PositionEs>? PositionEss { get; set; } = [];

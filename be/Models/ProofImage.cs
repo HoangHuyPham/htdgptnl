@@ -8,7 +8,7 @@ namespace be.Models
 {
     public class ProofImage
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; }= Guid.NewGuid();
         public Guid? ImageId { get; set; }
         public Image? Image { get; set; }
         public Guid? EvaluateScoreId { get; set; }

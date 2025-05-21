@@ -7,7 +7,7 @@ namespace be.Models
 {
     public class BalanceScore
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; }= Guid.NewGuid();
         public double WhatScale { get; set; } = 0;
         public double HowScale { get; set; } = 0;
         public Guid? PositionId { get; set; }

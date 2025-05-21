@@ -2,7 +2,7 @@ namespace be.Models
 {
     public class EvaluateScore
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; }= Guid.NewGuid();
         public float? Score { get; set; } = 0;
         public Guid? EmployeeId { get; set; }
         public Employee? EmployeeEvaluate { get; set; }

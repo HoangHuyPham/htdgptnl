@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace be.Migrations
 {
     /// <inheritdoc />
@@ -136,7 +138,7 @@ namespace be.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EvaluationScheduleId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
@@ -156,7 +158,7 @@ namespace be.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EvaluationScheduleId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
@@ -461,6 +463,67 @@ namespace be.Migrations
                         column: x => x.ImageId,
                         principalTable: "Images",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.InsertData(
+                table: "EvaluationSchedules",
+                columns: new[] { "Id", "Description", "End", "Start", "Status" },
+                values: new object[] { new Guid("306c98a6-c520-4ca8-898e-583991a15e0c"), "Lich danh gia nhan vien", new DateTime(2025, 5, 24, 10, 41, 59, 682, DateTimeKind.Local).AddTicks(3994), new DateTime(2025, 5, 21, 10, 41, 59, 682, DateTimeKind.Local).AddTicks(3976), "active" });
+
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id", "Description", "EvaluationScheduleId", "Name" },
+                values: new object[,]
+                {
+                    { new Guid("2de0a741-b6bd-4b3c-8ab1-76cd380cfcb5"), null, null, "Manager" },
+                    { new Guid("c26b7fcb-9e16-47aa-893e-3ef148de9714"), null, null, "Admin" },
+                    { new Guid("c36d9d97-8a11-4c8e-b498-289df49982da"), null, null, "Director" },
+                    { new Guid("f80eee5a-eefe-49c6-9a11-2e5b3804a71c"), null, null, "Employee" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "PerformanceEvaluations",
+                columns: new[] { "Id", "CreatedAt", "EvaluationScheduleId", "Name" },
+                values: new object[] { new Guid("849571c5-0826-4785-b178-82c286f6740c"), new DateTime(2025, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("306c98a6-c520-4ca8-898e-583991a15e0c"), "Đánh giá tháng 6" });
+
+            migrationBuilder.InsertData(
+                table: "RoleEvaluationSchedules",
+                columns: new[] { "Id", "EvaluationScheduleId", "RoleId" },
+                values: new object[] { new Guid("25db27de-c006-4be9-a876-4369db3c3642"), new Guid("306c98a6-c520-4ca8-898e-583991a15e0c"), new Guid("f80eee5a-eefe-49c6-9a11-2e5b3804a71c") });
+
+            migrationBuilder.InsertData(
+                table: "Achievements",
+                columns: new[] { "Id", "Name", "PerformanceEvaluationId", "TotalWeight" },
+                values: new object[] { new Guid("865726e2-7cf6-4746-8e30-1fb5cd382c80"), "Core Value", new Guid("849571c5-0826-4785-b178-82c286f6740c"), 100f });
+
+            migrationBuilder.InsertData(
+                table: "AchievementItems",
+                columns: new[] { "Id", "AchievementId", "Name", "Stretch", "Target", "Threshold", "Weight" },
+                values: new object[,]
+                {
+                    { new Guid("46cd9dac-e4a1-4486-8178-e5e191d5c66b"), new Guid("865726e2-7cf6-4746-8e30-1fb5cd382c80"), "Care", 120f, 100f, 80f, 25f },
+                    { new Guid("706dec6e-c701-45f6-8e10-0300ec6f37eb"), new Guid("865726e2-7cf6-4746-8e30-1fb5cd382c80"), "Accountability", 120f, 100f, 80f, 25f },
+                    { new Guid("a8304762-04da-4f03-9ca1-fb90eb1c8f22"), new Guid("865726e2-7cf6-4746-8e30-1fb5cd382c80"), "Resilience", 120f, 100f, 80f, 25f },
+                    { new Guid("b511664d-3c06-4809-967f-d3d5e9e0a79f"), new Guid("865726e2-7cf6-4746-8e30-1fb5cd382c80"), "Elevating", 120f, 100f, 80f, 25f }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Criterias",
+                columns: new[] { "Id", "AchievementItemId", "Content", "ProofRequired" },
+                values: new object[,]
+                {
+                    { new Guid("0046e287-a51b-4176-93e3-159c480b69be"), new Guid("a8304762-04da-4f03-9ca1-fb90eb1c8f22"), "We believe that together...", false },
+                    { new Guid("1a8c7b7f-4e6a-4918-b2d5-e5bd8b8912b9"), new Guid("b511664d-3c06-4809-967f-d3d5e9e0a79f"), "We are a meritocracy...", false },
+                    { new Guid("360f3a8b-b2be-46f3-9a7f-dcd1d8ae709a"), new Guid("706dec6e-c701-45f6-8e10-0300ec6f37eb"), "We take responsibility...", false },
+                    { new Guid("6138e65d-6262-40da-bff3-25cf72523b20"), new Guid("706dec6e-c701-45f6-8e10-0300ec6f37eb"), "We believe that whatever is...", false },
+                    { new Guid("8dff4616-cb11-40d5-b7e0-183860a35cae"), new Guid("46cd9dac-e4a1-4486-8178-e5e191d5c66b"), "We believe in taking at action...", false },
+                    { new Guid("aa26abb5-3a8e-442a-a713-194b198c51b7"), new Guid("46cd9dac-e4a1-4486-8178-e5e191d5c66b"), "We believe that fundamentally,...", false },
+                    { new Guid("ac1b63e0-e666-4f92-9ead-55c96d6daafe"), new Guid("a8304762-04da-4f03-9ca1-fb90eb1c8f22"), "We don't lose, we only...", false },
+                    { new Guid("b81d7540-a13c-438a-a3e2-a72d70a8a696"), new Guid("706dec6e-c701-45f6-8e10-0300ec6f37eb"), "We do what we say...", false },
+                    { new Guid("ca2652b1-7f4b-40af-96f0-9fd51a031888"), new Guid("b511664d-3c06-4809-967f-d3d5e9e0a79f"), "We believe in make things better...", false },
+                    { new Guid("dce125aa-ddd0-425a-9c14-0066048e1289"), new Guid("a8304762-04da-4f03-9ca1-fb90eb1c8f22"), "When times are tough, we have the...", false },
+                    { new Guid("de520adf-c93e-4de0-b9d9-10fdcd670a31"), new Guid("46cd9dac-e4a1-4486-8178-e5e191d5c66b"), "We don't take ourselves...", false },
+                    { new Guid("fdd18028-6d7b-4457-877a-dfba83e7fb56"), new Guid("b511664d-3c06-4809-967f-d3d5e9e0a79f"), "We believe in the direct link...", false }
                 });
 
             migrationBuilder.CreateIndex(

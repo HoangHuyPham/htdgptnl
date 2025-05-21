@@ -23,8 +23,7 @@ namespace fe
         public LoginWindow()
         {
             InitializeComponent();
-            LoginWindowModelView vm = new();
-            DataContext = vm;
+            DataContext = new LoginWindowModelView();
         }
     }
 }

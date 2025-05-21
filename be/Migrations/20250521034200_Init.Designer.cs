@@ -12,7 +12,7 @@ using be.Contexts;
 namespace be.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250515071402_Init")]
+    [Migration("20250521034200_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -45,6 +45,15 @@ namespace be.Migrations
                     b.HasIndex("PerformanceEvaluationId");
 
                     b.ToTable("Achievements");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("865726e2-7cf6-4746-8e30-1fb5cd382c80"),
+                            Name = "Core Value",
+                            PerformanceEvaluationId = new Guid("849571c5-0826-4785-b178-82c286f6740c"),
+                            TotalWeight = 100f
+                        });
                 });
 
             modelBuilder.Entity("be.Models.AchievementItem", b =>
@@ -76,6 +85,48 @@ namespace be.Migrations
                     b.HasIndex("AchievementId");
 
                     b.ToTable("AchievementItems");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("46cd9dac-e4a1-4486-8178-e5e191d5c66b"),
+                            AchievementId = new Guid("865726e2-7cf6-4746-8e30-1fb5cd382c80"),
+                            Name = "Care",
+                            Stretch = 120f,
+                            Target = 100f,
+                            Threshold = 80f,
+                            Weight = 25f
+                        },
+                        new
+                        {
+                            Id = new Guid("706dec6e-c701-45f6-8e10-0300ec6f37eb"),
+                            AchievementId = new Guid("865726e2-7cf6-4746-8e30-1fb5cd382c80"),
+                            Name = "Accountability",
+                            Stretch = 120f,
+                            Target = 100f,
+                            Threshold = 80f,
+                            Weight = 25f
+                        },
+                        new
+                        {
+                            Id = new Guid("a8304762-04da-4f03-9ca1-fb90eb1c8f22"),
+                            AchievementId = new Guid("865726e2-7cf6-4746-8e30-1fb5cd382c80"),
+                            Name = "Resilience",
+                            Stretch = 120f,
+                            Target = 100f,
+                            Threshold = 80f,
+                            Weight = 25f
+                        },
+                        new
+                        {
+                            Id = new Guid("b511664d-3c06-4809-967f-d3d5e9e0a79f"),
+                            AchievementId = new Guid("865726e2-7cf6-4746-8e30-1fb5cd382c80"),
+                            Name = "Elevating",
+                            Stretch = 120f,
+                            Target = 100f,
+                            Threshold = 80f,
+                            Weight = 25f
+                        });
                 });
 
             modelBuilder.Entity("be.Models.BalanceScore", b =>
@@ -141,6 +192,92 @@ namespace be.Migrations
                     b.HasIndex("AchievementItemId");
 
                     b.ToTable("Criterias");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("aa26abb5-3a8e-442a-a713-194b198c51b7"),
+                            AchievementItemId = new Guid("46cd9dac-e4a1-4486-8178-e5e191d5c66b"),
+                            Content = "We believe that fundamentally,...",
+                            ProofRequired = false
+                        },
+                        new
+                        {
+                            Id = new Guid("de520adf-c93e-4de0-b9d9-10fdcd670a31"),
+                            AchievementItemId = new Guid("46cd9dac-e4a1-4486-8178-e5e191d5c66b"),
+                            Content = "We don't take ourselves...",
+                            ProofRequired = false
+                        },
+                        new
+                        {
+                            Id = new Guid("8dff4616-cb11-40d5-b7e0-183860a35cae"),
+                            AchievementItemId = new Guid("46cd9dac-e4a1-4486-8178-e5e191d5c66b"),
+                            Content = "We believe in taking at action...",
+                            ProofRequired = false
+                        },
+                        new
+                        {
+                            Id = new Guid("b81d7540-a13c-438a-a3e2-a72d70a8a696"),
+                            AchievementItemId = new Guid("706dec6e-c701-45f6-8e10-0300ec6f37eb"),
+                            Content = "We do what we say...",
+                            ProofRequired = false
+                        },
+                        new
+                        {
+                            Id = new Guid("6138e65d-6262-40da-bff3-25cf72523b20"),
+                            AchievementItemId = new Guid("706dec6e-c701-45f6-8e10-0300ec6f37eb"),
+                            Content = "We believe that whatever is...",
+                            ProofRequired = false
+                        },
+                        new
+                        {
+                            Id = new Guid("360f3a8b-b2be-46f3-9a7f-dcd1d8ae709a"),
+                            AchievementItemId = new Guid("706dec6e-c701-45f6-8e10-0300ec6f37eb"),
+                            Content = "We take responsibility...",
+                            ProofRequired = false
+                        },
+                        new
+                        {
+                            Id = new Guid("dce125aa-ddd0-425a-9c14-0066048e1289"),
+                            AchievementItemId = new Guid("a8304762-04da-4f03-9ca1-fb90eb1c8f22"),
+                            Content = "When times are tough, we have the...",
+                            ProofRequired = false
+                        },
+                        new
+                        {
+                            Id = new Guid("ac1b63e0-e666-4f92-9ead-55c96d6daafe"),
+                            AchievementItemId = new Guid("a8304762-04da-4f03-9ca1-fb90eb1c8f22"),
+                            Content = "We don't lose, we only...",
+                            ProofRequired = false
+                        },
+                        new
+                        {
+                            Id = new Guid("0046e287-a51b-4176-93e3-159c480b69be"),
+                            AchievementItemId = new Guid("a8304762-04da-4f03-9ca1-fb90eb1c8f22"),
+                            Content = "We believe that together...",
+                            ProofRequired = false
+                        },
+                        new
+                        {
+                            Id = new Guid("ca2652b1-7f4b-40af-96f0-9fd51a031888"),
+                            AchievementItemId = new Guid("b511664d-3c06-4809-967f-d3d5e9e0a79f"),
+                            Content = "We believe in make things better...",
+                            ProofRequired = false
+                        },
+                        new
+                        {
+                            Id = new Guid("fdd18028-6d7b-4457-877a-dfba83e7fb56"),
+                            AchievementItemId = new Guid("b511664d-3c06-4809-967f-d3d5e9e0a79f"),
+                            Content = "We believe in the direct link...",
+                            ProofRequired = false
+                        },
+                        new
+                        {
+                            Id = new Guid("1a8c7b7f-4e6a-4918-b2d5-e5bd8b8912b9"),
+                            AchievementItemId = new Guid("b511664d-3c06-4809-967f-d3d5e9e0a79f"),
+                            Content = "We are a meritocracy...",
+                            ProofRequired = false
+                        });
                 });
 
             modelBuilder.Entity("be.Models.Department", b =>
@@ -302,6 +439,16 @@ namespace be.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("EvaluationSchedules");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("306c98a6-c520-4ca8-898e-583991a15e0c"),
+                            Description = "Lich danh gia nhan vien",
+                            End = new DateTime(2025, 5, 24, 10, 41, 59, 682, DateTimeKind.Local).AddTicks(3994),
+                            Start = new DateTime(2025, 5, 21, 10, 41, 59, 682, DateTimeKind.Local).AddTicks(3976),
+                            Status = "active"
+                        });
                 });
 
             modelBuilder.Entity("be.Models.Grade", b =>
@@ -356,7 +503,7 @@ namespace be.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid?>("EvaluationScheduleId")
@@ -372,6 +519,15 @@ namespace be.Migrations
                         .HasFilter("[EvaluationScheduleId] IS NOT NULL");
 
                     b.ToTable("PerformanceEvaluations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("849571c5-0826-4785-b178-82c286f6740c"),
+                            CreatedAt = new DateTime(2025, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EvaluationScheduleId = new Guid("306c98a6-c520-4ca8-898e-583991a15e0c"),
+                            Name = "Đánh giá tháng 6"
+                        });
                 });
 
             modelBuilder.Entity("be.Models.Plant", b =>
@@ -465,7 +621,6 @@ namespace be.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("EvaluationScheduleId")
@@ -479,6 +634,28 @@ namespace be.Migrations
                     b.HasIndex("EvaluationScheduleId");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("c26b7fcb-9e16-47aa-893e-3ef148de9714"),
+                            Name = "Admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("f80eee5a-eefe-49c6-9a11-2e5b3804a71c"),
+                            Name = "Employee"
+                        },
+                        new
+                        {
+                            Id = new Guid("2de0a741-b6bd-4b3c-8ab1-76cd380cfcb5"),
+                            Name = "Manager"
+                        },
+                        new
+                        {
+                            Id = new Guid("c36d9d97-8a11-4c8e-b498-289df49982da"),
+                            Name = "Director"
+                        });
                 });
 
             modelBuilder.Entity("be.Models.RoleEvaluationSchedule", b =>
@@ -500,6 +677,14 @@ namespace be.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("RoleEvaluationSchedules");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("25db27de-c006-4be9-a876-4369db3c3642"),
+                            EvaluationScheduleId = new Guid("306c98a6-c520-4ca8-898e-583991a15e0c"),
+                            RoleId = new Guid("f80eee5a-eefe-49c6-9a11-2e5b3804a71c")
+                        });
                 });
 
             modelBuilder.Entity("be.Models.User", b =>

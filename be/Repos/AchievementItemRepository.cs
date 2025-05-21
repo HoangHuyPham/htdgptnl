@@ -26,7 +26,7 @@ namespace be.Repos
 
         public async Task<List<AchievementItem>> FindAll()
         {
-            return await _context.AchievementItems.ToListAsync();
+            return await _context.AchievementItems.Include(x=>x.Criterias).ToListAsync();
         }
 
         public async Task<AchievementItem?> FindById(Guid id)

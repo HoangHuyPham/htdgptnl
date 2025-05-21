@@ -9,9 +9,9 @@ namespace be.Models
 {
     public class Role
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; }= Guid.NewGuid();
         public string? Name { get; set; } = Guid.NewGuid().ToString();
-        public string Description { get; set; } = null!;
+        public string? Description { get; set; } = null!;
         [JsonIgnore]
         public ICollection<User>? Users { get; set; } = [];
         [JsonIgnore]

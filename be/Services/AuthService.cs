@@ -74,6 +74,7 @@ namespace be.Services
         public string? GenerateJWTToken(User user){
             if (user.RoleId == null) return null;
 
+            Console.WriteLine("day " + user.RoleId);
             List<Claim> claims = [
                 new Claim("id", user.Id.ToString()),
                 new Claim("roleId", user.RoleId.ToString()!),

@@ -58,6 +58,7 @@ builder.Services.AddScoped<IRepository<Role>, RoleRepository>();
 builder.Services.AddScoped<IRepository<ProofImage>, ProofImageRepository>();
 builder.Services.AddScoped<IRepository<EvaluateScore>, EvaluateScoreRepository>();
 builder.Services.AddScoped<IRepository<Criteria>, CriteriaRepository>();
+builder.Services.AddScoped<IRoleEvaluationScheduleRepository, RoleEvaluationScheduleRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddScoped<IImageService, ImageService>();
