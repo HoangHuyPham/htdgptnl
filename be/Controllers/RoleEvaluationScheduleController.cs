@@ -16,6 +16,7 @@ namespace be.Controllers
         public  async Task<IActionResult> GetAllByRoleId()
         {
             var roleId = HttpContext.User.FindFirstValue("roleId");
+            
             List<RoleEvaluationSchedule> schedules = await roleEvaluationScheduleRepo.FindAllByRoleId(Guid.Parse(roleId!));
 
             return Ok(new ApiPaginationResponse<List<RoleEvaluationSchedule>>

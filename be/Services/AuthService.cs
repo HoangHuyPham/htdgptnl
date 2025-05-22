@@ -84,7 +84,7 @@ namespace be.Services
             var cred = new SigningCredentials(symKey, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(
                 claims: claims,
-                expires: DateTime.Now.AddHours(1),
+                expires: DateTime.UtcNow.AddHours(1),
                 signingCredentials: cred
             );
 

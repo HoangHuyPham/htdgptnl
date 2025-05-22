@@ -31,12 +31,12 @@ namespace be.Repos
 
         public async Task<List<RoleEvaluationSchedule>> FindAllByEvaluationId(Guid id)
         {
-            return await _context.RoleEvaluationSchedules.Where(x=>x.EvaluationScheduleId == id).ToListAsync();
+            return await _context.RoleEvaluationSchedules.Include(x=>x.EvaluationSchedule).ThenInclude(x=>x.PerformanceEvaluation!).ThenInclude(x=>x.Achievements).ThenInclude(x=>x.AchivementItems)!.ThenInclude(x=>x.Criterias).Where(x=>x.EvaluationScheduleId == id).OrderByDescending(x=>x.EvaluationSchedule.Start).ToListAsync();
         }
 
         public async Task<List<RoleEvaluationSchedule>> FindAllByRoleId(Guid id)
         {
-            return await _context.RoleEvaluationSchedules.Where(x=>x.RoleId == id).ToListAsync();
+            return await _context.RoleEvaluationSchedules.Include(x=>x.EvaluationSchedule).ThenInclude(x=>x.PerformanceEvaluation!).ThenInclude(x=>x.Achievements).ThenInclude(x=>x.AchivementItems)!.ThenInclude(x=>x.Criterias).Where(x=>x.RoleId == id).OrderByDescending(x=>x.EvaluationSchedule.Start).ToListAsync();
         }
 
         public async Task<RoleEvaluationSchedule?> FindById(Guid id)

@@ -13,7 +13,7 @@ namespace be.Mappers
             return new RoleDTO{
                 Id = role.Id,
                 Name = role.Name!,
-                Description = role.Description,
+                Description = role.Description!,
             };
         }
     }
