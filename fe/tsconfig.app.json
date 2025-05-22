@@ -43,6 +43,8 @@
       "@requests/*": ["./src/requests/*"],
       "@interfaces": ["./src/interfaces"],
       "@interfaces/*": ["./src/interfaces/*"],
+      "@utils": ["./src/utils"],
+      "@utils/*": ["./src/utils/*"],
     },
   },
   "include": ["src"]

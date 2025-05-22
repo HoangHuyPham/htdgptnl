@@ -7,6 +7,7 @@ export const AppRoutes: React.FC = () => {
             {/* Public Route  */}
             <Route>
                 <Route index element={<HomePage/>} />
+                <Route path="/home" element={<HomePage/>} />
                 <Route path="/login" element={<LoginPage/>} />
             </Route>
 

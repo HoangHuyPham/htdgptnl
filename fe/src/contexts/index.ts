@@ -1,1 +1,1 @@
-export { UserProvider, UserContext } from "./UserContext.tsx"
+export { UserProvider, UserContext } from "@contexts/UserContext"

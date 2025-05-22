@@ -1,4 +1,5 @@
 @import "tailwindcss";
+
 @font-face {
   font-family: 'Robot';
   src: url('../assets/Roboto-Light.ttf');
@@ -11,6 +12,51 @@
   font-weight: 700;
 }
 
-:root{
+@theme {
+  --color-simple-white: #f5f5f5;
+  --color-simple-black: #827eab;
+
+  --animate-fadeIn: fadeIn .25s ease-in-out;
+}
+
+@keyframes fadeIn {
+
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+:root {
   font-family: 'Robot', sans-serif, system-ui;
+}
+
+input[type="text"],
+input[type="password"] {
+  background-color: transparent;
+  border-bottom: 1px solid black;
+}
+
+input[type="text"]:focus-visible,
+input[type="password"]:focus-visible {
+  outline: none;
+}
+
+button.primary{
+  background-color: rgb(60, 124, 242);
+}
+
+button {
+  color: white;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 2px;
+}
+
+button:hover {
+  transition: .5s ease;
+  opacity: 0.5;
 }
