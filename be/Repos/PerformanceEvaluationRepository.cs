@@ -26,7 +26,7 @@ namespace be.Repos
 
         public async Task<List<PerformanceEvaluation>> FindAll()
         {
-            return await _context.PerformanceEvaluations.Include(x => x.Achievements).ThenInclude(x => x.AchivementItems!).ThenInclude(x => x.Criterias!).ToListAsync();
+            return await _context.PerformanceEvaluations.Include(x => x.Achievements).ThenInclude(x => x.AchievementItems!).ThenInclude(x => x.Criterias!).ToListAsync();
         }
 
         public async Task<PerformanceEvaluation?> FindById(Guid id)

@@ -11,6 +11,9 @@ namespace be.DTOs.Achievement
     {
         [Required]
         public string Name { get; set; } = null!;
+        public float Threshold { get; set; } = 0;
+        public float Target { get; set; } = 0;
+        public float Stretch { get; set; } = 0;
         public float? TotalWeight { get; set; } = 0;
         public Guid? PerformanceEvaluationId { get; set; }
     }

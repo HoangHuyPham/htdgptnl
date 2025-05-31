@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace be.Repos
 {
-    public class EvaluateScoreRepository(ApplicationDbContext context) : IRepository<EvaluateScore>
+    public class EvaluationScoreRepository(ApplicationDbContext context) : IEvaluationScoreRepository
     {
         private readonly ApplicationDbContext _context = context;
-        public async Task<EvaluateScore?> Create(EvaluateScore target)
+        public async Task<EvaluationScore?> Create(EvaluationScore target)
         {
             await _context.AddAsync(target);
             await _context.SaveChangesAsync();
@@ -17,28 +17,50 @@ namespace be.Repos
 
         public async Task<bool> Delete(Guid id)
         {
-            var existEvaluateScore = await _context.EvaluateScores.FirstOrDefaultAsync(x => x.Id == id);
-            if (existEvaluateScore == null) return false;
-            var result = _context.EvaluateScores.Remove(existEvaluateScore);
+            var existEvaluationScore = await _context.EvaluationScores.FirstOrDefaultAsync(x => x.Id == id);
+            if (existEvaluationScore == null) return false;
+            var result = _context.EvaluationScores.Remove(existEvaluationScore);
             await _context.SaveChangesAsync();
             return result != null;
         }
 
-        public async Task<List<EvaluateScore>> FindAll()
+        public async Task<List<EvaluationScore>> FindAll()
         {
-            return await _context.EvaluateScores.ToListAsync();
+            return await _context.EvaluationScores.Include(x=>x.Source).Include(x=>x.Target).Include(x=>x.SourceRoleType).Include(x=>x.Criteria).ToListAsync();
         }
 
-        public async Task<EvaluateScore?> FindById(Guid id)
+        public async Task<List<EvaluationScore>> FindAllByQuery(IEvaluationScoreQuery query)
         {
-            var existEvaluateScore = await _context.EvaluateScores.FirstOrDefaultAsync(x => x.Id == id);
-            if (existEvaluateScore == null) return null;
-            return existEvaluateScore;
+            var EvaluationScoreQuery = _context.EvaluationScores.Include(x => x.Source).Include(x => x.Target).Include(x => x.SourceRoleType).Include(x => x.Criteria).AsQueryable();
+
+            if (query.SourceId != null)
+            {
+                EvaluationScoreQuery.Where(x => x.SourceId == query.SourceId);
+            }
+
+            if (query.SourceId != null)
+            {
+                EvaluationScoreQuery.Where(x => x.SourceId == query.SourceId);
+            }
+
+            if (query.SourceId != null)
+            {
+                EvaluationScoreQuery.Where(x => x.SourceId == query.SourceId);
+            }
+
+            return await EvaluationScoreQuery.ToListAsync();
         }
 
-        public async Task<EvaluateScore?> Update(EvaluateScore data)
+        public async Task<EvaluationScore?> FindById(Guid id)
         {
-             _context.EvaluateScores.Update(data);
+            var existEvaluationScore = await _context.EvaluationScores.Include(x=>x.Source).Include(x=>x.Target).Include(x=>x.SourceRoleType).Include(x=>x.Criteria).FirstOrDefaultAsync(x => x.Id == id);
+            if (existEvaluationScore == null) return null;
+            return existEvaluationScore;
+        }
+
+        public async Task<EvaluationScore?> Update(EvaluationScore data)
+        {
+             _context.EvaluationScores.Update(data);
             await _context.SaveChangesAsync();
             return data;
         }

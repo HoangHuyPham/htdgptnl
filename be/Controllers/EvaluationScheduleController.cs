@@ -12,7 +12,7 @@ namespace be.Controllers
     public class EvaluationScheduleController(IRepository<EvaluationSchedule> _evaluationScheduleRepo) : ControllerBase
     {
         private readonly IRepository<EvaluationSchedule> evaluationScheduleRepo = _evaluationScheduleRepo;
-
+    
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] string? query)
         {
@@ -32,10 +32,8 @@ namespace be.Controllers
             {
                 var result = await evaluationScheduleRepo.Create(new EvaluationSchedule
                 {
-                    Start = dto.Start,
-                    End = dto.End,
-                    Description = dto.Description,
-                    Status = dto.Status,
+                    PerformanceEvaluationId = dto.PerformanceEvaluationId,
+                    ScheduleId = dto.ScheduleId
                 });
 
                 if (result == null)
@@ -80,10 +78,8 @@ namespace be.Controllers
                     });
                 }
 
-                evaluationSchedule.Start = dto.Start;
-                evaluationSchedule.End = dto.End;
-                evaluationSchedule.Description = dto.Description;
-                evaluationSchedule.Status = dto.Status;
+                evaluationSchedule.PerformanceEvaluationId = dto.PerformanceEvaluationId;
+                evaluationSchedule.ScheduleId = dto.ScheduleId;
 
                 if (!ModelState.IsValid)
                 {

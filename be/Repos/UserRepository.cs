@@ -26,19 +26,19 @@ namespace be.Repos
 
         public async Task<List<User>> FindAll()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users.Include(x=>x.Employee).Include(x=>x.Role).ToListAsync();
         }
 
         public async Task<User?> FindById(Guid id)
         {
-            var existUser = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            var existUser = await _context.Users.Include(x=>x.Employee).Include(x=>x.Role).FirstOrDefaultAsync(x => x.Id == id);
             if (existUser == null) return null;
             return existUser;
         }
 
         public async Task<User?> FindByUserName(string username)
         {
-            var existUser = await _context.Users.FirstOrDefaultAsync(x => x.Username == username);
+            var existUser = await _context.Users.Include(x=>x.Employee).Include(x=>x.Role).FirstOrDefaultAsync(x => x.Username == username);
             if (existUser == null) return null;
             return existUser;
         }

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace be.Models
 {
@@ -12,6 +12,12 @@ namespace be.Models
         public string? Email { get; set; } = null!;
         public string? Phone { get; set; } = null!;
         public Guid? RoleId { get; set; }
+        public Role? Role { get; set; }
         public Guid? EmployeeId { get; set; }
+        public Employee? Employee { get; set; }
+        [JsonIgnore]
+        public ICollection<EvaluationScore> EvaluationScoreSources { get; set; } = [];
+        [JsonIgnore]
+        public ICollection<EvaluationScore> EvaluationScoreTargets { get; set; } = [];
     }
 }

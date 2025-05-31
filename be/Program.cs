@@ -44,9 +44,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 });
 builder.Services.AddAuthorization(options=>
 {
-    options.FallbackPolicy = new AuthorizationPolicyBuilder()
-                            .RequireAuthenticatedUser()
-                            .Build();
+    // options.FallbackPolicy = new AuthorizationPolicyBuilder()
+    //                         .RequireAuthenticatedUser()
+    //                         .Build();
 });
 
 builder.Services.AddScoped<IRepository<EvaluationSchedule>, EvaluationScheduleRepository>();
@@ -54,15 +54,17 @@ builder.Services.AddScoped<IRepository<PerformanceEvaluation>, PerformanceEvalua
 builder.Services.AddScoped<IRepository<Achievement>, AchievementRepository>();
 builder.Services.AddScoped<IRepository<AchievementItem>, AchievementItemRepository>();
 builder.Services.AddScoped<IRepository<Image>, ImageRepository>();
+builder.Services.AddScoped<IRepository<Employee>, EmployeeRepository>();
 builder.Services.AddScoped<IRepository<Role>, RoleRepository>();
 builder.Services.AddScoped<IRepository<ProofImage>, ProofImageRepository>();
-builder.Services.AddScoped<IRepository<EvaluateScore>, EvaluateScoreRepository>();
+builder.Services.AddScoped<IEvaluationScoreRepository, EvaluationScoreRepository>();
 builder.Services.AddScoped<IRepository<Criteria>, CriteriaRepository>();
-builder.Services.AddScoped<IRoleEvaluationScheduleRepository, RoleEvaluationScheduleRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IRoleScheduleRepository, RoleScheduleRepository>();
 
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IScoreService, ScoreService>();
 
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddEndpointsApiExplorer();

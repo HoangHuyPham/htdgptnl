@@ -4,10 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace be.DTOs.EvaluateScore
+namespace be.DTOs.EvaluationScore
 {
     using be.Models;
-    public class PutEvaluateScoreDTO
+    public class PutEvaluationScoreDTO
     {
         public float? Score { get; set; } = 0;
     }

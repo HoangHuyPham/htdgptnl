@@ -6,14 +6,13 @@ using Newtonsoft.Json;
 
 namespace be.Models
 {
-    public class EvaluationSchedule
+    public class RoleType
     {
         public Guid Id { get; set; } = Guid.NewGuid();
-        public PerformanceEvaluation? PerformanceEvaluation { get; set; }
-        public Guid? PerformanceEvaluationId { get; set; }
-        public Schedule? Schedule { get; set; }
-        public Guid? ScheduleId { get; set; }
+        public string? Name { get; set; } = Guid.NewGuid().ToString();
         [JsonIgnore]
         public ICollection<RoleSchedule>? RoleSchedules { get; set; } = [];
+        [JsonIgnore]
+        public ICollection<EvaluationScore>? EvaluationScores { get; set; } = [];
     }
 }

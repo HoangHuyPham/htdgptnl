@@ -13,6 +13,6 @@ namespace be.Models
         public Image? Image { get; set; }
         public Guid? EvaluateScoreId { get; set; }
         [JsonIgnore]
-        public EvaluateScore? EvaluateScore { get; set; }
+        public EvaluationScore? EvaluateScore { get; set; }
     }
 }

@@ -12,7 +12,7 @@ using be.Contexts;
 namespace be.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250521034200_Init")]
+    [Migration("20250527024930_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -37,6 +37,15 @@ namespace be.Migrations
                     b.Property<Guid?>("PerformanceEvaluationId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<float>("Stretch")
+                        .HasColumnType("real");
+
+                    b.Property<float>("Target")
+                        .HasColumnType("real");
+
+                    b.Property<float>("Threshold")
+                        .HasColumnType("real");
+
                     b.Property<float?>("TotalWeight")
                         .HasColumnType("real");
 
@@ -49,9 +58,12 @@ namespace be.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("865726e2-7cf6-4746-8e30-1fb5cd382c80"),
+                            Id = new Guid("dbbc3f12-5cf4-420f-93b9-ae79f8748a20"),
                             Name = "Core Value",
-                            PerformanceEvaluationId = new Guid("849571c5-0826-4785-b178-82c286f6740c"),
+                            PerformanceEvaluationId = new Guid("6943b635-0a14-480c-b3d2-954efd482bd3"),
+                            Stretch = 120f,
+                            Target = 100f,
+                            Threshold = 80f,
                             TotalWeight = 100f
                         });
                 });
@@ -68,15 +80,6 @@ namespace be.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("Stretch")
-                        .HasColumnType("real");
-
-                    b.Property<float>("Target")
-                        .HasColumnType("real");
-
-                    b.Property<float>("Threshold")
-                        .HasColumnType("real");
-
                     b.Property<float>("Weight")
                         .HasColumnType("real");
 
@@ -89,42 +92,30 @@ namespace be.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("46cd9dac-e4a1-4486-8178-e5e191d5c66b"),
-                            AchievementId = new Guid("865726e2-7cf6-4746-8e30-1fb5cd382c80"),
+                            Id = new Guid("d7f702e1-5d85-4e50-8afd-a670d683e76d"),
+                            AchievementId = new Guid("dbbc3f12-5cf4-420f-93b9-ae79f8748a20"),
                             Name = "Care",
-                            Stretch = 120f,
-                            Target = 100f,
-                            Threshold = 80f,
                             Weight = 25f
                         },
                         new
                         {
-                            Id = new Guid("706dec6e-c701-45f6-8e10-0300ec6f37eb"),
-                            AchievementId = new Guid("865726e2-7cf6-4746-8e30-1fb5cd382c80"),
+                            Id = new Guid("f94de203-602b-44ed-ad0a-6e6a544443a7"),
+                            AchievementId = new Guid("dbbc3f12-5cf4-420f-93b9-ae79f8748a20"),
                             Name = "Accountability",
-                            Stretch = 120f,
-                            Target = 100f,
-                            Threshold = 80f,
                             Weight = 25f
                         },
                         new
                         {
-                            Id = new Guid("a8304762-04da-4f03-9ca1-fb90eb1c8f22"),
-                            AchievementId = new Guid("865726e2-7cf6-4746-8e30-1fb5cd382c80"),
+                            Id = new Guid("c2e9f3b0-eae7-4c93-b001-d9c0525cc46e"),
+                            AchievementId = new Guid("dbbc3f12-5cf4-420f-93b9-ae79f8748a20"),
                             Name = "Resilience",
-                            Stretch = 120f,
-                            Target = 100f,
-                            Threshold = 80f,
                             Weight = 25f
                         },
                         new
                         {
-                            Id = new Guid("b511664d-3c06-4809-967f-d3d5e9e0a79f"),
-                            AchievementId = new Guid("865726e2-7cf6-4746-8e30-1fb5cd382c80"),
+                            Id = new Guid("04162c7f-00af-466d-a23c-ab5be4e97923"),
+                            AchievementId = new Guid("dbbc3f12-5cf4-420f-93b9-ae79f8748a20"),
                             Name = "Elevating",
-                            Stretch = 120f,
-                            Target = 100f,
-                            Threshold = 80f,
                             Weight = 25f
                         });
                 });
@@ -196,85 +187,85 @@ namespace be.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("aa26abb5-3a8e-442a-a713-194b198c51b7"),
-                            AchievementItemId = new Guid("46cd9dac-e4a1-4486-8178-e5e191d5c66b"),
+                            Id = new Guid("67fe13a2-9b12-4893-b234-fadff6da9da9"),
+                            AchievementItemId = new Guid("d7f702e1-5d85-4e50-8afd-a670d683e76d"),
                             Content = "We believe that fundamentally,...",
                             ProofRequired = false
                         },
                         new
                         {
-                            Id = new Guid("de520adf-c93e-4de0-b9d9-10fdcd670a31"),
-                            AchievementItemId = new Guid("46cd9dac-e4a1-4486-8178-e5e191d5c66b"),
+                            Id = new Guid("a85ace94-78d6-4e6c-a2ab-c8b1037acc3d"),
+                            AchievementItemId = new Guid("d7f702e1-5d85-4e50-8afd-a670d683e76d"),
                             Content = "We don't take ourselves...",
                             ProofRequired = false
                         },
                         new
                         {
-                            Id = new Guid("8dff4616-cb11-40d5-b7e0-183860a35cae"),
-                            AchievementItemId = new Guid("46cd9dac-e4a1-4486-8178-e5e191d5c66b"),
+                            Id = new Guid("969573bb-12f8-4524-a71d-59ce329c7219"),
+                            AchievementItemId = new Guid("d7f702e1-5d85-4e50-8afd-a670d683e76d"),
                             Content = "We believe in taking at action...",
                             ProofRequired = false
                         },
                         new
                         {
-                            Id = new Guid("b81d7540-a13c-438a-a3e2-a72d70a8a696"),
-                            AchievementItemId = new Guid("706dec6e-c701-45f6-8e10-0300ec6f37eb"),
+                            Id = new Guid("5dc0ecb7-ada8-4aa7-8770-af010fc8563c"),
+                            AchievementItemId = new Guid("f94de203-602b-44ed-ad0a-6e6a544443a7"),
                             Content = "We do what we say...",
                             ProofRequired = false
                         },
                         new
                         {
-                            Id = new Guid("6138e65d-6262-40da-bff3-25cf72523b20"),
-                            AchievementItemId = new Guid("706dec6e-c701-45f6-8e10-0300ec6f37eb"),
+                            Id = new Guid("5e591a58-c992-4a1d-9bad-f95fef871165"),
+                            AchievementItemId = new Guid("f94de203-602b-44ed-ad0a-6e6a544443a7"),
                             Content = "We believe that whatever is...",
                             ProofRequired = false
                         },
                         new
                         {
-                            Id = new Guid("360f3a8b-b2be-46f3-9a7f-dcd1d8ae709a"),
-                            AchievementItemId = new Guid("706dec6e-c701-45f6-8e10-0300ec6f37eb"),
+                            Id = new Guid("411922a1-3c77-4dbb-8ef7-def47e0bef91"),
+                            AchievementItemId = new Guid("f94de203-602b-44ed-ad0a-6e6a544443a7"),
                             Content = "We take responsibility...",
                             ProofRequired = false
                         },
                         new
                         {
-                            Id = new Guid("dce125aa-ddd0-425a-9c14-0066048e1289"),
-                            AchievementItemId = new Guid("a8304762-04da-4f03-9ca1-fb90eb1c8f22"),
+                            Id = new Guid("54c21b71-5656-42fb-89b8-2e60431d23cd"),
+                            AchievementItemId = new Guid("c2e9f3b0-eae7-4c93-b001-d9c0525cc46e"),
                             Content = "When times are tough, we have the...",
                             ProofRequired = false
                         },
                         new
                         {
-                            Id = new Guid("ac1b63e0-e666-4f92-9ead-55c96d6daafe"),
-                            AchievementItemId = new Guid("a8304762-04da-4f03-9ca1-fb90eb1c8f22"),
+                            Id = new Guid("534986c8-ef84-4de4-866f-eec29d5cd664"),
+                            AchievementItemId = new Guid("c2e9f3b0-eae7-4c93-b001-d9c0525cc46e"),
                             Content = "We don't lose, we only...",
                             ProofRequired = false
                         },
                         new
                         {
-                            Id = new Guid("0046e287-a51b-4176-93e3-159c480b69be"),
-                            AchievementItemId = new Guid("a8304762-04da-4f03-9ca1-fb90eb1c8f22"),
+                            Id = new Guid("6b7d25c6-61c6-486b-8365-a2ceb5ca81c6"),
+                            AchievementItemId = new Guid("c2e9f3b0-eae7-4c93-b001-d9c0525cc46e"),
                             Content = "We believe that together...",
                             ProofRequired = false
                         },
                         new
                         {
-                            Id = new Guid("ca2652b1-7f4b-40af-96f0-9fd51a031888"),
-                            AchievementItemId = new Guid("b511664d-3c06-4809-967f-d3d5e9e0a79f"),
+                            Id = new Guid("567edfc2-6394-4161-9646-c0a5af25bfb4"),
+                            AchievementItemId = new Guid("04162c7f-00af-466d-a23c-ab5be4e97923"),
                             Content = "We believe in make things better...",
                             ProofRequired = false
                         },
                         new
                         {
-                            Id = new Guid("fdd18028-6d7b-4457-877a-dfba83e7fb56"),
-                            AchievementItemId = new Guid("b511664d-3c06-4809-967f-d3d5e9e0a79f"),
+                            Id = new Guid("744d4ee2-018d-463d-8a58-5cec1db8937f"),
+                            AchievementItemId = new Guid("04162c7f-00af-466d-a23c-ab5be4e97923"),
                             Content = "We believe in the direct link...",
                             ProofRequired = false
                         },
                         new
                         {
-                            Id = new Guid("1a8c7b7f-4e6a-4918-b2d5-e5bd8b8912b9"),
-                            AchievementItemId = new Guid("b511664d-3c06-4809-967f-d3d5e9e0a79f"),
+                            Id = new Guid("d897ed25-8c26-42fe-8df8-443b00e67ed9"),
+                            AchievementItemId = new Guid("04162c7f-00af-466d-a23c-ab5be4e97923"),
                             Content = "We are a meritocracy...",
                             ProofRequired = false
                         });
@@ -292,6 +283,18 @@ namespace be.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Departments");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("843a424c-5b43-4083-aa8a-9abfe550482d"),
+                            Name = "Creative"
+                        },
+                        new
+                        {
+                            Id = new Guid("21084582-636a-4b7d-9a2f-ff2bcdc506fa"),
+                            Name = "Engineering"
+                        });
                 });
 
             modelBuilder.Entity("be.Models.Employee", b =>
@@ -309,11 +312,16 @@ namespace be.Migrations
                     b.Property<Guid?>("EmployeeDetailId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("FullName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("GradeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("GroupId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("OperationId")
@@ -329,7 +337,6 @@ namespace be.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Type")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("WorkingDetailId")
@@ -339,7 +346,11 @@ namespace be.Migrations
 
                     b.HasIndex("DepartmentId");
 
+                    b.HasIndex("EmployeeId");
+
                     b.HasIndex("GradeId");
+
+                    b.HasIndex("GroupId");
 
                     b.HasIndex("OperationId");
 
@@ -352,6 +363,33 @@ namespace be.Migrations
                     b.HasIndex("WorkingDetailId");
 
                     b.ToTable("Employees");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("b1ab6af7-a60f-49e6-a25a-d8a9f04b4750"),
+                            BellCurveScore = 0f,
+                            DepartmentId = new Guid("843a424c-5b43-4083-aa8a-9abfe550482d"),
+                            FullName = "Nguyen Van B",
+                            GradeId = new Guid("f81d53ad-f9e7-48ba-89b0-b4dfb59cb59a"),
+                            GroupId = new Guid("fe37abbf-316f-4319-aec9-d31cdbcc037a"),
+                            OperationId = new Guid("07f5552d-540a-4d62-a3cb-df927e2f8878"),
+                            PlantId = new Guid("3dc445ae-bbea-4ebb-8681-abee9602ce2c"),
+                            PositionId = new Guid("a4719c40-9b19-4057-956a-9d7964c2315f")
+                        },
+                        new
+                        {
+                            Id = new Guid("ea146c09-405b-43e2-8469-cc5d5229e246"),
+                            BellCurveScore = 0f,
+                            DepartmentId = new Guid("843a424c-5b43-4083-aa8a-9abfe550482d"),
+                            EmployeeId = new Guid("b1ab6af7-a60f-49e6-a25a-d8a9f04b4750"),
+                            FullName = "Nguyen Van A",
+                            GradeId = new Guid("f81d53ad-f9e7-48ba-89b0-b4dfb59cb59a"),
+                            GroupId = new Guid("fe37abbf-316f-4319-aec9-d31cdbcc037a"),
+                            OperationId = new Guid("07f5552d-540a-4d62-a3cb-df927e2f8878"),
+                            PlantId = new Guid("3dc445ae-bbea-4ebb-8681-abee9602ce2c"),
+                            PositionId = new Guid("aad0d4b8-b8f6-412e-9611-1ddb7250bc12")
+                        });
                 });
 
             modelBuilder.Entity("be.Models.EmployeeDetail", b =>
@@ -365,9 +403,6 @@ namespace be.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("EmployeeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("EmployeeId1")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("FullName")
@@ -387,33 +422,11 @@ namespace be.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId1");
+                    b.HasIndex("EmployeeId")
+                        .IsUnique()
+                        .HasFilter("[EmployeeId] IS NOT NULL");
 
                     b.ToTable("EmployeeDetails");
-                });
-
-            modelBuilder.Entity("be.Models.EvaluateScore", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("CriteriaId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("EmployeeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<float?>("Score")
-                        .HasColumnType("real");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CriteriaId");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("EvaluateScores");
                 });
 
             modelBuilder.Entity("be.Models.EvaluationSchedule", b =>
@@ -422,33 +435,63 @@ namespace be.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid?>("PerformanceEvaluationId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("End")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Start")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid?>("ScheduleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PerformanceEvaluationId")
+                        .IsUnique()
+                        .HasFilter("[PerformanceEvaluationId] IS NOT NULL");
 
                     b.ToTable("EvaluationSchedules");
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("306c98a6-c520-4ca8-898e-583991a15e0c"),
-                            Description = "Lich danh gia nhan vien",
-                            End = new DateTime(2025, 5, 24, 10, 41, 59, 682, DateTimeKind.Local).AddTicks(3994),
-                            Start = new DateTime(2025, 5, 21, 10, 41, 59, 682, DateTimeKind.Local).AddTicks(3976),
-                            Status = "active"
+                            Id = new Guid("4bbd3859-15e9-41f3-a191-02c9dbfc99f0"),
+                            PerformanceEvaluationId = new Guid("6943b635-0a14-480c-b3d2-954efd482bd3")
                         });
+                });
+
+            modelBuilder.Entity("be.Models.EvaluationScore", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("CriteriaId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<float?>("Score")
+                        .HasColumnType("real");
+
+                    b.Property<Guid?>("SourceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("SourceRoleTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("TargetId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CriteriaId");
+
+                    b.HasIndex("SourceId");
+
+                    b.HasIndex("SourceRoleTypeId");
+
+                    b.HasIndex("TargetId");
+
+                    b.ToTable("EvaluationScores");
                 });
 
             modelBuilder.Entity("be.Models.Grade", b =>
@@ -463,6 +506,44 @@ namespace be.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Grades");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("f81d53ad-f9e7-48ba-89b0-b4dfb59cb59a"),
+                            Name = "AS0"
+                        },
+                        new
+                        {
+                            Id = new Guid("4a01c3d6-237f-4585-af30-0a580c52dd5a"),
+                            Name = "AS1"
+                        });
+                });
+
+            modelBuilder.Entity("be.Models.Group", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Groups");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("fe37abbf-316f-4319-aec9-d31cdbcc037a"),
+                            Name = "Creative"
+                        },
+                        new
+                        {
+                            Id = new Guid("6d69a063-8b04-425f-85a9-56fc012d7fee"),
+                            Name = "Engineering"
+                        });
                 });
 
             modelBuilder.Entity("be.Models.Image", b =>
@@ -495,6 +576,18 @@ namespace be.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Operations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("07f5552d-540a-4d62-a3cb-df927e2f8878"),
+                            Name = "Creative"
+                        },
+                        new
+                        {
+                            Id = new Guid("6fa5a4df-bb44-4804-8782-6aaa3b6732c9"),
+                            Name = "Engineering"
+                        });
                 });
 
             modelBuilder.Entity("be.Models.PerformanceEvaluation", b =>
@@ -514,18 +607,13 @@ namespace be.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EvaluationScheduleId")
-                        .IsUnique()
-                        .HasFilter("[EvaluationScheduleId] IS NOT NULL");
-
                     b.ToTable("PerformanceEvaluations");
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("849571c5-0826-4785-b178-82c286f6740c"),
+                            Id = new Guid("6943b635-0a14-480c-b3d2-954efd482bd3"),
                             CreatedAt = new DateTime(2025, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EvaluationScheduleId = new Guid("306c98a6-c520-4ca8-898e-583991a15e0c"),
                             Name = "Đánh giá tháng 6"
                         });
                 });
@@ -542,6 +630,18 @@ namespace be.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Plants");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("3dc445ae-bbea-4ebb-8681-abee9602ce2c"),
+                            Name = "Plant 1"
+                        },
+                        new
+                        {
+                            Id = new Guid("a65b25d3-4f3e-4ad1-b995-5c1e5ae53361"),
+                            Name = "Plant 2"
+                        });
                 });
 
             modelBuilder.Entity("be.Models.Position", b =>
@@ -556,9 +656,36 @@ namespace be.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Positions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("aad0d4b8-b8f6-412e-9611-1ddb7250bc12"),
+                            Name = "Staff"
+                        },
+                        new
+                        {
+                            Id = new Guid("a4719c40-9b19-4057-956a-9d7964c2315f"),
+                            Name = "Supervisor"
+                        },
+                        new
+                        {
+                            Id = new Guid("f02218b0-8a44-4ae9-aa11-5fd47021d00b"),
+                            Name = "Senior SuperVisor"
+                        },
+                        new
+                        {
+                            Id = new Guid("722d108a-fdcc-41a8-aebb-50f502308340"),
+                            Name = "Manager"
+                        },
+                        new
+                        {
+                            Id = new Guid("1f14453a-75c6-4d4d-9bae-5ac494c1e29d"),
+                            Name = "Senior Manager"
+                        });
                 });
 
-            modelBuilder.Entity("be.Models.PositionEs", b =>
+            modelBuilder.Entity("be.Models.PositionE", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -574,7 +701,20 @@ namespace be.Migrations
 
                     b.HasIndex("PositionId");
 
-                    b.ToTable("PositionEss");
+                    b.ToTable("PositionEs");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a4065b88-ac42-4210-85bd-72d7ebb1ebe4"),
+                            Name = "3D Renderer",
+                            PositionId = new Guid("aad0d4b8-b8f6-412e-9611-1ddb7250bc12")
+                        },
+                        new
+                        {
+                            Id = new Guid("a24cb6f6-83f0-41ec-85f4-de750554cbdf"),
+                            Name = "Lead Photographer"
+                        });
                 });
 
             modelBuilder.Entity("be.Models.Process", b =>
@@ -589,6 +729,18 @@ namespace be.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Processes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("b68557d7-0fb4-4072-aae5-440b32a2e4ad"),
+                            Name = "Creative"
+                        },
+                        new
+                        {
+                            Id = new Guid("0758ef0e-1b4e-413d-948f-22df618862af"),
+                            Name = "HS Engineering"
+                        });
                 });
 
             modelBuilder.Entity("be.Models.ProofImage", b =>
@@ -623,15 +775,13 @@ namespace be.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("EvaluationScheduleId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("Level")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EvaluationScheduleId");
 
                     b.ToTable("Roles");
 
@@ -639,35 +789,45 @@ namespace be.Migrations
                         new
                         {
                             Id = new Guid("c26b7fcb-9e16-47aa-893e-3ef148de9714"),
+                            Level = 0,
                             Name = "Admin"
                         },
                         new
                         {
                             Id = new Guid("f80eee5a-eefe-49c6-9a11-2e5b3804a71c"),
-                            Name = "Employee"
+                            Level = 0,
+                            Name = "Staff"
                         },
                         new
                         {
-                            Id = new Guid("2de0a741-b6bd-4b3c-8ab1-76cd380cfcb5"),
-                            Name = "Manager"
+                            Id = new Guid("b8010dc0-70b9-43ad-a39b-e68d383ad990"),
+                            Level = 0,
+                            Name = "Line Manager"
                         },
                         new
                         {
-                            Id = new Guid("c36d9d97-8a11-4c8e-b498-289df49982da"),
+                            Id = new Guid("e1f3912a-c92d-4447-b4d7-c7ebff0880fe"),
+                            Level = 0,
                             Name = "Director"
                         });
                 });
 
-            modelBuilder.Entity("be.Models.RoleEvaluationSchedule", b =>
+            modelBuilder.Entity("be.Models.RoleSchedule", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("EvaluationScheduleId")
+                    b.Property<Guid?>("EvaluationScheduleId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("RoleId")
+                    b.Property<Guid?>("RoleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("RoleTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ScheduleId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -676,14 +836,130 @@ namespace be.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("RoleEvaluationSchedules");
+                    b.HasIndex("RoleTypeId");
+
+                    b.ToTable("RoleSchedules");
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("25db27de-c006-4be9-a876-4369db3c3642"),
-                            EvaluationScheduleId = new Guid("306c98a6-c520-4ca8-898e-583991a15e0c"),
-                            RoleId = new Guid("f80eee5a-eefe-49c6-9a11-2e5b3804a71c")
+                            Id = new Guid("850487be-cc0b-4914-bbeb-f0e46796c3e8"),
+                            EvaluationScheduleId = new Guid("4bbd3859-15e9-41f3-a191-02c9dbfc99f0"),
+                            RoleId = new Guid("f80eee5a-eefe-49c6-9a11-2e5b3804a71c"),
+                            RoleTypeId = new Guid("9d15496d-5596-4590-ac43-06e9ad65e714")
+                        },
+                        new
+                        {
+                            Id = new Guid("3eca66a0-f4f4-4362-8cb6-4ccf0b03dd54"),
+                            EvaluationScheduleId = new Guid("4bbd3859-15e9-41f3-a191-02c9dbfc99f0"),
+                            RoleId = new Guid("b8010dc0-70b9-43ad-a39b-e68d383ad990"),
+                            RoleTypeId = new Guid("df761b61-22a3-4bbd-ab32-fb93e344ae7e")
+                        },
+                        new
+                        {
+                            Id = new Guid("b9f5ad63-45b5-4340-b5bf-50dc0b25b5cd"),
+                            EvaluationScheduleId = new Guid("4bbd3859-15e9-41f3-a191-02c9dbfc99f0"),
+                            RoleId = new Guid("e1f3912a-c92d-4447-b4d7-c7ebff0880fe"),
+                            RoleTypeId = new Guid("2b0bccd1-8cbb-4ed8-a2b1-34518ae7292a")
+                        });
+                });
+
+            modelBuilder.Entity("be.Models.RoleType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RoleTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("9d15496d-5596-4590-ac43-06e9ad65e714"),
+                            Name = "Self"
+                        },
+                        new
+                        {
+                            Id = new Guid("df761b61-22a3-4bbd-ab32-fb93e344ae7e"),
+                            Name = "Next"
+                        },
+                        new
+                        {
+                            Id = new Guid("2b0bccd1-8cbb-4ed8-a2b1-34518ae7292a"),
+                            Name = "Last"
+                        });
+                });
+
+            modelBuilder.Entity("be.Models.Schedule", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("End")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("EvaluationScheduleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("RoleScheduleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("Start")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EvaluationScheduleId")
+                        .IsUnique()
+                        .HasFilter("[EvaluationScheduleId] IS NOT NULL");
+
+                    b.HasIndex("RoleScheduleId")
+                        .IsUnique()
+                        .HasFilter("[RoleScheduleId] IS NOT NULL");
+
+                    b.ToTable("Schedules");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("3f3b2117-84aa-4af6-be8d-07795892af54"),
+                            Description = "",
+                            End = new DateTime(2025, 6, 3, 2, 49, 29, 858, DateTimeKind.Utc).AddTicks(262),
+                            EvaluationScheduleId = new Guid("4bbd3859-15e9-41f3-a191-02c9dbfc99f0"),
+                            Start = new DateTime(2025, 5, 27, 2, 49, 29, 858, DateTimeKind.Utc).AddTicks(261)
+                        },
+                        new
+                        {
+                            Id = new Guid("6e66db90-eae1-47bb-a041-d7d18f17f1b1"),
+                            Description = "",
+                            End = new DateTime(2025, 5, 29, 2, 49, 29, 858, DateTimeKind.Utc).AddTicks(269),
+                            RoleScheduleId = new Guid("850487be-cc0b-4914-bbeb-f0e46796c3e8"),
+                            Start = new DateTime(2025, 5, 27, 2, 49, 29, 858, DateTimeKind.Utc).AddTicks(269)
+                        },
+                        new
+                        {
+                            Id = new Guid("abba22f8-08a8-48d0-8bf1-3f17da09a8b7"),
+                            Description = "",
+                            End = new DateTime(2025, 5, 29, 2, 49, 29, 858, DateTimeKind.Utc).AddTicks(273),
+                            RoleScheduleId = new Guid("3eca66a0-f4f4-4362-8cb6-4ccf0b03dd54"),
+                            Start = new DateTime(2025, 5, 27, 2, 49, 29, 858, DateTimeKind.Utc).AddTicks(273)
+                        },
+                        new
+                        {
+                            Id = new Guid("b996b0fa-2250-4abb-aedc-8f06aef70e16"),
+                            Description = "",
+                            End = new DateTime(2025, 5, 30, 2, 49, 29, 858, DateTimeKind.Utc).AddTicks(276),
+                            RoleScheduleId = new Guid("b9f5ad63-45b5-4340-b5bf-50dc0b25b5cd"),
+                            Start = new DateTime(2025, 5, 27, 2, 49, 29, 858, DateTimeKind.Utc).AddTicks(275)
                         });
                 });
 
@@ -720,6 +996,28 @@ namespace be.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("e5079700-2f29-411a-b815-bf31e8faed0f"),
+                            Email = "nhanvien1@gmail.com",
+                            EmployeeId = new Guid("ea146c09-405b-43e2-8469-cc5d5229e246"),
+                            Password = "$2a$11$N.PTgKTrSRYtvrCpoQXn9u6GDI01nj/kERqthvErJGWloy8L45roK",
+                            Phone = "123456789",
+                            RoleId = new Guid("f80eee5a-eefe-49c6-9a11-2e5b3804a71c"),
+                            Username = "nhanvien1"
+                        },
+                        new
+                        {
+                            Id = new Guid("c76aa230-5e83-43d7-9be6-8dd7c9db50c2"),
+                            Email = "quanly1@gmail.com",
+                            EmployeeId = new Guid("b1ab6af7-a60f-49e6-a25a-d8a9f04b4750"),
+                            Password = "$2a$11$N.PTgKTrSRYtvrCpoQXn9u6GDI01nj/kERqthvErJGWloy8L45roK",
+                            Phone = "123456789",
+                            RoleId = new Guid("b8010dc0-70b9-43ad-a39b-e68d383ad990"),
+                            Username = "quanly1"
+                        });
                 });
 
             modelBuilder.Entity("be.Models.WorkingDetail", b =>
@@ -772,7 +1070,7 @@ namespace be.Migrations
             modelBuilder.Entity("be.Models.AchievementItem", b =>
                 {
                     b.HasOne("be.Models.Achievement", "Achievement")
-                        .WithMany("AchivementItems")
+                        .WithMany("AchievementItems")
                         .HasForeignKey("AchievementId");
 
                     b.Navigation("Achievement");
@@ -807,72 +1105,114 @@ namespace be.Migrations
 
             modelBuilder.Entity("be.Models.Employee", b =>
                 {
-                    b.HasOne("be.Models.Department", null)
+                    b.HasOne("be.Models.Department", "Department")
                         .WithMany("Employees")
                         .HasForeignKey("DepartmentId");
 
-                    b.HasOne("be.Models.Grade", null)
+                    b.HasOne("be.Models.Employee", "Supervisor")
+                        .WithMany("Employees")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("be.Models.Grade", "Grade")
                         .WithMany("Employees")
                         .HasForeignKey("GradeId");
 
-                    b.HasOne("be.Models.Operation", null)
+                    b.HasOne("be.Models.Group", "Group")
+                        .WithMany("Employees")
+                        .HasForeignKey("GroupId");
+
+                    b.HasOne("be.Models.Operation", "Operation")
                         .WithMany("Employees")
                         .HasForeignKey("OperationId");
 
-                    b.HasOne("be.Models.Plant", null)
+                    b.HasOne("be.Models.Plant", "Plant")
                         .WithMany("Employees")
                         .HasForeignKey("PlantId");
 
-                    b.HasOne("be.Models.Position", null)
+                    b.HasOne("be.Models.Position", "Position")
                         .WithMany("Employees")
                         .HasForeignKey("PositionId");
 
-                    b.HasOne("be.Models.Process", null)
+                    b.HasOne("be.Models.Process", "Process")
                         .WithMany("Employees")
                         .HasForeignKey("ProcessId");
 
                     b.HasOne("be.Models.WorkingDetail", null)
                         .WithMany("Employees")
                         .HasForeignKey("WorkingDetailId");
+
+                    b.Navigation("Department");
+
+                    b.Navigation("Grade");
+
+                    b.Navigation("Group");
+
+                    b.Navigation("Operation");
+
+                    b.Navigation("Plant");
+
+                    b.Navigation("Position");
+
+                    b.Navigation("Process");
+
+                    b.Navigation("Supervisor");
                 });
 
             modelBuilder.Entity("be.Models.EmployeeDetail", b =>
                 {
                     b.HasOne("be.Models.Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId1");
+                        .WithOne("EmployeeDetail")
+                        .HasForeignKey("be.Models.EmployeeDetail", "EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Employee");
                 });
 
-            modelBuilder.Entity("be.Models.EvaluateScore", b =>
+            modelBuilder.Entity("be.Models.EvaluationSchedule", b =>
+                {
+                    b.HasOne("be.Models.PerformanceEvaluation", "PerformanceEvaluation")
+                        .WithOne("EvaluationSchedule")
+                        .HasForeignKey("be.Models.EvaluationSchedule", "PerformanceEvaluationId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("PerformanceEvaluation");
+                });
+
+            modelBuilder.Entity("be.Models.EvaluationScore", b =>
                 {
                     b.HasOne("be.Models.Criteria", "Criteria")
                         .WithMany("EvaluateScores")
                         .HasForeignKey("CriteriaId");
 
-                    b.HasOne("be.Models.Employee", "EmployeeEvaluate")
-                        .WithMany("EvaluateScores")
-                        .HasForeignKey("EmployeeId");
+                    b.HasOne("be.Models.User", "Source")
+                        .WithMany("EvaluationScoreSources")
+                        .HasForeignKey("SourceId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("be.Models.RoleType", "SourceRoleType")
+                        .WithMany("EvaluationScores")
+                        .HasForeignKey("SourceRoleTypeId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("be.Models.User", "Target")
+                        .WithMany("EvaluationScoreTargets")
+                        .HasForeignKey("TargetId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Criteria");
 
-                    b.Navigation("EmployeeEvaluate");
+                    b.Navigation("Source");
+
+                    b.Navigation("SourceRoleType");
+
+                    b.Navigation("Target");
                 });
 
-            modelBuilder.Entity("be.Models.PerformanceEvaluation", b =>
-                {
-                    b.HasOne("be.Models.EvaluationSchedule", "EvaluationSchedule")
-                        .WithOne("PerformanceEvaluation")
-                        .HasForeignKey("be.Models.PerformanceEvaluation", "EvaluationScheduleId");
-
-                    b.Navigation("EvaluationSchedule");
-                });
-
-            modelBuilder.Entity("be.Models.PositionEs", b =>
+            modelBuilder.Entity("be.Models.PositionE", b =>
                 {
                     b.HasOne("be.Models.Position", "Position")
-                        .WithMany("PositionEss")
+                        .WithMany("PositionEs")
                         .HasForeignKey("PositionId");
 
                     b.Navigation("Position");
@@ -880,7 +1220,7 @@ namespace be.Migrations
 
             modelBuilder.Entity("be.Models.ProofImage", b =>
                 {
-                    b.HasOne("be.Models.EvaluateScore", "EvaluateScore")
+                    b.HasOne("be.Models.EvaluationScore", "EvaluateScore")
                         .WithMany("ProofImages")
                         .HasForeignKey("EvaluateScoreId");
 
@@ -893,46 +1233,62 @@ namespace be.Migrations
                     b.Navigation("Image");
                 });
 
-            modelBuilder.Entity("be.Models.Role", b =>
-                {
-                    b.HasOne("be.Models.EvaluationSchedule", null)
-                        .WithMany("Roles")
-                        .HasForeignKey("EvaluationScheduleId");
-                });
-
-            modelBuilder.Entity("be.Models.RoleEvaluationSchedule", b =>
+            modelBuilder.Entity("be.Models.RoleSchedule", b =>
                 {
                     b.HasOne("be.Models.EvaluationSchedule", "EvaluationSchedule")
-                        .WithMany("RoleEvaluationSchedules")
-                        .HasForeignKey("EvaluationScheduleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("RoleSchedules")
+                        .HasForeignKey("EvaluationScheduleId");
 
                     b.HasOne("be.Models.Role", "Role")
-                        .WithMany("RoleEvaluationSchedules")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("RoleSchedules")
+                        .HasForeignKey("RoleId");
+
+                    b.HasOne("be.Models.RoleType", "RoleType")
+                        .WithMany("RoleSchedules")
+                        .HasForeignKey("RoleTypeId");
 
                     b.Navigation("EvaluationSchedule");
 
                     b.Navigation("Role");
+
+                    b.Navigation("RoleType");
+                });
+
+            modelBuilder.Entity("be.Models.Schedule", b =>
+                {
+                    b.HasOne("be.Models.EvaluationSchedule", "EvaluationSchedule")
+                        .WithOne("Schedule")
+                        .HasForeignKey("be.Models.Schedule", "EvaluationScheduleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("be.Models.RoleSchedule", "RoleSchedule")
+                        .WithOne("Schedule")
+                        .HasForeignKey("be.Models.Schedule", "RoleScheduleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("EvaluationSchedule");
+
+                    b.Navigation("RoleSchedule");
                 });
 
             modelBuilder.Entity("be.Models.User", b =>
                 {
-                    b.HasOne("be.Models.Employee", null)
+                    b.HasOne("be.Models.Employee", "Employee")
                         .WithOne("User")
                         .HasForeignKey("be.Models.User", "EmployeeId");
 
-                    b.HasOne("be.Models.Role", null)
+                    b.HasOne("be.Models.Role", "Role")
                         .WithMany("Users")
                         .HasForeignKey("RoleId");
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("be.Models.Achievement", b =>
                 {
-                    b.Navigation("AchivementItems");
+                    b.Navigation("AchievementItems");
                 });
 
             modelBuilder.Entity("be.Models.AchievementItem", b =>
@@ -952,26 +1308,31 @@ namespace be.Migrations
 
             modelBuilder.Entity("be.Models.Employee", b =>
                 {
-                    b.Navigation("EvaluateScores");
+                    b.Navigation("EmployeeDetail");
+
+                    b.Navigation("Employees");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("be.Models.EvaluateScore", b =>
+            modelBuilder.Entity("be.Models.EvaluationSchedule", b =>
+                {
+                    b.Navigation("RoleSchedules");
+
+                    b.Navigation("Schedule");
+                });
+
+            modelBuilder.Entity("be.Models.EvaluationScore", b =>
                 {
                     b.Navigation("ProofImages");
                 });
 
-            modelBuilder.Entity("be.Models.EvaluationSchedule", b =>
+            modelBuilder.Entity("be.Models.Grade", b =>
                 {
-                    b.Navigation("PerformanceEvaluation");
-
-                    b.Navigation("RoleEvaluationSchedules");
-
-                    b.Navigation("Roles");
+                    b.Navigation("Employees");
                 });
 
-            modelBuilder.Entity("be.Models.Grade", b =>
+            modelBuilder.Entity("be.Models.Group", b =>
                 {
                     b.Navigation("Employees");
                 });
@@ -989,6 +1350,8 @@ namespace be.Migrations
             modelBuilder.Entity("be.Models.PerformanceEvaluation", b =>
                 {
                     b.Navigation("Achievements");
+
+                    b.Navigation("EvaluationSchedule");
                 });
 
             modelBuilder.Entity("be.Models.Plant", b =>
@@ -1002,7 +1365,7 @@ namespace be.Migrations
 
                     b.Navigation("Employees");
 
-                    b.Navigation("PositionEss");
+                    b.Navigation("PositionEs");
                 });
 
             modelBuilder.Entity("be.Models.Process", b =>
@@ -1012,9 +1375,28 @@ namespace be.Migrations
 
             modelBuilder.Entity("be.Models.Role", b =>
                 {
-                    b.Navigation("RoleEvaluationSchedules");
+                    b.Navigation("RoleSchedules");
 
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("be.Models.RoleSchedule", b =>
+                {
+                    b.Navigation("Schedule");
+                });
+
+            modelBuilder.Entity("be.Models.RoleType", b =>
+                {
+                    b.Navigation("EvaluationScores");
+
+                    b.Navigation("RoleSchedules");
+                });
+
+            modelBuilder.Entity("be.Models.User", b =>
+                {
+                    b.Navigation("EvaluationScoreSources");
+
+                    b.Navigation("EvaluationScoreTargets");
                 });
 
             modelBuilder.Entity("be.Models.WorkingDetail", b =>

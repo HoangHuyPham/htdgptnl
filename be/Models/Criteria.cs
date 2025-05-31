@@ -12,7 +12,7 @@ namespace be.Models
         public string? Content { get; set; } = null!;
         public bool? ProofRequired { get; set; } = false;
         [JsonIgnore]
-        public ICollection<EvaluateScore>? EvaluateScores { get; set; } = [];
+        public ICollection<EvaluationScore>? EvaluateScores { get; set; } = [];
         public Guid? AchievementItemId { get; set; }
         [JsonIgnore]
         public AchievementItem? AchievementItem { get; set; }

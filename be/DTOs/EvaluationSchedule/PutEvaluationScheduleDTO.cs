@@ -8,9 +8,7 @@ namespace be.DTOs.EvaluationSchedule
 {
     public class PutEvaluationScheduleDTO
     {
-        public DateTime Start { get; set; }
-        public DateTime End { get; set; }
-        public string Description { get; set; } = null!;
-        public string Status { get; set; } = null!;
+        public Guid? PerformanceEvaluationId { get; set; }
+        public Guid? ScheduleId { get; set; }
     }
 }

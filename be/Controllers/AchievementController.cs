@@ -14,6 +14,17 @@ namespace be.Controllers
     public class AchievementController(IRepository<Achievement> _AchievementRepo) : ControllerBase
     {
         private readonly IRepository<Achievement> AchievementRepo = _AchievementRepo;
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var ExistAchievement = await AchievementRepo.FindById(id);
+
+            return Ok(new ApiResponse<Achievement>
+            {
+                Message = "get success",
+                Data = ExistAchievement,
+            });
+        }
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] string? query)
         {
@@ -35,6 +46,9 @@ namespace be.Controllers
                 {
                     Name = dto.Name,
                     PerformanceEvaluationId = dto.PerformanceEvaluationId,
+                    Threshold = dto.Threshold,
+                    Target = dto.Target,
+                    Stretch = dto.Stretch,
                     TotalWeight = dto.TotalWeight
                 });
 
@@ -79,10 +93,13 @@ namespace be.Controllers
                         Data = null
                     });
                 }
-                
+
                 Achievement.TotalWeight = dto.TotalWeight;
                 Achievement.Name = dto.Name;
                 Achievement.PerformanceEvaluationId = dto.PerformanceEvaluationId;
+                Achievement.Threshold = dto.Threshold;
+                Achievement.Target = dto.Target;
+                Achievement.Stretch = dto.Stretch;
 
                 if (!ModelState.IsValid)
                 {

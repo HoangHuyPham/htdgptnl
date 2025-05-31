@@ -13,6 +13,17 @@ namespace be.Controllers
     public class CriteriaController(IRepository<Criteria> _CriteriaRepo) : ControllerBase
     {
         private readonly IRepository<Criteria> CriteriaRepo = _CriteriaRepo;
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var ExistCriteria = await CriteriaRepo.FindById(id);
+
+            return Ok(new ApiResponse<Criteria>
+            {
+                Message = "get success",
+                Data = ExistCriteria,
+            });
+        }
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] string? query)
         {
