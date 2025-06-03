@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using be.Models;
+using be.Models.Enums;
 
 namespace be.DTOs.Role
 {
@@ -10,5 +10,6 @@ namespace be.DTOs.Role
     {
         public string Name { get; set; } = null!;
         public string Description { get; set; } = null!;
+        public RoleLevel Level { get; set; }
     }
 }

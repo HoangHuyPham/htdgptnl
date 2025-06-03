@@ -1,130 +1,141 @@
-using be.DTOs.AchievementItem;
+using be.DTOs.Criteria;
+using be.DTOs.User;
 using be.Helpers;
+using be.Mappers;
 using be.Models;
 using be.Repos.Interfaces;
+using be.Services.Interfaces;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Serialization;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace be.Controllers
 {
+    [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
-    public class AchievementItemController(IRepository<AchievementItem> _AchievementItemRepo) : ControllerBase
+    public class AchievementItemController(IRepository<AchievementItem> _repoAchievementItem) : ControllerBase
     {
-        private readonly IRepository<AchievementItem> AchievementItemRepo = _AchievementItemRepo;
+        private readonly IRepository<AchievementItem> repoAchievementItem = _repoAchievementItem;
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var ExistAchievement = await AchievementItemRepo.FindById(id);
+            var existAchievementItem = await repoAchievementItem.FindById(id);
+
+            if (existAchievementItem == null)
+            {
+                return NotFound(new ApiResponse<AchievementItem>
+                {
+                    Message = "entity not found",
+                    Data = null
+                });
+            }
 
             return Ok(new ApiResponse<AchievementItem>
             {
-                Message = "get success",
-                Data = ExistAchievement,
+                Message = "success",
+                Data = existAchievementItem
             });
         }
+
+
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] string? query)
+        public async Task<IActionResult> GetAll([FromQuery] PaginationQuery query)
         {
-            var AchievementItems = await AchievementItemRepo.FindAll();
-
-            return Ok(new ApiPaginationResponse<List<AchievementItem>>
-            {
-                Message = "get success",
-                Data = AchievementItems,
-            });
+            return Ok(await repoAchievementItem.FindAll(query));
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateAchievementItemDTO dto)
-        {
-            try
-            {
-                var result = await AchievementItemRepo.Create(new AchievementItem
-                {
-                    Name = dto.Name,
-                    AchievementId = dto.AchievementId,
-                    Weight = dto.Weight
-                });
+        // [HttpPost]
+        // public async Task<IActionResult> Create([FromBody] CreateAchievementItemDTO dto)
+        // {
+        //     try
+        //     {
+        //         var result = await repoAchievementItem.Create(new AchievementItem
+        //         {
+        //             Name = dto.Name,
+        //             Description = dto.Description,
+        //             Level = dto.Level
+        //         });
 
-                if (result == null)
-                {
-                    return Ok(new ApiResponse<AchievementItem>
-                    {
-                        Message = "create failed",
-                        Data = null,
-                    });
-                }
+        //         if (result == null)
+        //         {
+        //             return Ok(new ApiResponse<AchievementItem>
+        //             {
+        //                 Message = "create failed",
+        //                 Data = null,
+        //             });
+        //         }
 
-                return Ok(new ApiResponse<AchievementItem>
-                {
-                    Message = "create success",
-                    Data = result,
-                });
-            }
-            catch
-            {
-                return BadRequest(new ApiResponse<AchievementItem>
-                {
-                    Message = "server error",
-                    Data = null,
-                });
-            }
-        }
+        //         return Ok(new ApiResponse<AchievementItem>
+        //         {
+        //             Message = "create success",
+        //             Data = result,
+        //         });
+        //     }
+        //     catch
+        //     {
+        //         return BadRequest(new ApiResponse<AchievementItem>
+        //         {
+        //             Message = "server error",
+        //             Data = null,
+        //         });
+        //     }
+        // }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid id, PutAchievementItemDTO dto)
-        {
-            try
-            {
+        // [HttpPut("{id}")]
+        // public async Task<IActionResult> Put(Guid id, CreateAchievementItemDTO dto)
+        // {
+        //     try
+        //     {
 
-                var AchievementItem = await AchievementItemRepo.FindById(id);
+        //         var AchievementItem = await repoAchievementItem.FindById(id);
 
-                if (AchievementItem == null)
-                {
-                    return NotFound(new ApiResponse<AchievementItem>
-                    {
-                        Message = "entity not found",
-                        Data = null
-                    });
-                }
-                
-                AchievementItem.Name = dto.Name;
-                AchievementItem.Weight = dto.Weight;
+        //         if (AchievementItem == null)
+        //         {
+        //             return NotFound(new ApiResponse<AchievementItem>
+        //             {
+        //                 Message = "entity not found",
+        //                 Data = null
+        //             });
+        //         }
 
-                if (!ModelState.IsValid)
-                {
-                    return Ok(new ApiResponse<AchievementItem>
-                    {
-                        Data = null,
-                        Message = "invalid params"
-                    });
-                }
+        //         AchievementItem.Description = dto.Description;
+        //         AchievementItem.Name = dto.Name;
+        //         AchievementItem.Level = dto.Level;
 
-                return Ok(new ApiResponse<AchievementItem>
-                {
-                    Message = "update success",
-                    Data = await AchievementItemRepo.Update(AchievementItem),
-                });
-            }
-            catch
-            {
-                return BadRequest(new ApiResponse<AchievementItem>
-                {
-                    Message = "server error",
-                    Data = null,
-                });
-            }
-        }
+        //         if (!ModelState.IsValid)
+        //         {
+        //             return Ok(new ApiResponse<AchievementItem>
+        //             {
+        //                 Data = null,
+        //                 Message = "invalid params"
+        //             });
+        //         }
+
+        //         return Ok(new ApiResponse<AchievementItem>
+        //         {
+        //             Message = "update success",
+        //             Data = await repoAchievementItem.Update(AchievementItem),
+        //         });
+        //     }
+        //     catch
+        //     {
+        //         return BadRequest(new ApiResponse<AchievementItem>
+        //         {
+        //             Message = "server error",
+        //             Data = null,
+        //         });
+        //     }
+        // }
 
         [HttpPatch("{id}")]
         public async Task<IActionResult> Patch(Guid id, [FromBody] JsonPatchDocument<AchievementItem> jsonPatch)
         {
             try
             {
-                var AchievementItem = await AchievementItemRepo.FindById(id);
+                var AchievementItem = await repoAchievementItem.FindById(id);
                 if (AchievementItem == null || jsonPatch == null)
                 {
                     return NotFound(new ApiResponse<AchievementItem>
@@ -148,7 +159,7 @@ namespace be.Controllers
                 return Ok(new ApiResponse<AchievementItem>
                 {
                     Message = "update success",
-                    Data = await AchievementItemRepo.Update(AchievementItem),
+                    Data = await repoAchievementItem.Update(AchievementItem),
                 });
             }
             catch
@@ -166,15 +177,15 @@ namespace be.Controllers
         {
             try
             {
-                var result = await AchievementItemRepo.Delete(id);
+                var result = await repoAchievementItem.Delete(id);
 
-                if (!result) return Ok(new ApiResponse<CreateAchievementItemDTO>
+                if (!result) return Ok(new ApiResponse<AchievementItem>
                 {
                     Message = "id not found",
                     Data = null,
                 });
 
-                return Ok(new ApiResponse<CreateAchievementItemDTO>
+                return Ok(new ApiResponse<AchievementItem>
                 {
                     Message = "delete success",
                     Data = null,

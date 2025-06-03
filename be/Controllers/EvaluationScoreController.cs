@@ -1,69 +1,62 @@
-using System.Security.Claims;
-using be.DTOs.EvaluationScore;
+using be.DTOs.Criteria;
+using be.DTOs.User;
 using be.Helpers;
+using be.Mappers;
 using be.Models;
 using be.Repos.Interfaces;
 using be.Services.Interfaces;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Serialization;
+using Microsoft.AspNetCore.Authorization;
+using be.DTOs.EvaluationScore;
+using System.Security.Claims;
 
 namespace be.Controllers
 {
+    [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
-    public class EvaluationScoreController(IRepository<Criteria> _CriteriaRepo, IRepository<Employee> _EmployeeRepo, IEvaluationScoreRepository _EvaluationScoreRepo, IUserRepository _UserRepo, IScoreService _ScoreService) : ControllerBase
+    public class EvaluationScoreController(IEvaluationScoreRepository _repoEvaluationScore, IRepository<Evidence> _repoEvidence) : ControllerBase
     {
-        private readonly IEvaluationScoreRepository EvaluationScoreRepo = _EvaluationScoreRepo;
-        private readonly IRepository<Employee> EmployeeRepo = _EmployeeRepo;
-        private readonly IRepository<Criteria> CriteriaRepo = _CriteriaRepo;
-        private readonly IUserRepository UserRepo = _UserRepo;
-        private readonly IScoreService ScoreService = _ScoreService;
+        private readonly IEvaluationScoreRepository repoEvaluationScore = _repoEvaluationScore;
+        private readonly IRepository<Evidence> repoEvidence = _repoEvidence;
 
-        [HttpGet("self")]
-        public async Task<IActionResult> GetAllBySelf(Guid criteriaId)
+        [HttpGet("Self")]
+        public async Task<IActionResult> GetAllSelf(Guid? criteriaId)
         {
-            var UserId = HttpContext.User.FindFirstValue("id");
+            var sourceId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            if (UserId == null)
+            if (sourceId == null)
             {
-                return Ok(new ApiPaginationResponse<RoleSchedule>
+                return Ok(new ApiResponse<EvaluationScore>
                 {
-                    Message = "get failed (jwt claims)",
+                    Message = "source not found",
                     Data = null,
                 });
             }
 
-            var UserExist = await UserRepo.FindById(Guid.Parse(UserId));
+            List<EvaluationScore> result = [];
 
-            if (UserExist == null)
+            if (criteriaId != null)
             {
-                return Ok(new ApiPaginationResponse<RoleSchedule>
-                {
-                    Message = "user not found",
-                    Data = null,
-                });
+                result.AddRange(await repoEvaluationScore.FindAllBy(sourceId: Guid.Parse(sourceId), targetId: Guid.Parse(sourceId), criteriaId: criteriaId));
+            }
+            else
+            {
+                result.AddRange(await repoEvaluationScore.FindAllBy(sourceId: Guid.Parse(sourceId), targetId: Guid.Parse(sourceId), criteriaId: null));
             }
 
-            var EvaluationScores = await EvaluationScoreRepo.FindAllByUserId(UserExist.Id);
-
-            return Ok(new ApiPaginationResponse<List<EvaluationScore>>
+            return Ok(new ApiResponse<List<EvaluationScore>>
             {
-                Message = "get success",
-                Data = EvaluationScores.FindAll(x=>x.CriteriaId == criteriaId).ToList(),
+                Message = "success",
+                Data = result.OrderByDescending(x=>x.CreatedAt).ToList(),
             });
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] string? query)
+        public async Task<IActionResult> GetAll([FromQuery] PaginationQuery query)
         {
-            var EvaluationScores = await EvaluationScoreRepo.FindAll();
-
-            return Ok(new ApiPaginationResponse<List<EvaluationScore>>
-            {
-                Message = "get success",
-                Data = EvaluationScores,
-            });
+            return Ok(await repoEvaluationScore.FindAll(query));
         }
 
         [HttpPost]
@@ -71,31 +64,27 @@ namespace be.Controllers
         {
             try
             {
-                var UserId = HttpContext.User.FindFirstValue("id");
+                var sourceId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-                if (UserId == null)
+                if (sourceId == null)
                 {
-                    return Ok(new ApiPaginationResponse<EvaluationScore>
-                    {
-                        Message = "get failed (jwt claims)",
-                        Data = null,
-                    });
-                }
-
-                var UserExist = await UserRepo.FindById(Guid.Parse(UserId));
-
-                if (UserExist == null)
-                {
-                    return Ok(new ApiPaginationResponse<EvaluationScore>
+                    return Ok(new ApiResponse<EvaluationScore>
                     {
                         Message = "source not found",
                         Data = null,
                     });
                 }
 
-                var EvaluationScore = await ScoreService.AddScore(dto.Score!.Value, UserExist.Id, dto.TargetId!.Value, dto.CriteriaId!.Value);
+                var result = await repoEvaluationScore.Create(new EvaluationScore
+                {
+                    Score = dto.Score,
+                    Comment = dto.Comment,
+                    SourceId = Guid.Parse(sourceId),
+                    TargetId = dto.TargetId,
+                    CriteriaId = dto.CriteriaId,
+                });
 
-                if (EvaluationScore == null)
+                if (result == null)
                 {
                     return Ok(new ApiResponse<EvaluationScore>
                     {
@@ -107,7 +96,7 @@ namespace be.Controllers
                 return Ok(new ApiResponse<EvaluationScore>
                 {
                     Message = "create success",
-                    Data = EvaluationScore,
+                    Data = result,
                 });
             }
             catch
@@ -121,12 +110,21 @@ namespace be.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid id, PutEvaluationScoreDTO dto)
+        public async Task<IActionResult> Put(Guid id, CreateEvaluationScoreDTO dto)
         {
             try
             {
+                var EvaluationScore = await repoEvaluationScore.FindById(id);
+                var sourceId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-                var EvaluationScore = await EvaluationScoreRepo.FindById(id);
+                if (sourceId == null)
+                {
+                    return Ok(new ApiResponse<EvaluationScore>
+                    {
+                        Message = "source not found",
+                        Data = null,
+                    });
+                }
 
                 if (EvaluationScore == null)
                 {
@@ -138,6 +136,10 @@ namespace be.Controllers
                 }
 
                 EvaluationScore.Score = dto.Score;
+                EvaluationScore.Comment = dto.Comment;
+                EvaluationScore.SourceId = Guid.Parse(sourceId);
+                EvaluationScore.TargetId = dto.TargetId;
+                EvaluationScore.CriteriaId = dto.CriteriaId;
 
                 if (!ModelState.IsValid)
                 {
@@ -151,7 +153,7 @@ namespace be.Controllers
                 return Ok(new ApiResponse<EvaluationScore>
                 {
                     Message = "update success",
-                    Data = await EvaluationScoreRepo.Update(EvaluationScore),
+                    Data = await repoEvaluationScore.Update(EvaluationScore),
                 });
             }
             catch
@@ -169,7 +171,7 @@ namespace be.Controllers
         {
             try
             {
-                var EvaluationScore = await EvaluationScoreRepo.FindById(id);
+                var EvaluationScore = await repoEvaluationScore.FindById(id);
                 if (EvaluationScore == null || jsonPatch == null)
                 {
                     return NotFound(new ApiResponse<EvaluationScore>
@@ -193,7 +195,7 @@ namespace be.Controllers
                 return Ok(new ApiResponse<EvaluationScore>
                 {
                     Message = "update success",
-                    Data = await EvaluationScoreRepo.Update(EvaluationScore),
+                    Data = await repoEvaluationScore.Update(EvaluationScore),
                 });
             }
             catch
@@ -211,7 +213,7 @@ namespace be.Controllers
         {
             try
             {
-                var result = await EvaluationScoreRepo.Delete(id);
+                var result = await repoEvaluationScore.Delete(id);
 
                 if (!result) return Ok(new ApiResponse<CreateEvaluationScoreDTO>
                 {

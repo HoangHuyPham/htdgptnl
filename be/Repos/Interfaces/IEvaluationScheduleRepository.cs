@@ -7,8 +7,8 @@ using be.Repos.Interfaces;
 
 namespace be.Services.Interfaces
 {
-    public interface IUserRepository : IRepository<User>
+    public interface IEvaluationScheduleRepository : IRepository<EvaluationSchedule>
     {
-        Task<User?> FindByUserName(string username);
+        Task<List<EvaluationSchedule>> FindAllAvailable();
     }
 }

@@ -14,6 +14,7 @@ namespace be.Services
     using System.Security.Claims;
     using System.Text;
     using BCrypt.Net;
+    using be.DTOs.Role;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.IdentityModel.JsonWebTokens;
     using Microsoft.IdentityModel.Tokens;
@@ -39,17 +40,21 @@ namespace be.Services
             return existUser;
         }
 
-        public async Task<User?> CreateUser(string username, string password)
+        public async Task<User?> CreateUser(CreateUserDTO createDTO)
         {
-            var existUser = await userRepository.FindByUserName(username);
+            var existUser = await userRepository.FindByUserName(createDTO.UserName);
 
             if (existUser != null){
                 return null;
             }
 
-            var newUser = await userRepository.Create(new User{
-                Username = username,
-                Password = BCrypt.HashPassword(password)
+            var newUser = await userRepository.Create(new User
+            {
+                UserName = createDTO.UserName,
+                Password = BCrypt.HashPassword(createDTO.Password),
+                Email = createDTO.Email,
+                Phone = createDTO.Phone,
+                RoleId = createDTO.RoleId,
             });
 
             return newUser;
@@ -74,9 +79,8 @@ namespace be.Services
         public string? GenerateJWTToken(User user){
             if (user.RoleId == null) return null;
 
-            Console.WriteLine("day " + user.RoleId);
             List<Claim> claims = [
-                new Claim("id", user.Id.ToString()),
+                new Claim("sub", user.Id.ToString()),
                 new Claim("roleId", user.RoleId.ToString()!),
             ];
 

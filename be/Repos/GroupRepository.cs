@@ -11,14 +11,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace be.Repos
 {
-    public class AchievementRepository(ApplicationDbContext _dbContext) : IRepository<Achievement>
+    public class GroupRepository(ApplicationDbContext _dbContext) : IRepository<Group>
     {
         private readonly ApplicationDbContext dbContext = _dbContext;
-        public async Task<Achievement?> Create(Achievement target)
+        public async Task<Group?> Create(Group target)
         {
             try
             {
-                await dbContext.Achievements.AddAsync(target);
+                await dbContext.Groups.AddAsync(target);
                 await dbContext.SaveChangesAsync();
                 return target;
             }
@@ -33,10 +33,10 @@ namespace be.Repos
         {
             try
             {
-                var existAchievement = await dbContext.Achievements.FirstOrDefaultAsync(x => x.Id == id);
-                if (existAchievement != null)
+                var existGroup = await dbContext.Groups.FirstOrDefaultAsync(x => x.Id == id);
+                if (existGroup != null)
                 {
-                    dbContext.Achievements.Remove(existAchievement);
+                    dbContext.Groups.Remove(existGroup);
                     await dbContext.SaveChangesAsync();
                     return true;
                 }
@@ -48,11 +48,11 @@ namespace be.Repos
             return false;
         }
 
-        public async Task<ApiPaginationResponse<List<Achievement>>> FindAll(PaginationQuery query)
+        public async Task<ApiPaginationResponse<List<Group>>> FindAll(PaginationQuery query)
         {
             try
             {
-                var queryAchievements = dbContext.Achievements.AsQueryable();
+                var queryGroups = dbContext.Groups.AsQueryable();
 
                 if (!string.IsNullOrEmpty(query.Sort))
                 {
@@ -60,24 +60,24 @@ namespace be.Repos
 
                     if (sortPaths[1] == "desc")
                     {
-                        queryAchievements = queryAchievements.OrderByDescending(x => EF.Property<object>(x, sortPaths[0]));
+                        queryGroups = queryGroups.OrderByDescending(x => EF.Property<object>(x, sortPaths[0]));
                     }
                     else
                     {
-                        queryAchievements = queryAchievements.OrderBy(x => EF.Property<object>(x, sortPaths[0]));
+                        queryGroups = queryGroups.OrderBy(x => EF.Property<object>(x, sortPaths[0]));
                     }
                 }
 
-                var total = await queryAchievements.CountAsync();
+                var total = await queryGroups.CountAsync();
 
                 if (query.Page > 0 && query.Limit > 0)
                 {
                     int skip = (query.Page - 1) * query.Limit;
-                    queryAchievements = queryAchievements.Skip(skip).Take(query.Limit);
+                    queryGroups = queryGroups.Skip(skip).Take(query.Limit);
                 }
                 return new()
                 {
-                    Data = await queryAchievements.ToListAsync(),
+                    Data = await queryGroups.ToListAsync(),
                     Message = "success",
                     Pagination = new()
                     {
@@ -106,13 +106,13 @@ namespace be.Repos
             };
         }
 
-        public async Task<Achievement?> FindById(Guid id)
+        public async Task<Group?> FindById(Guid id)
         {
             try
             {
-                var existAchievement = await dbContext.Achievements.FirstOrDefaultAsync(x => x.Id == id);
-                if (existAchievement != null)
-                    return existAchievement;
+                var existGroup = await dbContext.Groups.FirstOrDefaultAsync(x => x.Id == id);
+                if (existGroup != null)
+                    return existGroup;
             }
             catch (Exception ex)
             {
@@ -121,9 +121,9 @@ namespace be.Repos
             return null;
         }
 
-        public async Task<Achievement?> Update(Achievement data)
+        public async Task<Group?> Update(Group data)
         {
-            dbContext.Achievements.Update(data);
+            dbContext.Groups.Update(data);
             await dbContext.SaveChangesAsync();
             return data;
         }

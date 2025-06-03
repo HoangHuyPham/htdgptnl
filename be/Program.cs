@@ -49,22 +49,29 @@ builder.Services.AddAuthorization(options=>
     //                         .Build();
 });
 
-builder.Services.AddScoped<IRepository<EvaluationSchedule>, EvaluationScheduleRepository>();
-builder.Services.AddScoped<IRepository<PerformanceEvaluation>, PerformanceEvaluationRepository>();
 builder.Services.AddScoped<IRepository<Achievement>, AchievementRepository>();
 builder.Services.AddScoped<IRepository<AchievementItem>, AchievementItemRepository>();
-builder.Services.AddScoped<IRepository<Image>, ImageRepository>();
-builder.Services.AddScoped<IRepository<Employee>, EmployeeRepository>();
-builder.Services.AddScoped<IRepository<Role>, RoleRepository>();
-builder.Services.AddScoped<IRepository<ProofImage>, ProofImageRepository>();
-builder.Services.AddScoped<IEvaluationScoreRepository, EvaluationScoreRepository>();
 builder.Services.AddScoped<IRepository<Criteria>, CriteriaRepository>();
+builder.Services.AddScoped<IRepository<Role>, RoleRepository>();
+builder.Services.AddScoped<IRepository<Department>, DepartmentRepository>();
+builder.Services.AddScoped<IRepository<Employee>, EmployeeRepository>();
+builder.Services.AddScoped<IRepository<EmployeeDetail>, EmployeeDetailRepository>();
+builder.Services.AddScoped<IEvaluationScheduleRepository, EvaluationScheduleRepository>();
+builder.Services.AddScoped<IEvaluationScoreRepository, EvaluationScoreRepository>();
+builder.Services.AddScoped<IRepository<Evidence>, EvidenceRepository>();
+builder.Services.AddScoped<IRepository<Grade>, GradeRepository>();
+builder.Services.AddScoped<IRepository<Group>, GroupRepository>();
+builder.Services.AddScoped<IRepository<Image>, ImageRepository>();
+builder.Services.AddScoped<IRepository<Operation>, OperationRepository>();
+builder.Services.AddScoped<IRepository<PerformanceEvaluation>, PerformanceEvaluationRepository>();
+builder.Services.AddScoped<IRepository<Plant>, PlantRepository>();
+builder.Services.AddScoped<IRepository<PositionE>, PositionERepository>();
+builder.Services.AddScoped<IRepository<Process>, ProcessRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IRoleScheduleRepository, RoleScheduleRepository>();
+builder.Services.AddScoped<IRepository<WorkingDetail>, WorkingDetailRepository>();
 
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<IScoreService, ScoreService>();
 
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddEndpointsApiExplorer();

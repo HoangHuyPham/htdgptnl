@@ -1,47 +1,51 @@
-using System.Transactions;
-using be.Contexts;
-using be.DTOs.User;
+using be.DTOs.Criteria;
 using be.Helpers;
 using be.Mappers;
 using be.Models;
 using be.Repos.Interfaces;
 using be.Services.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.AspNetCore.Authorization;
+using be.DTOs.Role;
+using System.Security.Claims;
 
 namespace be.Controllers
 {
     [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
-    public class UserController(IUserRepository _UserRepo, IAuthService _authService, ApplicationDbContext _dbContext) : ControllerBase
+    public class UserController(IUserRepository _repoUser, IAuthService _authService) : ControllerBase
     {
-        private readonly IUserRepository UserRepo = _UserRepo;
+        private readonly IUserRepository repoUser = _repoUser;
         private readonly IAuthService authService = _authService;
-        private readonly ApplicationDbContext dbContext = _dbContext;
-        [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] string? query)
-        {
-            var Users = await UserRepo.FindAll();
 
-            return Ok(new ApiPaginationResponse<List<User>>
+        [HttpGet("Me")]
+        public async Task<IActionResult> Me()
+        {
+            var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var existUser = await repoUser.FindById(Guid.Parse(userId ?? Guid.Empty.ToString()));
+            return Ok(new ApiResponse<User>
             {
-                Message = "get success",
-                Data = Users,
+                Data = existUser,
+                Message = "success"
             });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll([FromQuery] PaginationQuery query)
+        {
+            return Ok(await repoUser.FindAll(query));
         }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateUserDTO dto)
         {
-            using var transaction = await dbContext.Database.BeginTransactionAsync();
             try
             {
-                var newUser = await authService.CreateUser(dto.Username, dto.Password);
+                var result = await authService.CreateUser(dto);
 
-                if (newUser == null)
+                if (result == null)
                 {
                     return Ok(new ApiResponse<User>
                     {
@@ -50,28 +54,10 @@ namespace be.Controllers
                     });
                 }
 
-                newUser.EmployeeId = dto.EmployeeId;
-                newUser.RoleId = dto.RoleId;
-                newUser.Email = dto.Email;
-                newUser.Phone = dto.Phone;
-
-                var savedUser = await UserRepo.Update(newUser);
-
-                if (savedUser == null)
-                {
-                    return Ok(new ApiResponse<User>
-                    {
-                        Message = "create failed",
-                        Data = null,
-                    });
-                }
-
-                await transaction.CommitAsync();
-                
                 return Ok(new ApiResponse<User>
                 {
                     Message = "create success",
-                    Data = savedUser,
+                    Data = result,
                 });
             }
             catch
@@ -85,11 +71,12 @@ namespace be.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid id, PutUserDTO dto)
+        public async Task<IActionResult> Put(Guid id, CreateUserDTO dto)
         {
             try
             {
-                var User = await UserRepo.FindById(id);
+
+                var User = await repoUser.FindById(id);
 
                 if (User == null)
                 {
@@ -100,10 +87,10 @@ namespace be.Controllers
                     });
                 }
 
-                User.EmployeeId = dto.EmployeeId;
-                User.RoleId = dto.RoleId;
+                User.UserName = dto.UserName;
                 User.Email = dto.Email;
                 User.Phone = dto.Phone;
+                User.RoleId = dto.RoleId;
 
                 if (!ModelState.IsValid)
                 {
@@ -117,7 +104,7 @@ namespace be.Controllers
                 return Ok(new ApiResponse<User>
                 {
                     Message = "update success",
-                    Data = await UserRepo.Update(User),
+                    Data = await repoUser.Update(User),
                 });
             }
             catch
@@ -135,7 +122,7 @@ namespace be.Controllers
         {
             try
             {
-                var User = await UserRepo.FindById(id);
+                var User = await repoUser.FindById(id);
                 if (User == null || jsonPatch == null)
                 {
                     return NotFound(new ApiResponse<User>
@@ -159,7 +146,7 @@ namespace be.Controllers
                 return Ok(new ApiResponse<User>
                 {
                     Message = "update success",
-                    Data = await UserRepo.Update(User),
+                    Data = await repoUser.Update(User),
                 });
             }
             catch
@@ -177,7 +164,7 @@ namespace be.Controllers
         {
             try
             {
-                var result = await UserRepo.Delete(id);
+                var result = await repoUser.Delete(id);
 
                 if (!result) return Ok(new ApiResponse<CreateUserDTO>
                 {

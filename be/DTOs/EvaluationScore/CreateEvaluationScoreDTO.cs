@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using be.Models.Enums;
 
 namespace be.DTOs.EvaluationScore
 {
-    using be.Models;
     public class CreateEvaluationScoreDTO
     {
-        public float? Score { get; set; } = 0;
+        public float Score { get; set; } = 0;
+        public string Comment { get; set; } = String.Empty;
         public Guid? TargetId { get; set; }
 
         public Guid? CriteriaId { get; set; }

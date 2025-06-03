@@ -1,28 +1,56 @@
-using be.DTOs.EvaluationSchedule;
+using be.DTOs.Criteria;
+using be.DTOs.User;
 using be.Helpers;
+using be.Mappers;
 using be.Models;
 using be.Repos.Interfaces;
+using be.Services.Interfaces;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using be.DTOs.Role;
+using System.Security.Claims;
+using be.DTOs.EvaluationScore;
 
 namespace be.Controllers
 {
+    [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
-    public class EvaluationScheduleController(IRepository<EvaluationSchedule> _evaluationScheduleRepo) : ControllerBase
+    public class EvaluationScheduleController(IEvaluationScheduleRepository _repoEvaluationSchedule) : ControllerBase
     {
-        private readonly IRepository<EvaluationSchedule> evaluationScheduleRepo = _evaluationScheduleRepo;
-    
-        [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] string? query)
-        {
-            var evaluationSchedules = await evaluationScheduleRepo.FindAll();
+        private readonly IEvaluationScheduleRepository repoEvaluationSchedule = _repoEvaluationSchedule;
 
-            return Ok(new ApiPaginationResponse<List<EvaluationSchedule>>
+        [HttpGet("Self")]
+        public async Task<IActionResult> Self()
+        {
+            var roleId = HttpContext.User.FindFirstValue("roleId");
+            var availableSchedules = await repoEvaluationSchedule.FindAllAvailable();
+
+            return Ok(new ApiResponse<List<EvaluationSchedule>>
             {
-                Message = "get success",
-                Data = evaluationSchedules,
+                Message = "success",
+                Data = availableSchedules.Where(x => (x.RoleId == Guid.Parse(roleId ?? Guid.Empty.ToString())) && x.IsSelfEvalution).ToList(),
             });
+        }
+
+        [HttpGet("Available")]
+        public async Task<IActionResult> Available()
+        {
+            var roleId = HttpContext.User.FindFirstValue("roleId");
+            var availableSchedules = await repoEvaluationSchedule.FindAllAvailable();
+
+            return Ok(new ApiResponse<List<EvaluationSchedule>>
+            {
+                Message = "success",
+                Data = availableSchedules.Where(x => x.RoleId == Guid.Parse(roleId ?? Guid.Empty.ToString())).ToList(),
+            });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll([FromQuery] PaginationQuery query)
+        {
+            return Ok(await repoEvaluationSchedule.FindAll(query));
         }
 
         [HttpPost]
@@ -30,10 +58,13 @@ namespace be.Controllers
         {
             try
             {
-                var result = await evaluationScheduleRepo.Create(new EvaluationSchedule
+                var result = await repoEvaluationSchedule.Create(new EvaluationSchedule
                 {
+                    Description = dto.Description,
+                    Start = dto.Start,
+                    End = dto.End,
+                    RoleId = dto.RoleId,
                     PerformanceEvaluationId = dto.PerformanceEvaluationId,
-                    ScheduleId = dto.ScheduleId
                 });
 
                 if (result == null)
@@ -62,14 +93,13 @@ namespace be.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid id, PutEvaluationScheduleDTO dto)
+        public async Task<IActionResult> Put(Guid id, CreateEvaluationScheduleDTO dto)
         {
             try
             {
+                var EvaluationSchedule = await repoEvaluationSchedule.FindById(id);
 
-                var evaluationSchedule = await evaluationScheduleRepo.FindById(id);
-
-                if (evaluationSchedule == null)
+                if (EvaluationSchedule == null)
                 {
                     return NotFound(new ApiResponse<EvaluationSchedule>
                     {
@@ -78,8 +108,11 @@ namespace be.Controllers
                     });
                 }
 
-                evaluationSchedule.PerformanceEvaluationId = dto.PerformanceEvaluationId;
-                evaluationSchedule.ScheduleId = dto.ScheduleId;
+                EvaluationSchedule.Description = dto.Description;
+                EvaluationSchedule.Start = dto.Start;
+                EvaluationSchedule.End = dto.End;
+                EvaluationSchedule.RoleId = dto.RoleId;
+                EvaluationSchedule.PerformanceEvaluationId = dto.PerformanceEvaluationId;
 
                 if (!ModelState.IsValid)
                 {
@@ -93,7 +126,7 @@ namespace be.Controllers
                 return Ok(new ApiResponse<EvaluationSchedule>
                 {
                     Message = "update success",
-                    Data = await evaluationScheduleRepo.Update(evaluationSchedule),
+                    Data = await repoEvaluationSchedule.Update(EvaluationSchedule),
                 });
             }
             catch
@@ -111,8 +144,8 @@ namespace be.Controllers
         {
             try
             {
-                var evaluationSchedule = await evaluationScheduleRepo.FindById(id);
-                if (evaluationSchedule == null || jsonPatch == null)
+                var EvaluationSchedule = await repoEvaluationSchedule.FindById(id);
+                if (EvaluationSchedule == null || jsonPatch == null)
                 {
                     return NotFound(new ApiResponse<EvaluationSchedule>
                     {
@@ -121,7 +154,7 @@ namespace be.Controllers
                     });
                 }
 
-                jsonPatch.ApplyTo(evaluationSchedule, ModelState);
+                jsonPatch.ApplyTo(EvaluationSchedule, ModelState);
 
                 if (!ModelState.IsValid)
                 {
@@ -135,7 +168,7 @@ namespace be.Controllers
                 return Ok(new ApiResponse<EvaluationSchedule>
                 {
                     Message = "update success",
-                    Data = await evaluationScheduleRepo.Update(evaluationSchedule),
+                    Data = await repoEvaluationSchedule.Update(EvaluationSchedule),
                 });
             }
             catch
@@ -153,7 +186,7 @@ namespace be.Controllers
         {
             try
             {
-                var result = await evaluationScheduleRepo.Delete(id);
+                var result = await repoEvaluationSchedule.Delete(id);
 
                 if (!result) return Ok(new ApiResponse<CreateEvaluationScheduleDTO>
                 {

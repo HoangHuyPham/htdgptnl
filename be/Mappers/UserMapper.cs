@@ -13,11 +13,10 @@ namespace be.Mappers
             return new UserInfoDTO
             {
                 Id = user.Id,
-                Username = user.Username,
+                UserName = user.UserName,
                 Email = user.Email,
                 Phone = user.Phone,
-                EmployeeId = user.EmployeeId,
-                RoleId = user.RoleId,
+                Role = user.Role,
             };
         }
     }

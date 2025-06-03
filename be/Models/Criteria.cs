@@ -8,13 +8,15 @@ namespace be.Models
 {
     public class Criteria
     {
-        public Guid Id { get; set; }= Guid.NewGuid();
-        public string? Content { get; set; } = null!;
-        public bool? ProofRequired { get; set; } = false;
-        [JsonIgnore]
-        public ICollection<EvaluationScore>? EvaluateScores { get; set; } = [];
+        public Guid Id { get; set; } = Guid.NewGuid();
+        public string Content { get; set; } = String.Empty;
+        public bool EvidenceRequired { get; set; } = false;
+
         public Guid? AchievementItemId { get; set; }
         [JsonIgnore]
         public AchievementItem? AchievementItem { get; set; }
+
+        [JsonIgnore]
+        public ICollection<EvaluationScore> EvaluationScores { get; set; } = [];
     }
 }

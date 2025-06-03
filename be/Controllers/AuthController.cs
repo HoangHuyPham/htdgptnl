@@ -14,9 +14,8 @@ namespace be.Controllers
     [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
-    public class AuthController(IUserRepository _UserRepo, IAuthService _authService) : ControllerBase
+    public class AuthController(IAuthService _authService) : ControllerBase
     {
-        private readonly IUserRepository UserRepo = _UserRepo;
         private readonly IAuthService authService = _authService;
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDTO dto)
