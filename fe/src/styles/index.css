@@ -1,5 +1,21 @@
 @import "tailwindcss";
 
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #494545;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 @font-face {
   font-family: 'Robot';
   src: url('../assets/Roboto-Light.ttf');
@@ -16,7 +32,7 @@
   --color-simple-white: #f5f5f5;
   --color-simple-black: #827eab;
 
-  --animate-fadeIn: fadeIn .25s ease-in-out;
+  --animate-fadeIn: fadeIn .25s ease-in-out forwards;
 }
 
 @keyframes fadeIn {
@@ -32,6 +48,7 @@
 
 :root {
   font-family: 'Robot', sans-serif, system-ui;
+  box-sizing: border-box;
 }
 
 input[type="text"],
@@ -58,5 +75,13 @@ button {
 
 button:hover {
   transition: .5s ease;
-  opacity: 0.5;
+  opacity: 0.9;
+}
+
+button:disabled{
+  background-color: gray;
+}
+
+button:disabled:hover{
+  cursor: not-allowed;
 }
