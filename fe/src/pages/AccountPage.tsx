@@ -23,9 +23,13 @@ export const AccountPage : React.FC = ()=>{
         }, 1000);
     }
 
+    const handleProfile = ()=>{
+        navigate("/home/profile")
+    }
+
     return <>
         <div className="flex gap-2 justify-around px-5 flex-wrap">
-            <span className="basis-[100%] shrink-1 transition-all animate-fadeIn shadow-xl text-white cursor-pointer hover:bg-orange-300 flex flex-col items-center justify-center rounded-xl w-[230px] h-[230px] bg-blue-400">
+            <span onClick={handleProfile} className="basis-[100%] shrink-1 transition-all animate-fadeIn shadow-xl text-white cursor-pointer hover:bg-orange-300 flex flex-col items-center justify-center rounded-xl w-[230px] h-[230px] bg-blue-400">
                 <img className="w-[120px] h-[120px]" src={userIcon}/>
                 <span className="text-3xl font-semibold">Profile</span>
             </span>

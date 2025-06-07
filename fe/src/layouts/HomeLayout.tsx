@@ -10,6 +10,7 @@ import backIcon from "/back-home.svg"
 import { useLocation } from "react-router"
 import { toast } from "react-toastify"
 import { AxiosError } from "axios"
+import { AppSocket } from "@websocket"
 
 export const HomeLayout: React.FC = () => {
     const { user, dispatchUser } = useContext(UserContext)
@@ -41,12 +42,16 @@ export const HomeLayout: React.FC = () => {
     })
 
     useEffect(() => {
+        AppSocket.getInstance().init(`wss://localhost:7061/connect?token=${localStorage.getItem("jwt")}`, dispatchUser)
+    }, [])
+
+    useEffect(() => {
         fetchUserInfo()
     }, [])
 
     const fetchUserInfo = async () => {
         try {
-            const resp = await AppRequest.getInstance().get("api/User/me")
+            const resp = await AppRequest.getInstance().get("api/Profile/me")
 
             if (resp.data?.message === "success") {
                 dispatchUser({
@@ -57,11 +62,10 @@ export const HomeLayout: React.FC = () => {
                 })
             }
 
-        } catch (e){
+        } catch (e) {
             const err = e as AxiosError
             toast.error(`Has error (${err?.code})`)
         }
-
     }
 
     const handleHome = () => {

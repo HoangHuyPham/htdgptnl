@@ -4,9 +4,9 @@ import { AppRoutes } from '@routes'
 function App() {
   return (
     <>
-        <BrowserRouter>
-          <AppRoutes />
-        </BrowserRouter>
+      <BrowserRouter>
+        <AppRoutes />
+      </BrowserRouter>
     </>
   )
 }

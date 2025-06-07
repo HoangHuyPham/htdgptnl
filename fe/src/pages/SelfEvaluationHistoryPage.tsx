@@ -27,7 +27,7 @@ export const SelfEvaluationHistoryPage: React.FC = () => {
             <div className="overflow-y-scroll p-5 h-[100%]">
                 <ul className="block space-y-2 h-[100%]">
                     {
-                        scores.map((v, i) => <li key={i}>[{moment((v.createdAt ?? 0) * 1000).format("DD/MM/yyyy hh:mm:ss A")}] Scored <b>{v.score}</b> ({v.criteria?.content})</li>)
+                        scores?.length > 0 && scores.map((v, i) => <li key={i}>[{moment((v.createdAt ?? 0) * 1000).format("DD/MM/yyyy hh:mm:ss A")}] Scored <b>{v.score}</b> ({v.criteria?.content})</li>) || (<b>No history now ✔</b>)
                     }
                 </ul>
             </div>

@@ -1,38 +1,112 @@
-export interface IUser{
-    id? : string
-    username? : string
-    email? : string
-    phone? : string
-    roleId? : string
-    employeeId? : string
+export interface IUser {
+    id?: string
+    userName?: string
+    email?: string
+    phone?: string
+    roleId?: string,
+    role?: IRole,
+    employeeId?: string,
+    employee?: IEmployee
 }
 
-export interface IRole{
+export interface ISocketMessage{
+    type: string,
+    content: string,
+}
+
+export interface IEmployee {
+    id?: string,
+    detail?: IEmployeeDetail
+    supervisor?: IEmployee,
+    employees?: IEmployee[]
+}
+
+export interface IPositionE {
+    id?: string,
+    name?: string
+}
+
+export interface IPlant {
+    id?: string,
+    name?: string
+}
+
+export interface IGrade {
+    id?: string,
+    name?: string
+}
+
+export interface IDepartment {
+    id?: string,
+    name?: string
+}
+
+export interface IProcess {
+    id?: string,
+    name?: string
+}
+
+export interface IOperation {
+    id?: string,
+    name?: string
+}
+
+export interface IGroup {
+    id?: string,
+    name?: string
+}
+
+export interface IEmployeeDetail {
+    id?: string,
+    code?: string,
+    type?: string,
+    fullName?: string,
+    startDate?: number,
+    eligible?: boolean,
+    workingDetail?: null,
+    employeeId?: string,
+    gradeId?: string,
+    grade?: IGrade,
+    positionEId?: string,
+    positionE?: IPositionE,
+    plantId?: string,
+    plant?: IPlant,
+    departmentId?: string,
+    department?: IDepartment,
+    processId?: string,
+    process?: IProcess,
+    operationId?: string,
+    operation?: IOperation,
+    groupId?: string,
+    group?: IGroup
+}
+
+export interface IRole {
     id?: string,
     name?: string,
     description?: string
 }
 
-export interface ISchedule{
+export interface ISchedule {
     id?: string,
     start?: Date,
     end?: Date,
     description?: string
 }
 
-export interface IRoleType{
+export interface IRoleType {
     id?: string,
     name?: string
 }
 
-export interface ICriteria{
+export interface ICriteria {
     id?: string,
     content?: string,
     evidenceRequired?: boolean,
     achievementItemId?: string
 }
 
-export interface IAchievementItem{
+export interface IAchievementItem {
     id?: string,
     name?: string,
     threshold?: number,
@@ -42,7 +116,7 @@ export interface IAchievementItem{
     criterias?: ICriteria[]
 }
 
-export interface IAchievement{
+export interface IAchievement {
     id?: string,
     name?: string,
     threshold?: number,
@@ -52,7 +126,7 @@ export interface IAchievement{
     achievementItems?: IAchievementItem[]
 }
 
-export interface IPerformanceEvaluation{
+export interface IPerformanceEvaluation {
     id?: string,
     name?: string,
     start?: number,
@@ -61,7 +135,7 @@ export interface IPerformanceEvaluation{
     achievements?: IAchievement[]
 }
 
-export interface IEvaluationSchedule{
+export interface IEvaluationSchedule {
     id?: string,
     isSelfEvalution?: boolean,
     description?: string,
@@ -70,11 +144,11 @@ export interface IEvaluationSchedule{
     performanceEvaluation?: IPerformanceEvaluation,
 }
 
-export interface IEvidence{
+export interface IEvidence {
     id?: string
 }
 
-export interface IEvaluationScore{
+export interface IEvaluationScore {
     id?: string,
     score?: number,
     comment?: string,

@@ -6,7 +6,7 @@ interface UserType {
     dispatchUser: Dispatch<UserAction>
 }
 
-interface UserAction {
+export interface UserAction {
     type: string,
     payload: IUser | null
 }
