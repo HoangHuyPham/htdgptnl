@@ -1,6 +1,4 @@
 import { useCallback, useRef, useState } from "react"
-import minusIcon from "/minus.svg"
-import plusIcon from "/plus.svg"
 import { useLocation, useNavigate } from "react-router"
 
 export interface MenuTabProps {

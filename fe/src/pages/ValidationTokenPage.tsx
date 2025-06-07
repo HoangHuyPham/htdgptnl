@@ -2,7 +2,6 @@ import { AppRequest } from "@requests"
 import { AxiosError, HttpStatusCode } from "axios"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router"
-import { toast } from "react-toastify"
 import loadingSpinner from "/loading_black.svg"
 
 export const ValidationTokenPage: React.FC = () => {

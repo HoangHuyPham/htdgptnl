@@ -1,11 +1,9 @@
 import userIcon from "/user.svg"
 import logoutIcon from "/logout.svg"
 import { useContext } from "react"
-import { ScoreContext, ScoreTempContext, UserContext } from '@contexts';
+import { UserContext } from '@contexts';
 import { USER_ACTION } from "@contexts/UserContext";
 import { useNavigate } from "react-router";
-import { SCORE_ACTION } from "@contexts/ScoreContext";
-import { SCORE_TEMP_ACTION } from "@contexts/ScoreTempContext";
 
 export const AccountPage : React.FC = ()=>{
     const { dispatchUser } = useContext(UserContext)

@@ -13,10 +13,10 @@ import { AxiosError } from "axios"
 import { AppSocket } from "@websocket"
 
 export const HomeLayout: React.FC = () => {
-    const { user, dispatchUser } = useContext(UserContext)
+    const { dispatchUser } = useContext(UserContext)
     const navigate = useNavigate()
     const location = useLocation()
-    const [data, setData] = useState<MenuProps>({
+    const [data] = useState<MenuProps>({
         tabs: [
             {
                 title: "Self Evaluation",

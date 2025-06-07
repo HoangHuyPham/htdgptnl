@@ -8,7 +8,6 @@ import { AppRequest } from "@requests";
 import { ScoreTempContext, ScoreTempProvider, ScoreContext, ScoreProvider, UserContext } from "@contexts";
 import { SCORE_ACTION } from "@contexts/ScoreContext";
 import { SCORE_TEMP_ACTION } from "@contexts/ScoreTempContext";
-import { AxiosError } from "axios";
 
 export const FormTable: React.FC<{ evaluationSchedule?: IEvaluationSchedule }> = ({ evaluationSchedule }) => {
     return <>
@@ -27,7 +26,7 @@ export const FormTable: React.FC<{ evaluationSchedule?: IEvaluationSchedule }> =
 }
 
 const Achievement: React.FC<{ achievement?: IAchievement }> = ({ achievement }) => {
-    const [isLoading, setLoading] = useState(false)
+    const [isLoading] = useState(false)
     const [isHide, setHide] = useState(false)
     const { dispatchScore } = useContext(ScoreContext)
     const { tempScores } = useContext(ScoreTempContext)

@@ -1,15 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AppRequest } from '@requests';
-import { IAchievementItem, ICriteria, IEvaluationSchedule, IEvaluationScore, IPerformanceEvaluation } from "@interfaces";
+import { IEvaluationScore } from "@interfaces";
 import { UserContext } from '@contexts';
-import { AxiosError } from "axios";
-import { toast } from "react-toastify";
 import moment from "moment";
 
 export const SelfEvaluationHistoryPage: React.FC = () => {
     const { user } = useContext(UserContext)
     const [scores, setScores] = useState<IEvaluationScore[]>([])
-    const [evaluationSchedules, setevaluationSchedules] = useState<IEvaluationSchedule[]>([])
 
     useEffect(() => {
         fetchSelfHistory()
