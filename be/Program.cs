@@ -1,10 +1,8 @@
 using be.Contexts;
-using be.Controllers;
 using be.Models;
 using be.Repos;
 using be.Repos.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.FileProviders;
 using be.Services;
 using be.Services.Interfaces;
@@ -13,7 +11,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authorization;
-using System.IdentityModel.Tokens.Jwt;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetSection("ConnectionStrings").GetSection("Admin").Value;

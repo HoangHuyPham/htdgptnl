@@ -1,13 +1,9 @@
-using be.DTOs.Criteria;
-using be.DTOs.User;
 using be.Helpers;
-using be.Mappers;
 using be.Models;
 using be.Repos.Interfaces;
 using be.Services.Interfaces;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
 using be.DTOs.EvaluationScore;
 using System.Security.Claims;
 

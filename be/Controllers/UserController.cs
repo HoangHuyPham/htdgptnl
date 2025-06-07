@@ -1,10 +1,8 @@
 using be.Helpers;
-using be.Mappers;
 using be.Models;
 using be.Services.Interfaces;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using be.DTOs.User;
 
 namespace be.Controllers
