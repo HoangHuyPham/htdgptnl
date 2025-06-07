@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace be.Models
 {
@@ -17,6 +18,7 @@ namespace be.Models
         public WorkingDetail? WorkingDetail { get; set; }
         
         public Guid? EmployeeId { get; set; }
+        [JsonIgnore]
         public Employee? Employee { get; set; }
 
         public Guid? GradeId { get; set; }

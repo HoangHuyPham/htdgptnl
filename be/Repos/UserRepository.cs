@@ -35,7 +35,7 @@ namespace be.Repos
             using var transaction = await dbContext.Database.BeginTransactionAsync();
             try
             {
-                var existUser = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
+                var existUser = await dbContext.Users.Include(x=>x.Role).FirstOrDefaultAsync(x => x.Id == id);
                 if (existUser != null)
                 {
                     // Phải xóa thế này vì sql server không thể cascade 2 cùng lúc fk được
@@ -63,7 +63,7 @@ namespace be.Repos
         {
             try
             {
-                var queryUsers = dbContext.Users.AsQueryable();
+                var queryUsers = dbContext.Users.Include(x=>x.Role).AsQueryable();
 
                 if (!string.IsNullOrEmpty(query.Sort))
                 {
@@ -121,7 +121,40 @@ namespace be.Repos
         {
             try
             {
-                var existUser = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
+                var existUser = await dbContext.Users
+                .Include(x => x.Role)
+                .Include(x => x.Employee!).ThenInclude(x => x.Employees)
+                .Include(x => x.Employee!).ThenInclude(x => x.Supervisor!)
+                .Include(x => x.Employee!).ThenInclude(x => x.Supervisor!).ThenInclude(x => x.Detail!)
+
+                .Include(x => x.Employee!).ThenInclude(x => x.Detail!).ThenInclude(x => x.Grade)
+                .Include(x => x.Employee!).ThenInclude(x => x.Detail!).ThenInclude(x => x.PositionE)
+                .Include(x => x.Employee!).ThenInclude(x => x.Detail!).ThenInclude(x => x.Plant)
+                .Include(x => x.Employee!).ThenInclude(x => x.Detail!).ThenInclude(x => x.Department)
+                .Include(x => x.Employee!).ThenInclude(x => x.Detail!).ThenInclude(x => x.Process)
+                .Include(x => x.Employee!).ThenInclude(x => x.Detail!).ThenInclude(x => x.Operation)
+                .Include(x => x.Employee!).ThenInclude(x => x.Detail!).ThenInclude(x => x.Group)
+                .Include(x => x.Employee!).ThenInclude(x => x.Detail!).ThenInclude(x => x.WorkingDetail)
+
+                .Include(x => x.Employee!).ThenInclude(x => x.Supervisor!).ThenInclude(x => x.Detail!).ThenInclude(x => x.Grade)
+                .Include(x => x.Employee!).ThenInclude(x => x.Supervisor!).ThenInclude(x => x.Detail!).ThenInclude(x => x.PositionE)
+                .Include(x => x.Employee!).ThenInclude(x => x.Supervisor!).ThenInclude(x => x.Detail!).ThenInclude(x => x.Plant)
+                .Include(x => x.Employee!).ThenInclude(x => x.Supervisor!).ThenInclude(x => x.Detail!).ThenInclude(x => x.Department)
+                .Include(x => x.Employee!).ThenInclude(x => x.Supervisor!).ThenInclude(x => x.Detail!).ThenInclude(x => x.Process)
+                .Include(x => x.Employee!).ThenInclude(x => x.Supervisor!).ThenInclude(x => x.Detail!).ThenInclude(x => x.Operation)
+                .Include(x => x.Employee!).ThenInclude(x => x.Supervisor!).ThenInclude(x => x.Detail!).ThenInclude(x => x.Group)
+                .Include(x => x.Employee!).ThenInclude(x => x.Supervisor!).ThenInclude(x => x.Detail!).ThenInclude(x => x.WorkingDetail)
+
+                .Include(x => x.Employee!).ThenInclude(x => x.Supervisor!).ThenInclude(x => x.Supervisor!).ThenInclude(x => x.Detail!).ThenInclude(x => x.Grade)
+                .Include(x => x.Employee!).ThenInclude(x => x.Supervisor!).ThenInclude(x => x.Supervisor!).ThenInclude(x => x.Detail!).ThenInclude(x => x.PositionE)
+                .Include(x => x.Employee!).ThenInclude(x => x.Supervisor!).ThenInclude(x => x.Supervisor!).ThenInclude(x => x.Detail!).ThenInclude(x => x.Plant)
+                .Include(x => x.Employee!).ThenInclude(x => x.Supervisor!).ThenInclude(x => x.Supervisor!).ThenInclude(x => x.Detail!).ThenInclude(x => x.Department)
+                .Include(x => x.Employee!).ThenInclude(x => x.Supervisor!).ThenInclude(x => x.Supervisor!).ThenInclude(x => x.Detail!).ThenInclude(x => x.Process)
+                .Include(x => x.Employee!).ThenInclude(x => x.Supervisor!).ThenInclude(x => x.Supervisor!).ThenInclude(x => x.Detail!).ThenInclude(x => x.Operation)
+                .Include(x => x.Employee!).ThenInclude(x => x.Supervisor!).ThenInclude(x => x.Supervisor!).ThenInclude(x => x.Detail!).ThenInclude(x => x.Group)
+                .Include(x => x.Employee!).ThenInclude(x => x.Supervisor!).ThenInclude(x => x.Supervisor!).ThenInclude(x => x.Detail!).ThenInclude(x => x.WorkingDetail)
+                
+                .FirstOrDefaultAsync(x => x.Id == id);
                 if (existUser != null)
                     return existUser;
             }
@@ -136,7 +169,7 @@ namespace be.Repos
         {
             try
             {
-                var existUser = await dbContext.Users.FirstOrDefaultAsync(x => x.UserName == username);
+                var existUser = await dbContext.Users.Include(x=>x.Role).FirstOrDefaultAsync(x => x.UserName == username);
                 if (existUser != null)
                     return existUser;
             }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace be.Models
 {
@@ -11,8 +12,10 @@ namespace be.Models
         public EmployeeDetail? Detail { get; set; }
         public Guid? SupervisorId { get; set; }
         public Employee? Supervisor { get; set; }
+        [JsonIgnore]
         public ICollection<Employee> Employees { get; set; } = [];
         public Guid? UserId { get; set; }
-        public User? User{ get; set; }
+        [JsonIgnore]
+        public User? User { get; set; }
     }
 }

@@ -152,7 +152,7 @@ namespace be.Repos
 
         public async Task<List<EvaluationScore>> FindAllBy(Guid? sourceId, Guid? targetId, Guid? criteriaId)
         {
-            var queryEvaluationScores = dbContext.EvaluationScores.AsQueryable();
+            var queryEvaluationScores = dbContext.EvaluationScores.Include(x=>x.Criteria!).AsQueryable();
             if (criteriaId != null)
             {
                 queryEvaluationScores = queryEvaluationScores.Where(x => x.CriteriaId == criteriaId);

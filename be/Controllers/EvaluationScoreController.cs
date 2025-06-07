@@ -13,7 +13,6 @@ using System.Security.Claims;
 
 namespace be.Controllers
 {
-    [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
     public class EvaluationScoreController(IEvaluationScoreRepository _repoEvaluationScore, IRepository<Evidence> _repoEvidence) : ControllerBase
@@ -68,7 +67,7 @@ namespace be.Controllers
 
                 if (sourceId == null)
                 {
-                    return Ok(new ApiResponse<EvaluationScore>
+                    return NotFound(new ApiResponse<EvaluationScore>
                     {
                         Message = "source not found",
                         Data = null,
@@ -86,11 +85,7 @@ namespace be.Controllers
 
                 if (result == null)
                 {
-                    return Ok(new ApiResponse<EvaluationScore>
-                    {
-                        Message = "create failed",
-                        Data = null,
-                    });
+                    return Forbid("create failed");
                 }
 
                 return Ok(new ApiResponse<EvaluationScore>

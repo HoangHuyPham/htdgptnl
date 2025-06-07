@@ -8,11 +8,11 @@ namespace be.Services
 {
     public class ImageService(IConfiguration configuration) : IImageService
     {
-        private readonly IConfiguration _configuration = configuration;
+        private readonly IConfiguration configuration = configuration;
         public async Task<string?> Upload(IFormFile file)
         {
             var hashName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-            var path = _configuration.GetSection("FileStorage:Path")!.Value;
+            var path = configuration.GetSection("FileStorage:Path")!.Value;
             if (path == null)
                 return null;
             using FileStream stream = new FileStream(Path.Combine(path, hashName), FileMode.Create);

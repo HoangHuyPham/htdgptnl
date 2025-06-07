@@ -1,36 +1,20 @@
-using be.DTOs.Criteria;
 using be.Helpers;
 using be.Mappers;
 using be.Models;
-using be.Repos.Interfaces;
 using be.Services.Interfaces;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using be.DTOs.Role;
 using System.Security.Claims;
+using be.DTOs.User;
 
 namespace be.Controllers
 {
-    [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
     public class UserController(IUserRepository _repoUser, IAuthService _authService) : ControllerBase
     {
         private readonly IUserRepository repoUser = _repoUser;
         private readonly IAuthService authService = _authService;
-
-        [HttpGet("Me")]
-        public async Task<IActionResult> Me()
-        {
-            var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var existUser = await repoUser.FindById(Guid.Parse(userId ?? Guid.Empty.ToString()));
-            return Ok(new ApiResponse<User>
-            {
-                Data = existUser,
-                Message = "success"
-            });
-        }
 
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] PaginationQuery query)

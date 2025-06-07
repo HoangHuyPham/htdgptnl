@@ -12,5 +12,6 @@ namespace be.DTOs.User
         public string? Email { get; set; }
         public string? Phone { get; set; }
         public Role? Role { get; set; }
+        public Employee? Employee { get; set; }
     }
 }

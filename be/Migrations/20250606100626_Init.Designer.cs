@@ -12,7 +12,7 @@ using be.Contexts;
 namespace be.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250601070440_Init")]
+    [Migration("20250606100626_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -59,9 +59,9 @@ namespace be.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b425352a-670d-49d5-a1b9-58be75e0c6b9"),
+                            Id = new Guid("31f75965-3202-43fe-a0ce-722ed32097dc"),
                             Name = "Core Value",
-                            PerformanceEvaluationId = new Guid("0c237d95-af63-4d9c-a9c1-78b8285aa79c"),
+                            PerformanceEvaluationId = new Guid("008000f6-186b-4ae9-a543-8b628a99f0d5"),
                             Stretch = 120f,
                             Target = 100f,
                             Threshold = 80f,
@@ -103,8 +103,8 @@ namespace be.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ca16db53-40cb-44c8-8d6d-04c0afe20c06"),
-                            AchievementId = new Guid("b425352a-670d-49d5-a1b9-58be75e0c6b9"),
+                            Id = new Guid("11d4dc49-5ede-4a3b-97c3-c1d55f52d4ab"),
+                            AchievementId = new Guid("31f75965-3202-43fe-a0ce-722ed32097dc"),
                             Name = "Care",
                             Stretch = 120f,
                             Target = 100f,
@@ -113,8 +113,8 @@ namespace be.Migrations
                         },
                         new
                         {
-                            Id = new Guid("48ded0fd-4850-4bfa-b084-5726017535ed"),
-                            AchievementId = new Guid("b425352a-670d-49d5-a1b9-58be75e0c6b9"),
+                            Id = new Guid("7ff51df4-fb6c-42a1-8ae2-ec95c73a4d9b"),
+                            AchievementId = new Guid("31f75965-3202-43fe-a0ce-722ed32097dc"),
                             Name = "Accountability",
                             Stretch = 120f,
                             Target = 100f,
@@ -123,8 +123,8 @@ namespace be.Migrations
                         },
                         new
                         {
-                            Id = new Guid("0fe22e23-be23-4290-94d3-33214dac7f6a"),
-                            AchievementId = new Guid("b425352a-670d-49d5-a1b9-58be75e0c6b9"),
+                            Id = new Guid("a7e52710-6b0e-4f84-8eef-f9ce7c5673ee"),
+                            AchievementId = new Guid("31f75965-3202-43fe-a0ce-722ed32097dc"),
                             Name = "Resilience",
                             Stretch = 120f,
                             Target = 100f,
@@ -133,8 +133,8 @@ namespace be.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d34e1c45-3eff-4f95-8556-09ec73b13a5a"),
-                            AchievementId = new Guid("b425352a-670d-49d5-a1b9-58be75e0c6b9"),
+                            Id = new Guid("50ca81f1-a54b-4375-aec9-cb1748915e0a"),
+                            AchievementId = new Guid("31f75965-3202-43fe-a0ce-722ed32097dc"),
                             Name = "Elevating",
                             Stretch = 120f,
                             Target = 100f,
@@ -168,85 +168,85 @@ namespace be.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("0d629639-e01c-4f0f-94d6-ef33e6c615f8"),
-                            AchievementItemId = new Guid("ca16db53-40cb-44c8-8d6d-04c0afe20c06"),
+                            Id = new Guid("4f4cf4c8-0f66-47d2-aa9c-7de0192334cb"),
+                            AchievementItemId = new Guid("11d4dc49-5ede-4a3b-97c3-c1d55f52d4ab"),
                             Content = "We believe that fundamentally, we are here to look after one another",
                             EvidenceRequired = false
                         },
                         new
                         {
-                            Id = new Guid("04685700-23a3-4efa-8e46-b52f917f6b72"),
-                            AchievementItemId = new Guid("ca16db53-40cb-44c8-8d6d-04c0afe20c06"),
+                            Id = new Guid("7b2f3d1e-e943-4124-aa1a-a3b130ffda6f"),
+                            AchievementItemId = new Guid("11d4dc49-5ede-4a3b-97c3-c1d55f52d4ab"),
                             Content = "We don't take ourselves too seriously and always follow the 'Golden Rule' of treating others like how you like to be treated;",
                             EvidenceRequired = false
                         },
                         new
                         {
-                            Id = new Guid("2a115a54-dbcb-4402-9cb0-711eaad0d6de"),
-                            AchievementItemId = new Guid("ca16db53-40cb-44c8-8d6d-04c0afe20c06"),
+                            Id = new Guid("3feb171f-d34f-44cc-9da5-2aa12e7aca9e"),
+                            AchievementItemId = new Guid("11d4dc49-5ede-4a3b-97c3-c1d55f52d4ab"),
                             Content = "We believe in taking action every day, to help someone else.",
                             EvidenceRequired = false
                         },
                         new
                         {
-                            Id = new Guid("8805eb52-693d-4794-8d67-77e8a57e3f29"),
-                            AchievementItemId = new Guid("48ded0fd-4850-4bfa-b084-5726017535ed"),
+                            Id = new Guid("a62c5d56-3685-47cd-939d-bcf097bfaddc"),
+                            AchievementItemId = new Guid("7ff51df4-fb6c-42a1-8ae2-ec95c73a4d9b"),
                             Content = "We do what we say we'll do",
                             EvidenceRequired = false
                         },
                         new
                         {
-                            Id = new Guid("4d4a5d3e-c354-4136-8268-b6927a95db88"),
-                            AchievementItemId = new Guid("48ded0fd-4850-4bfa-b084-5726017535ed"),
+                            Id = new Guid("15aa687e-6b33-467e-85a1-98ccf5f223f0"),
+                            AchievementItemId = new Guid("7ff51df4-fb6c-42a1-8ae2-ec95c73a4d9b"),
                             Content = "We believe that whatever is rightly done, however humble, is noble",
                             EvidenceRequired = false
                         },
                         new
                         {
-                            Id = new Guid("c774c619-e1f3-42ae-93f2-9fc87e4cea10"),
-                            AchievementItemId = new Guid("48ded0fd-4850-4bfa-b084-5726017535ed"),
+                            Id = new Guid("9963f4ee-530a-4b82-9768-555fe0e7e0e8"),
+                            AchievementItemId = new Guid("7ff51df4-fb6c-42a1-8ae2-ec95c73a4d9b"),
                             Content = "We take responsibility for the impact we have & take small steps for a better world",
                             EvidenceRequired = false
                         },
                         new
                         {
-                            Id = new Guid("d347adf2-3ffe-4c3f-92e9-4974ee5da399"),
-                            AchievementItemId = new Guid("0fe22e23-be23-4290-94d3-33214dac7f6a"),
+                            Id = new Guid("461c0791-a865-446e-bf1d-3747e9124df7"),
+                            AchievementItemId = new Guid("a7e52710-6b0e-4f84-8eef-f9ce7c5673ee"),
                             Content = "When times are tough, we have the courage to step up",
                             EvidenceRequired = false
                         },
                         new
                         {
-                            Id = new Guid("b9e84832-7e7e-4cba-85a5-3431c0919c82"),
-                            AchievementItemId = new Guid("0fe22e23-be23-4290-94d3-33214dac7f6a"),
+                            Id = new Guid("945d2515-a459-409b-8101-70b95d8d8dd3"),
+                            AchievementItemId = new Guid("a7e52710-6b0e-4f84-8eef-f9ce7c5673ee"),
                             Content = "We don't lose., we only win or learn",
                             EvidenceRequired = false
                         },
                         new
                         {
-                            Id = new Guid("a530ecea-77b7-4b5b-89fc-36331ed3aae6"),
-                            AchievementItemId = new Guid("0fe22e23-be23-4290-94d3-33214dac7f6a"),
+                            Id = new Guid("8ebb7393-978e-4702-a3a8-44d1ff3026b5"),
+                            AchievementItemId = new Guid("a7e52710-6b0e-4f84-8eef-f9ce7c5673ee"),
                             Content = "We believe that together, we are stronger",
                             EvidenceRequired = false
                         },
                         new
                         {
-                            Id = new Guid("e2ebd762-ba04-4d6d-861f-92ed4ff1be56"),
-                            AchievementItemId = new Guid("d34e1c45-3eff-4f95-8556-09ec73b13a5a"),
+                            Id = new Guid("3439bc1d-9b45-4ce5-ae3e-43f06afcfc50"),
+                            AchievementItemId = new Guid("50ca81f1-a54b-4375-aec9-cb1748915e0a"),
                             Content = "We believe in making things better and the continuous pursuit of knowledge",
                             EvidenceRequired = false
                         },
                         new
                         {
-                            Id = new Guid("d120d2ca-8c89-4509-b09a-f57bfedbd271"),
-                            AchievementItemId = new Guid("d34e1c45-3eff-4f95-8556-09ec73b13a5a"),
+                            Id = new Guid("a54c5654-bf80-49c8-bf81-5028c606a809"),
+                            AchievementItemId = new Guid("50ca81f1-a54b-4375-aec9-cb1748915e0a"),
                             Content = "We believe in the direct link between developing our people, our community & our business",
                             EvidenceRequired = false
                         },
                         new
                         {
-                            Id = new Guid("824d2d5a-6856-46fa-8e4d-91028a781e0f"),
-                            AchievementItemId = new Guid("d34e1c45-3eff-4f95-8556-09ec73b13a5a"),
+                            Id = new Guid("cc3d4106-c28a-4599-bceb-1234c53dc806"),
+                            AchievementItemId = new Guid("50ca81f1-a54b-4375-aec9-cb1748915e0a"),
                             Content = "We are a meritocracy that believes in competency-based progression.",
                             EvidenceRequired = false
                         });
@@ -269,12 +269,12 @@ namespace be.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a0e46464-bfd9-4948-bac4-7e6cbf31bf9c"),
+                            Id = new Guid("32eb03b8-0f09-4bde-88e0-11bb37e57585"),
                             Name = "Engineer"
                         },
                         new
                         {
-                            Id = new Guid("8622af63-705d-43b1-9ccd-76e26fef6cc2"),
+                            Id = new Guid("24f691c4-5cef-4883-9c19-78d19d8b1c5b"),
                             Name = "Office"
                         });
                 });
@@ -304,20 +304,20 @@ namespace be.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f3f133bf-d083-43a3-adc5-ad4edc6a7d6f"),
-                            SupervisorId = new Guid("4b756510-4c4a-47ab-9e7a-e996ef549b93"),
-                            UserId = new Guid("ce7e4268-aaa1-48e4-8dc7-ef268ce8c93c")
+                            Id = new Guid("25600998-561b-4548-a17e-f12877319593"),
+                            SupervisorId = new Guid("890172b4-aa4b-4079-8986-4c4269cda2f0"),
+                            UserId = new Guid("2da351a9-f668-4d35-a057-7f67ad8ac550")
                         },
                         new
                         {
-                            Id = new Guid("4b756510-4c4a-47ab-9e7a-e996ef549b93"),
-                            SupervisorId = new Guid("0f2824fd-2992-411a-84ca-8506a8ed4439"),
-                            UserId = new Guid("29b7f60c-249e-4fbb-abaf-b6d13fa1adf2")
+                            Id = new Guid("890172b4-aa4b-4079-8986-4c4269cda2f0"),
+                            SupervisorId = new Guid("5b1b28c5-22a4-4052-909e-7d22de65c5da"),
+                            UserId = new Guid("53f6e5c7-ad3f-4d4c-b8d9-4128a4d567bb")
                         },
                         new
                         {
-                            Id = new Guid("0f2824fd-2992-411a-84ca-8506a8ed4439"),
-                            UserId = new Guid("34e07b8a-648b-4380-8872-dca827bc9524")
+                            Id = new Guid("5b1b28c5-22a4-4052-909e-7d22de65c5da"),
+                            UserId = new Guid("819984b9-637e-41a5-bad8-970963a21222")
                         });
                 });
 
@@ -394,46 +394,52 @@ namespace be.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("7c1eb0cf-110c-4547-850b-b6f08b3c0821"),
+                            Id = new Guid("d01661c3-ccf5-4deb-9d33-e32fa699e65c"),
                             Code = "12345",
-                            DepartmentId = new Guid("a0e46464-bfd9-4948-bac4-7e6cbf31bf9c"),
+                            DepartmentId = new Guid("32eb03b8-0f09-4bde-88e0-11bb37e57585"),
                             Eligible = true,
-                            EmployeeId = new Guid("f3f133bf-d083-43a3-adc5-ad4edc6a7d6f"),
-                            FullName = "",
-                            OperationId = new Guid("cfba6725-9026-418b-b531-804a0f694de9"),
-                            PlantId = new Guid("919d0deb-95d2-4889-a805-9a9e998c5618"),
-                            PositionEId = new Guid("081dc95b-1662-480b-851d-1426d89a43bf"),
-                            ProcessId = new Guid("17e774f9-62ae-4f1d-9f1d-750f2163f2b7"),
+                            EmployeeId = new Guid("25600998-561b-4548-a17e-f12877319593"),
+                            FullName = "Nguyễn Văn A",
+                            GradeId = new Guid("91cec208-1665-4d2f-ba4a-b479a6a94882"),
+                            GroupId = new Guid("aaa03ed0-4c5d-402d-904a-5faf20b4397f"),
+                            OperationId = new Guid("f9117a2d-3373-4b3f-a933-3ddab7dd6975"),
+                            PlantId = new Guid("7836ded2-971e-4637-8b1b-be6b48df9ab7"),
+                            PositionEId = new Guid("e8f7a96a-b600-48c5-8894-dbe78d52d7aa"),
+                            ProcessId = new Guid("6a139eaa-4ad2-4c51-a31a-06d01d9dc982"),
                             StartDate = 1655830800L,
                             Type = "IDL"
                         },
                         new
                         {
-                            Id = new Guid("17b29b37-a852-4062-a512-a546ba7ebd4d"),
+                            Id = new Guid("1f509f21-5bb8-40fa-a697-d268dbd87ea9"),
                             Code = "12346",
-                            DepartmentId = new Guid("a0e46464-bfd9-4948-bac4-7e6cbf31bf9c"),
+                            DepartmentId = new Guid("32eb03b8-0f09-4bde-88e0-11bb37e57585"),
                             Eligible = true,
-                            EmployeeId = new Guid("4b756510-4c4a-47ab-9e7a-e996ef549b93"),
-                            FullName = "",
-                            OperationId = new Guid("cfba6725-9026-418b-b531-804a0f694de9"),
-                            PlantId = new Guid("c1b4d1b8-c087-4f3a-8a5f-a1f9b401434b"),
-                            PositionEId = new Guid("081dc95b-1662-480b-851d-1426d89a43bf"),
-                            ProcessId = new Guid("17e774f9-62ae-4f1d-9f1d-750f2163f2b7"),
+                            EmployeeId = new Guid("890172b4-aa4b-4079-8986-4c4269cda2f0"),
+                            FullName = "Nguyễn Văn B",
+                            GradeId = new Guid("bb7a56a7-396b-4e7a-bffb-e92e8a4c422b"),
+                            GroupId = new Guid("aaa03ed0-4c5d-402d-904a-5faf20b4397f"),
+                            OperationId = new Guid("f9117a2d-3373-4b3f-a933-3ddab7dd6975"),
+                            PlantId = new Guid("4423e651-d2fd-4de4-bf0f-5b6bbf15d8d7"),
+                            PositionEId = new Guid("e8f7a96a-b600-48c5-8894-dbe78d52d7aa"),
+                            ProcessId = new Guid("6a139eaa-4ad2-4c51-a31a-06d01d9dc982"),
                             StartDate = 1695229200L,
                             Type = "IDL"
                         },
                         new
                         {
-                            Id = new Guid("e65b8dda-4164-4ea9-9c11-e6971ad183cf"),
+                            Id = new Guid("cec3d403-cdb1-44ae-8513-ca7e6f664135"),
                             Code = "12347",
-                            DepartmentId = new Guid("a0e46464-bfd9-4948-bac4-7e6cbf31bf9c"),
+                            DepartmentId = new Guid("32eb03b8-0f09-4bde-88e0-11bb37e57585"),
                             Eligible = true,
-                            EmployeeId = new Guid("0f2824fd-2992-411a-84ca-8506a8ed4439"),
-                            FullName = "",
-                            OperationId = new Guid("cfba6725-9026-418b-b531-804a0f694de9"),
-                            PlantId = new Guid("919d0deb-95d2-4889-a805-9a9e998c5618"),
-                            PositionEId = new Guid("984280b5-38f2-4b0f-8f4c-a5ec8fe41da6"),
-                            ProcessId = new Guid("17e774f9-62ae-4f1d-9f1d-750f2163f2b7"),
+                            EmployeeId = new Guid("5b1b28c5-22a4-4052-909e-7d22de65c5da"),
+                            FullName = "Nguyễn Văn C",
+                            GradeId = new Guid("bb7a56a7-396b-4e7a-bffb-e92e8a4c422b"),
+                            GroupId = new Guid("aaa03ed0-4c5d-402d-904a-5faf20b4397f"),
+                            OperationId = new Guid("f9117a2d-3373-4b3f-a933-3ddab7dd6975"),
+                            PlantId = new Guid("7836ded2-971e-4637-8b1b-be6b48df9ab7"),
+                            PositionEId = new Guid("5ff0b3e2-7ec5-4bb3-9bba-06e64333e5d9"),
+                            ProcessId = new Guid("6a139eaa-4ad2-4c51-a31a-06d01d9dc982"),
                             StartDate = 1714669200L,
                             Type = "IDL"
                         });
@@ -478,36 +484,36 @@ namespace be.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("98bafd56-2f3a-427c-be42-d188fb275e83"),
-                            CreatedAt = 1748761480L,
+                            Id = new Guid("0139d531-ab7d-4e5f-9d08-3bfe4d3747e5"),
+                            CreatedAt = 1749204385L,
                             Description = "Vui lòng đánh giá trước hạn, đánh giá của bạn sẽ bị vô hiệu nếu quá hạn",
-                            End = 1749020680L,
+                            End = 1749463585L,
                             IsSelfEvalution = true,
-                            PerformanceEvaluationId = new Guid("0c237d95-af63-4d9c-a9c1-78b8285aa79c"),
-                            RoleId = new Guid("30863c40-98e3-4813-a166-1dcfdb1b6b3c"),
-                            Start = 1748761480L
+                            PerformanceEvaluationId = new Guid("008000f6-186b-4ae9-a543-8b628a99f0d5"),
+                            RoleId = new Guid("2a19b00a-8753-4d5f-937e-5f3a7815b554"),
+                            Start = 1749204385L
                         },
                         new
                         {
-                            Id = new Guid("c8a0d712-2844-451e-8f25-33d3ec2a3cd3"),
-                            CreatedAt = 1748761480L,
+                            Id = new Guid("f25c902f-193c-4cd7-9979-fbb1a326d59d"),
+                            CreatedAt = 1749204385L,
                             Description = "Vui lòng đánh giá trước hạn, đánh giá của bạn sẽ bị vô hiệu nếu quá hạn",
-                            End = 1749193480L,
+                            End = 1749636385L,
                             IsSelfEvalution = false,
-                            PerformanceEvaluationId = new Guid("0c237d95-af63-4d9c-a9c1-78b8285aa79c"),
-                            RoleId = new Guid("756e37d5-f7ee-403d-bd82-f3265d3e0c91"),
-                            Start = 1749020680L
+                            PerformanceEvaluationId = new Guid("008000f6-186b-4ae9-a543-8b628a99f0d5"),
+                            RoleId = new Guid("05cf5ce9-8c60-425f-bebc-4c34841b9136"),
+                            Start = 1749463585L
                         },
                         new
                         {
-                            Id = new Guid("1b66012c-92ee-47ab-977c-6ebcd53d5932"),
-                            CreatedAt = 1748761480L,
+                            Id = new Guid("f38ba82c-f562-4b9f-a0a9-1e90e77c8c03"),
+                            CreatedAt = 1749204385L,
                             Description = "Vui lòng đánh giá trước hạn, đánh giá của bạn sẽ bị vô hiệu nếu quá hạn",
-                            End = 1749366280L,
+                            End = 1749809185L,
                             IsSelfEvalution = false,
-                            PerformanceEvaluationId = new Guid("0c237d95-af63-4d9c-a9c1-78b8285aa79c"),
-                            RoleId = new Guid("50fa98a4-2c0c-4f1f-b23f-2790009d5612"),
-                            Start = 1749193480L
+                            PerformanceEvaluationId = new Guid("008000f6-186b-4ae9-a543-8b628a99f0d5"),
+                            RoleId = new Guid("6668daea-8563-4074-8cda-9886c93beecf"),
+                            Start = 1749636385L
                         });
                 });
 
@@ -590,12 +596,12 @@ namespace be.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("7d7d6134-39c8-4a7e-a1c4-1667eaec30c8"),
+                            Id = new Guid("91cec208-1665-4d2f-ba4a-b479a6a94882"),
                             Name = "as1"
                         },
                         new
                         {
-                            Id = new Guid("6e6ec5e3-8495-4786-a44a-cf14c936afd6"),
+                            Id = new Guid("bb7a56a7-396b-4e7a-bffb-e92e8a4c422b"),
                             Name = "as2"
                         });
                 });
@@ -617,12 +623,12 @@ namespace be.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d2f6bf3a-ecea-4754-911a-19fdffc89132"),
+                            Id = new Guid("aaa03ed0-4c5d-402d-904a-5faf20b4397f"),
                             Name = "Engineer"
                         },
                         new
                         {
-                            Id = new Guid("5c607477-eed2-4018-938d-b9e2ce44f019"),
+                            Id = new Guid("760b93fe-5555-4eca-a7eb-d394838011f9"),
                             Name = "Costing"
                         });
                 });
@@ -669,12 +675,12 @@ namespace be.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("cfba6725-9026-418b-b531-804a0f694de9"),
+                            Id = new Guid("f9117a2d-3373-4b3f-a933-3ddab7dd6975"),
                             Name = "Engineer"
                         },
                         new
                         {
-                            Id = new Guid("e0421e47-b754-4722-a212-414af122dff4"),
+                            Id = new Guid("ea28b7df-6ec2-4f2f-bc1e-c7327b5a538b"),
                             Name = "Prototype"
                         });
                 });
@@ -705,11 +711,11 @@ namespace be.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("0c237d95-af63-4d9c-a9c1-78b8285aa79c"),
-                            CreatedAt = 1748761480L,
-                            End = 1749366280L,
+                            Id = new Guid("008000f6-186b-4ae9-a543-8b628a99f0d5"),
+                            CreatedAt = 1749204385L,
+                            End = 1749809185L,
                             Name = "Don danh gia nhan vien 2025 (Behavior)",
-                            Start = 1748761480L
+                            Start = 1749204385L
                         });
                 });
 
@@ -730,12 +736,12 @@ namespace be.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("919d0deb-95d2-4889-a805-9a9e998c5618"),
+                            Id = new Guid("7836ded2-971e-4637-8b1b-be6b48df9ab7"),
                             Name = "plant 1"
                         },
                         new
                         {
-                            Id = new Guid("c1b4d1b8-c087-4f3a-8a5f-a1f9b401434b"),
+                            Id = new Guid("4423e651-d2fd-4de4-bf0f-5b6bbf15d8d7"),
                             Name = "plant 2"
                         });
                 });
@@ -757,12 +763,12 @@ namespace be.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("081dc95b-1662-480b-851d-1426d89a43bf"),
+                            Id = new Guid("e8f7a96a-b600-48c5-8894-dbe78d52d7aa"),
                             Name = "Casegoods Drafter"
                         },
                         new
                         {
-                            Id = new Guid("984280b5-38f2-4b0f-8f4c-a5ec8fe41da6"),
+                            Id = new Guid("5ff0b3e2-7ec5-4bb3-9bba-06e64333e5d9"),
                             Name = "Casegoods Drafter Team Leader"
                         });
                 });
@@ -784,12 +790,12 @@ namespace be.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("17e774f9-62ae-4f1d-9f1d-750f2163f2b7"),
+                            Id = new Guid("6a139eaa-4ad2-4c51-a31a-06d01d9dc982"),
                             Name = "Engineer"
                         },
                         new
                         {
-                            Id = new Guid("4942fab8-ba6c-4e1d-9682-7f854a261c5e"),
+                            Id = new Guid("09db74b3-11eb-4eeb-88e0-2f2c58d3ce49"),
                             Name = "Prototype"
                         });
                 });
@@ -818,28 +824,28 @@ namespace be.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("30863c40-98e3-4813-a166-1dcfdb1b6b3c"),
+                            Id = new Guid("2a19b00a-8753-4d5f-937e-5f3a7815b554"),
                             Description = "No description",
                             Level = 0,
                             Name = "Staff"
                         },
                         new
                         {
-                            Id = new Guid("756e37d5-f7ee-403d-bd82-f3265d3e0c91"),
+                            Id = new Guid("05cf5ce9-8c60-425f-bebc-4c34841b9136"),
                             Description = "No description",
                             Level = 1,
                             Name = "LineManager"
                         },
                         new
                         {
-                            Id = new Guid("50fa98a4-2c0c-4f1f-b23f-2790009d5612"),
+                            Id = new Guid("6668daea-8563-4074-8cda-9886c93beecf"),
                             Description = "No description",
                             Level = 2,
                             Name = "Director"
                         },
                         new
                         {
-                            Id = new Guid("6d3b56e1-821b-43c9-83f2-af1a1566d097"),
+                            Id = new Guid("9dc56b9f-5646-4296-bfd8-ab7c9bf9fe86"),
                             Description = "No description",
                             Level = 3,
                             Name = "Admin"
@@ -878,31 +884,42 @@ namespace be.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ce7e4268-aaa1-48e4-8dc7-ef268ce8c93c"),
-                            Email = "nhanvien1@gmail.com",
-                            Password = "$2a$11$Fym7WajUkdmJ31SAIj6UeO/TadSkRXXmoHwT/xKC/JhtrWSnpsfxW",
+                            Id = new Guid("2da351a9-f668-4d35-a057-7f67ad8ac550"),
+                            Email = "",
+                            Password = "$2a$11$1JY3Q.mRHET2IKG3Squ6reEPEBul8a6N52Rqn5LMDgfQK9TeMJqdq",
                             Phone = "123456789",
-                            RoleId = new Guid("30863c40-98e3-4813-a166-1dcfdb1b6b3c"),
+                            RoleId = new Guid("2a19b00a-8753-4d5f-937e-5f3a7815b554"),
                             UserName = "nhanvien1"
                         },
                         new
                         {
-                            Id = new Guid("29b7f60c-249e-4fbb-abaf-b6d13fa1adf2"),
+                            Id = new Guid("53f6e5c7-ad3f-4d4c-b8d9-4128a4d567bb"),
                             Email = "quanly1@gmail.com",
-                            Password = "$2a$11$yfVIdTsqxArm4nx7suWMKunV3BzXGrc3T1k9A88ZUriktZeLnaQ6W",
+                            Password = "$2a$11$k9bkfbp88ObCtUCurk.IL.n0ma20D4oMXNCGxnfe7fwcNMWqOm9wq",
                             Phone = "123456789",
-                            RoleId = new Guid("756e37d5-f7ee-403d-bd82-f3265d3e0c91"),
+                            RoleId = new Guid("05cf5ce9-8c60-425f-bebc-4c34841b9136"),
                             UserName = "quanly1"
                         },
                         new
                         {
-                            Id = new Guid("34e07b8a-648b-4380-8872-dca827bc9524"),
+                            Id = new Guid("819984b9-637e-41a5-bad8-970963a21222"),
                             Email = "giamdoc1@gmail.com",
-                            Password = "$2a$11$JUZYOYbCRcdHLUohlvDZVezgS8HDfCFHKQqQn5zkGDKnMnrXKfdR.",
+                            Password = "$2a$11$QH2UBrl9S0fw.ytc2y4KIOtIgfDziJuDaaT/p1mJxUD/8nWOpRbE6",
                             Phone = "123456789",
-                            RoleId = new Guid("50fa98a4-2c0c-4f1f-b23f-2790009d5612"),
+                            RoleId = new Guid("6668daea-8563-4074-8cda-9886c93beecf"),
                             UserName = "giamdoc1"
                         });
+                });
+
+            modelBuilder.Entity("be.Models.ValidationToken", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ValidationTokens");
                 });
 
             modelBuilder.Entity("be.Models.WorkingDetail", b =>

@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace be.Controllers
 {
-    [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
     public class AchievementItemController(IRepository<AchievementItem> _repoAchievementItem) : ControllerBase

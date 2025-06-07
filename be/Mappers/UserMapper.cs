@@ -17,7 +17,9 @@ namespace be.Mappers
                 Email = user.Email,
                 Phone = user.Phone,
                 Role = user.Role,
+                Employee = user.Employee
             };
         }
+        
     }
 }

@@ -15,6 +15,7 @@ namespace be.Services
     using System.Text;
     using BCrypt.Net;
     using be.DTOs.Role;
+    using be.DTOs.User;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.IdentityModel.JsonWebTokens;
     using Microsoft.IdentityModel.Tokens;
@@ -91,7 +92,6 @@ namespace be.Services
                 expires: DateTime.UtcNow.AddHours(1),
                 signingCredentials: cred
             );
-
             var normalizeToken = new JwtSecurityTokenHandler().WriteToken(token);
             return normalizeToken;
         }

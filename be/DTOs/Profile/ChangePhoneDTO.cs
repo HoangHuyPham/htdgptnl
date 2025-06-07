@@ -5,11 +5,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using be.Models;
 
-namespace be.DTOs.Auth
+namespace be.DTOs.Profile
 {
-    public class LoginDTO
+    public class ChangePhoneDTO
     {
-        public string Username { get; set; } = null!;
-        public string Password { get; set; } = null!;
+        public string NewPhone { get; set; } = null!;
     }
 }

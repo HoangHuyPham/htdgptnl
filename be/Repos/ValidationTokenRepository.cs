@@ -6,20 +6,19 @@ using be.Contexts;
 using be.Helpers;
 using be.Models;
 using be.Repos.Interfaces;
-using be.Services.Interfaces;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 
 namespace be.Repos
 {
-    public class EvaluationScheduleRepository(ApplicationDbContext _dbContext) : IEvaluationScheduleRepository
+    public class ValidationTokenRepository(ApplicationDbContext _dbContext) : IRepository<ValidationToken>
     {
         private readonly ApplicationDbContext dbContext = _dbContext;
-        public async Task<EvaluationSchedule?> Create(EvaluationSchedule target)
+        public async Task<ValidationToken?> Create(ValidationToken target)
         {
             try
             {
-                await dbContext.EvaluationSchedules.AddAsync(target);
+                await dbContext.ValidationTokens.AddAsync(target);
                 await dbContext.SaveChangesAsync();
                 return target;
             }
@@ -34,10 +33,10 @@ namespace be.Repos
         {
             try
             {
-                var existEvaluationSchedule = await dbContext.EvaluationSchedules.FirstOrDefaultAsync(x => x.Id == id);
-                if (existEvaluationSchedule != null)
+                var existValidationToken = await dbContext.ValidationTokens.FirstOrDefaultAsync(x => x.Id == id);
+                if (existValidationToken != null)
                 {
-                    dbContext.EvaluationSchedules.Remove(existEvaluationSchedule);
+                    dbContext.ValidationTokens.Remove(existValidationToken);
                     await dbContext.SaveChangesAsync();
                     return true;
                 }
@@ -49,11 +48,11 @@ namespace be.Repos
             return false;
         }
 
-        public async Task<ApiPaginationResponse<List<EvaluationSchedule>>> FindAll(PaginationQuery query)
+        public async Task<ApiPaginationResponse<List<ValidationToken>>> FindAll(PaginationQuery query)
         {
             try
             {
-                var queryEvaluationSchedules = dbContext.EvaluationSchedules.AsQueryable();
+                var queryValidationTokens = dbContext.ValidationTokens.AsQueryable();
 
                 if (!string.IsNullOrEmpty(query.Sort))
                 {
@@ -61,24 +60,24 @@ namespace be.Repos
 
                     if (sortPaths[1] == "desc")
                     {
-                        queryEvaluationSchedules = queryEvaluationSchedules.OrderByDescending(x => EF.Property<object>(x, sortPaths[0]));
+                        queryValidationTokens = queryValidationTokens.OrderByDescending(x => EF.Property<object>(x, sortPaths[0]));
                     }
                     else
                     {
-                        queryEvaluationSchedules = queryEvaluationSchedules.OrderBy(x => EF.Property<object>(x, sortPaths[0]));
+                        queryValidationTokens = queryValidationTokens.OrderBy(x => EF.Property<object>(x, sortPaths[0]));
                     }
                 }
 
-                var total = await queryEvaluationSchedules.CountAsync();
+                var total = await queryValidationTokens.CountAsync();
 
                 if (query.Page > 0 && query.Limit > 0)
                 {
                     int skip = (query.Page - 1) * query.Limit;
-                    queryEvaluationSchedules = queryEvaluationSchedules.Skip(skip).Take(query.Limit);
+                    queryValidationTokens = queryValidationTokens.Skip(skip).Take(query.Limit);
                 }
                 return new()
                 {
-                    Data = await queryEvaluationSchedules.ToListAsync(),
+                    Data = await queryValidationTokens.ToListAsync(),
                     Message = "success",
                     Pagination = new()
                     {
@@ -107,24 +106,13 @@ namespace be.Repos
             };
         }
 
-        public async Task<List<EvaluationSchedule>> FindAllAvailable()
-        {
-            return await dbContext.EvaluationSchedules
-            .Include(x => x.PerformanceEvaluation!)
-            .ThenInclude(x => x.Achievements)
-            .ThenInclude(x => x.AchievementItems)
-            .ThenInclude(x => x.Criterias)
-            .Where(x => (x.PerformanceEvaluation!.End > DateTimeOffset.UtcNow.ToUnixTimeSeconds()) && (x.PerformanceEvaluation!.Start < DateTimeOffset.UtcNow.ToUnixTimeSeconds()))
-            .ToListAsync();
-        }
-
-        public async Task<EvaluationSchedule?> FindById(Guid id)
+        public async Task<ValidationToken?> FindById(Guid id)
         {
             try
             {
-                var existEvaluationSchedule = await dbContext.EvaluationSchedules.FirstOrDefaultAsync(x => x.Id == id);
-                if (existEvaluationSchedule != null)
-                    return existEvaluationSchedule;
+                var existValidationToken = await dbContext.ValidationTokens.FirstOrDefaultAsync(x => x.Id == id);
+                if (existValidationToken != null)
+                    return existValidationToken;
             }
             catch (Exception ex)
             {
@@ -133,9 +121,9 @@ namespace be.Repos
             return null;
         }
 
-        public async Task<EvaluationSchedule?> Update(EvaluationSchedule data)
+        public async Task<ValidationToken?> Update(ValidationToken data)
         {
-            dbContext.EvaluationSchedules.Update(data);
+            dbContext.ValidationTokens.Update(data);
             await dbContext.SaveChangesAsync();
             return data;
         }

@@ -12,7 +12,6 @@ using be.DTOs.Role;
 
 namespace be.Controllers
 {
-    [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
     public class RoleController(IRepository<Role> _repoRole) : ControllerBase

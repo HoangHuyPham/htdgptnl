@@ -12,7 +12,6 @@ using be.DTOs.EvaluationScore;
 
 namespace be.Controllers
 {
-    [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
     public class CriteriaController(IRepository<Criteria> _repoCriteria) : ControllerBase

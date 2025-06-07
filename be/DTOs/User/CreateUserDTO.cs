@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using be.Models;
 using be.Models.Enums;
 
-namespace be.DTOs.Role
+namespace be.DTOs.User
 {
     public class CreateUserDTO
     {

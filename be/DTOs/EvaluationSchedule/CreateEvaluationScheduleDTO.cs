@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using be.Models.Enums;
 
-namespace be.DTOs.EvaluationScore
+namespace be.DTOs.EvaluationSchedule
 {
     public class CreateEvaluationScheduleDTO
     {

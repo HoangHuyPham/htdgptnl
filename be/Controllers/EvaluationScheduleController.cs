@@ -11,10 +11,10 @@ using Microsoft.AspNetCore.Authorization;
 using be.DTOs.Role;
 using System.Security.Claims;
 using be.DTOs.EvaluationScore;
+using be.DTOs.EvaluationSchedule;
 
 namespace be.Controllers
 {
-    [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
     public class EvaluationScheduleController(IEvaluationScheduleRepository _repoEvaluationSchedule) : ControllerBase

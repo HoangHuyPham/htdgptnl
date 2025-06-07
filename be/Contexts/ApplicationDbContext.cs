@@ -26,6 +26,7 @@ namespace be.Contexts
         public DbSet<Process> Processs { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<ValidationToken> ValidationTokens { get; set; }
         public DbSet<WorkingDetail> WorkingDetails { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -56,7 +57,7 @@ namespace be.Contexts
             modelBuilder.Entity<Role>().HasData([roleStaff, roleLineManager, roleDirector, roleAdmin]);
 
             // User
-            User user1 = new() { UserName = "nhanvien1", Password = BCrypt.HashPassword("123"), Email = "nhanvien1@gmail.com", Phone = "123456789", RoleId = roleStaff.Id };
+            User user1 = new() { UserName = "nhanvien1", Password = BCrypt.HashPassword("123"), Email = "", Phone = "123456789", RoleId = roleStaff.Id };
             User user2 = new() { UserName = "quanly1", Password = BCrypt.HashPassword("123"), Email = "quanly1@gmail.com", Phone = "123456789", RoleId = roleLineManager.Id };
             User user3 = new() { UserName = "giamdoc1", Password = BCrypt.HashPassword("123"), Email = "giamdoc1@gmail.com", Phone = "123456789", RoleId = roleDirector.Id };
             modelBuilder.Entity<User>().HasData([user1, user2, user3]);
@@ -104,9 +105,9 @@ namespace be.Contexts
             modelBuilder.Entity<Group>().HasData([group1, group2]);
 
             // EmployeeDetail
-            EmployeeDetail employeeDetail1 = new() { Code = "12345", Type = "IDL", DepartmentId = department1.Id, EmployeeId = employee1.Id, PlantId = plant1.Id, OperationId = operation1.Id, ProcessId = process1.Id, PositionEId = positionE1.Id, StartDate = DateTimeOffset.Parse("06-22-2022").ToUnixTimeSeconds() };
-            EmployeeDetail employeeDetail2 = new() { Code = "12346", Type = "IDL", DepartmentId = department1.Id, EmployeeId = employee2.Id, PlantId = plant2.Id, OperationId = operation1.Id, ProcessId = process1.Id, PositionEId = positionE1.Id, StartDate = DateTimeOffset.Parse("09-21-2023").ToUnixTimeSeconds() };
-            EmployeeDetail employeeDetail3 = new() { Code = "12347", Type = "IDL", DepartmentId = department1.Id, EmployeeId = employee3.Id, PlantId = plant1.Id, OperationId = operation1.Id, ProcessId = process1.Id, PositionEId = positionE2.Id, StartDate = DateTimeOffset.Parse("05-03-2024").ToUnixTimeSeconds() };
+            EmployeeDetail employeeDetail1 = new() { Code = "12345", FullName="Nguyễn Văn A", Type = "IDL", DepartmentId = department1.Id, EmployeeId = employee1.Id, PlantId = plant1.Id, OperationId = operation1.Id, GradeId = grade1.Id, GroupId = group1.Id, ProcessId = process1.Id, PositionEId = positionE1.Id, StartDate = DateTimeOffset.Parse("06-22-2022").ToUnixTimeSeconds() };
+            EmployeeDetail employeeDetail2 = new() { Code = "12346", FullName="Nguyễn Văn B",Type = "IDL", DepartmentId = department1.Id, EmployeeId = employee2.Id, PlantId = plant2.Id, OperationId = operation1.Id, GradeId = grade2.Id, GroupId = group1.Id, ProcessId = process1.Id, PositionEId = positionE1.Id, StartDate = DateTimeOffset.Parse("09-21-2023").ToUnixTimeSeconds() };
+            EmployeeDetail employeeDetail3 = new() { Code = "12347", FullName="Nguyễn Văn C",Type = "IDL", DepartmentId = department1.Id, EmployeeId = employee3.Id, PlantId = plant1.Id, OperationId = operation1.Id, GradeId = grade2.Id, GroupId = group1.Id, ProcessId = process1.Id, PositionEId = positionE2.Id, StartDate = DateTimeOffset.Parse("05-03-2024").ToUnixTimeSeconds() };
             modelBuilder.Entity<EmployeeDetail>().HasData([employeeDetail1, employeeDetail2, employeeDetail3]);
 
             // PerformanceEvaluation
