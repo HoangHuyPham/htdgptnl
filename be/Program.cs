@@ -13,11 +13,12 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.IdentityModel.Tokens.Jwt;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetSection("ConnectionStrings").GetSection("admin").Value;
-// Add services to the container.
+var connectionString = builder.Configuration.GetSection("ConnectionStrings").GetSection("Admin").Value;
 
+// Add services to the container.
 builder.Services.AddCors(options =>
         {
             options.AddPolicy(name: "AppPolicy", policy =>
@@ -38,31 +39,46 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         ValidateIssuer = false,
         ValidateAudience = false,
         ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("JWTSecret:Key").Value!)),
         RoleClaimType = "roleId",
     };
+
 });
-builder.Services.AddAuthorization(options=>
+builder.Services.AddAuthorization(options =>
 {
     options.FallbackPolicy = new AuthorizationPolicyBuilder()
                             .RequireAuthenticatedUser()
                             .Build();
 });
 
-builder.Services.AddScoped<IRepository<EvaluationSchedule>, EvaluationScheduleRepository>();
-builder.Services.AddScoped<IRepository<PerformanceEvaluation>, PerformanceEvaluationRepository>();
 builder.Services.AddScoped<IRepository<Achievement>, AchievementRepository>();
 builder.Services.AddScoped<IRepository<AchievementItem>, AchievementItemRepository>();
-builder.Services.AddScoped<IRepository<Image>, ImageRepository>();
-builder.Services.AddScoped<IRepository<Role>, RoleRepository>();
-builder.Services.AddScoped<IRepository<ProofImage>, ProofImageRepository>();
-builder.Services.AddScoped<IRepository<EvaluateScore>, EvaluateScoreRepository>();
 builder.Services.AddScoped<IRepository<Criteria>, CriteriaRepository>();
-builder.Services.AddScoped<IRoleEvaluationScheduleRepository, RoleEvaluationScheduleRepository>();
+builder.Services.AddScoped<IRepository<Role>, RoleRepository>();
+builder.Services.AddScoped<IRepository<Department>, DepartmentRepository>();
+builder.Services.AddScoped<IRepository<Employee>, EmployeeRepository>();
+builder.Services.AddScoped<IRepository<EmployeeDetail>, EmployeeDetailRepository>();
+builder.Services.AddScoped<IEvaluationScheduleRepository, EvaluationScheduleRepository>();
+builder.Services.AddScoped<IEvaluationScoreRepository, EvaluationScoreRepository>();
+builder.Services.AddScoped<IRepository<Evidence>, EvidenceRepository>();
+builder.Services.AddScoped<IRepository<Grade>, GradeRepository>();
+builder.Services.AddScoped<IRepository<Group>, GroupRepository>();
+builder.Services.AddScoped<IRepository<Image>, ImageRepository>();
+builder.Services.AddScoped<IRepository<Operation>, OperationRepository>();
+builder.Services.AddScoped<IRepository<PerformanceEvaluation>, PerformanceEvaluationRepository>();
+builder.Services.AddScoped<IRepository<Plant>, PlantRepository>();
+builder.Services.AddScoped<IRepository<PositionE>, PositionERepository>();
+builder.Services.AddScoped<IRepository<Process>, ProcessRepository>();
+builder.Services.AddScoped<IRepository<ValidationToken>, ValidationTokenRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IRepository<WorkingDetail>, WorkingDetailRepository>();
 
 builder.Services.AddScoped<IImageService, ImageService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+
+builder.Services.AddSingleton<ISocketManager, SocketManager>();
 
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddEndpointsApiExplorer();
@@ -104,13 +120,19 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+app.UseCors("AppPolicy");
+
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")),
     RequestPath = "/static"
 });
 
-app.UseCors("AppPolicy");
+var webSocketConfig = new WebSocketOptions();
+webSocketConfig.AllowedOrigins.Add("http://localhost:5173");
+app.UseWebSockets(webSocketConfig);
+
+app.UseRouting();
 
 app.UseHttpsRedirection();
 

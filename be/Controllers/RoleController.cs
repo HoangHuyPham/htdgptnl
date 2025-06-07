@@ -1,28 +1,27 @@
-using be.DTOs.Role;
+using be.DTOs.Criteria;
+using be.DTOs.User;
 using be.Helpers;
 using be.Mappers;
 using be.Models;
 using be.Repos.Interfaces;
+using be.Services.Interfaces;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using be.DTOs.Role;
 
 namespace be.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class RoleController(IRepository<Role> _RoleRepo) : ControllerBase
+    public class RoleController(IRepository<Role> _repoRole) : ControllerBase
     {
-        private readonly IRepository<Role> RoleRepo = _RoleRepo;
-        [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] string? query)
-        {
-            var Roles = await RoleRepo.FindAll();
+        private readonly IRepository<Role> repoRole = _repoRole;
 
-            return Ok(new ApiPaginationResponse<List<RoleDTO>>
-            {
-                Message = "get success",
-                Data = Roles.Select(x=>x.getDTO()).ToList(),
-            });
+        [HttpGet]
+        public async Task<IActionResult> GetAll([FromQuery] PaginationQuery query)
+        {
+            return Ok(await repoRole.FindAll(query));
         }
 
         [HttpPost]
@@ -30,10 +29,11 @@ namespace be.Controllers
         {
             try
             {
-                var result = await RoleRepo.Create(new Role
+                var result = await repoRole.Create(new Role
                 {
                     Name = dto.Name,
                     Description = dto.Description,
+                    Level = dto.Level
                 });
 
                 if (result == null)
@@ -62,12 +62,12 @@ namespace be.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid id, PutRoleDTO dto)
+        public async Task<IActionResult> Put(Guid id, CreateRoleDTO dto)
         {
             try
             {
 
-                var Role = await RoleRepo.FindById(id);
+                var Role = await repoRole.FindById(id);
 
                 if (Role == null)
                 {
@@ -80,6 +80,7 @@ namespace be.Controllers
                 
                 Role.Description = dto.Description;
                 Role.Name = dto.Name;
+                Role.Level = dto.Level;
 
                 if (!ModelState.IsValid)
                 {
@@ -93,7 +94,7 @@ namespace be.Controllers
                 return Ok(new ApiResponse<Role>
                 {
                     Message = "update success",
-                    Data = await RoleRepo.Update(Role),
+                    Data = await repoRole.Update(Role),
                 });
             }
             catch
@@ -111,7 +112,7 @@ namespace be.Controllers
         {
             try
             {
-                var Role = await RoleRepo.FindById(id);
+                var Role = await repoRole.FindById(id);
                 if (Role == null || jsonPatch == null)
                 {
                     return NotFound(new ApiResponse<Role>
@@ -135,7 +136,7 @@ namespace be.Controllers
                 return Ok(new ApiResponse<Role>
                 {
                     Message = "update success",
-                    Data = await RoleRepo.Update(Role),
+                    Data = await repoRole.Update(Role),
                 });
             }
             catch
@@ -153,7 +154,7 @@ namespace be.Controllers
         {
             try
             {
-                var result = await RoleRepo.Delete(id);
+                var result = await repoRole.Delete(id);
 
                 if (!result) return Ok(new ApiResponse<CreateRoleDTO>
                 {

@@ -3,17 +3,17 @@ import { createContext, Dispatch, ReactNode, Reducer, useReducer } from "react";
 
 interface UserType {
     user: IUser,
-    dispatch: Dispatch<UserAction>
+    dispatchUser: Dispatch<UserAction>
 }
 
-interface UserAction {
+export interface UserAction {
     type: string,
     payload: IUser | null
 }
 
 const USER_ACTION = {
     ADD: "ADD",
-    REMOVE: "REMOVE",
+    CLEAR: "CLEAR",
     UPDATE: "UPDATE"
 }
 
@@ -23,7 +23,7 @@ const UserReducer: Reducer<IUser | null, UserAction> = (state, action) => {
     switch (action.type) {
         case USER_ACTION.ADD:
             return { ...action.payload } as IUser
-        case USER_ACTION.REMOVE:
+        case USER_ACTION.CLEAR:
             localStorage.removeItem("jwt")
             return null
         case USER_ACTION.UPDATE:
@@ -34,8 +34,8 @@ const UserReducer: Reducer<IUser | null, UserAction> = (state, action) => {
 }
 
 const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [user, dispatch] = useReducer(UserReducer, null)
-    return <UserContext.Provider value={{ user, dispatch } as UserType}>
+    const [user, dispatchUser] = useReducer(UserReducer, null)
+    return <UserContext.Provider value={{ user, dispatchUser } as UserType}>
         {children}
     </UserContext.Provider>
 }

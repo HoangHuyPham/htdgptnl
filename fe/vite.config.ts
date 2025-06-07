@@ -18,6 +18,7 @@ export default defineConfig({
       "@requests": path.resolve(__dirname, "./src/requests"),
       "@interfaces": path.resolve(__dirname, "./src/interfaces"),
       "@utils": path.resolve(__dirname, "./src/utils"),
+      "@websocket": path.resolve(__dirname, "./src/websocket"),
     }
   },
   plugins: [react(), tailwindcss()],

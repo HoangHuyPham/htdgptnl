@@ -1,28 +1,27 @@
 using be.DTOs.Criteria;
+using be.DTOs.User;
 using be.Helpers;
+using be.Mappers;
 using be.Models;
 using be.Repos.Interfaces;
+using be.Services.Interfaces;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Serialization;
+using Microsoft.AspNetCore.Authorization;
+using be.DTOs.EvaluationScore;
 
 namespace be.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CriteriaController(IRepository<Criteria> _CriteriaRepo) : ControllerBase
+    public class CriteriaController(IRepository<Criteria> _repoCriteria) : ControllerBase
     {
-        private readonly IRepository<Criteria> CriteriaRepo = _CriteriaRepo;
-        [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] string? query)
-        {
-            var Criterias = await CriteriaRepo.FindAll();
+        private readonly IRepository<Criteria> repoCriteria = _repoCriteria;
 
-            return Ok(new ApiPaginationResponse<List<Criteria>>
-            {
-                Message = "get success",
-                Data = Criterias,
-            });
+        [HttpGet]
+        public async Task<IActionResult> GetAll([FromQuery] PaginationQuery query)
+        {
+            return Ok(await repoCriteria.FindAll(query));
         }
 
         [HttpPost]
@@ -30,10 +29,10 @@ namespace be.Controllers
         {
             try
             {
-                var result = await CriteriaRepo.Create(new Criteria
+                var result = await repoCriteria.Create(new Criteria
                 {
                     Content = dto.Content,
-                    ProofRequired = dto.ProofRequired,
+                    EvidenceRequired = dto.EvidenceRequired,
                     AchievementItemId = dto.AchievementItemId
                 });
 
@@ -63,12 +62,12 @@ namespace be.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid id, PutCriteriaDTO dto)
+        public async Task<IActionResult> Put(Guid id, CreateCriteriaDTO dto)
         {
             try
             {
 
-                var Criteria = await CriteriaRepo.FindById(id);
+                var Criteria = await repoCriteria.FindById(id);
 
                 if (Criteria == null)
                 {
@@ -78,9 +77,11 @@ namespace be.Controllers
                         Data = null
                     });
                 }
-                
+
                 Criteria.Content = dto.Content;
-                Criteria.ProofRequired = dto.ProofRequired;
+                Criteria.EvidenceRequired = dto.EvidenceRequired;
+                Criteria.AchievementItemId = dto.AchievementItemId;
+
 
                 if (!ModelState.IsValid)
                 {
@@ -94,7 +95,7 @@ namespace be.Controllers
                 return Ok(new ApiResponse<Criteria>
                 {
                     Message = "update success",
-                    Data = await CriteriaRepo.Update(Criteria),
+                    Data = await repoCriteria.Update(Criteria),
                 });
             }
             catch
@@ -112,7 +113,7 @@ namespace be.Controllers
         {
             try
             {
-                var Criteria = await CriteriaRepo.FindById(id);
+                var Criteria = await repoCriteria.FindById(id);
                 if (Criteria == null || jsonPatch == null)
                 {
                     return NotFound(new ApiResponse<Criteria>
@@ -136,7 +137,7 @@ namespace be.Controllers
                 return Ok(new ApiResponse<Criteria>
                 {
                     Message = "update success",
-                    Data = await CriteriaRepo.Update(Criteria),
+                    Data = await repoCriteria.Update(Criteria),
                 });
             }
             catch
@@ -154,7 +155,7 @@ namespace be.Controllers
         {
             try
             {
-                var result = await CriteriaRepo.Delete(id);
+                var result = await repoCriteria.Delete(id);
 
                 if (!result) return Ok(new ApiResponse<CreateCriteriaDTO>
                 {

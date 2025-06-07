@@ -7,9 +7,10 @@ namespace be.Models
 {
     public class WorkingDetail
     {
-        public Guid Id { get; set; }= Guid.NewGuid();
-        public int Standard { get; set; } = 0;
-        public int Actual { get; set; } = 0;
+        public Guid Id { get; set; } = Guid.NewGuid();
+        public string Name { get; set; } = String.Empty;
+        public int StandardWorkingDay { get; set; } = 0;
+        public int ActualWorkingDay { get; set; } = 0;
         public int Hoic { get; set; } = 0;
         public int Pv { get; set; } = 0;
         public int Np { get; set; } = 0;
@@ -17,6 +18,7 @@ namespace be.Models
         public int Written { get; set; } = 0;
         public int Verbal { get; set; } = 0;
         public int Maternity { get; set; } = 0;
-        public ICollection<Employee>? Employees { get; set; }
+        public Guid? EmployeeDetailId { get; set; }
+        public EmployeeDetail? EmployeeDetail { get; set; }
     }
 }
